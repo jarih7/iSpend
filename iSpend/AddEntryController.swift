@@ -10,19 +10,19 @@ import FirebaseDatabase
 
 class AddEntryController: UIViewController {
     
-    let dbRef = Database.database().reference()
     let transactionsPath = "user/transactions/"
+    let dbRef = Database.database().reference()
     let newTransactionId = 2
     var newTransactionPath = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        newTransactionPath = "\(transactionsPath)/\(newTransactionId)"
         
-        addData(name: "counterparty", value: "Albert")
+        //newTransactionPath = "\(transactionsPath)/\(newTransactionId)"
+        //addData(name: "counterparty", value: "Albert")
     }
     
     func addData(name: String, value: Any) {
-        dbRef.child("\(newTransactionPath)/\(name)").setValue(value)
+        //dbRef.child("\(newTransactionPath)/\(name)").setValue(value)
     }
 }

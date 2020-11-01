@@ -31,11 +31,13 @@
       "size" : "40x40"
     },
     {
+      "filename" : "iSpend_icon_2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "iSpend_icon_3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
@@ -71,16 +73,19 @@
       "size" : "40x40"
     },
     {
+      "filename" : "iSpend_icon_1x_iPad.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
     },
     {
+      "filename" : "iSpend_icon_2x_iPad.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
+      "filename" : "iSpend_icon_2x_iPadPro.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "83.5x83.5"

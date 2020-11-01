@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class HistoryController: UIViewController {
     
+    let dbRef = Database.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
 }

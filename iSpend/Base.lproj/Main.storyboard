@@ -6,6 +6,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -140,13 +141,59 @@
                     <view key="view" contentMode="scaleToFill" id="jzr-o4-4IF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lwN-9o-R3r">
+                                <rect key="frame" x="20" y="94" width="374" height="719"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p9b-Lk-d8H">
+                                    <size key="itemSize" width="374" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TransactionViewCell" id="BiF-cV-2fR" customClass="TransactionViewCell" customModule="iSpend" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YBd-nv-rdq">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0A-go-5Kg">
+                                                    <rect key="frame" x="166" y="53.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="i0A-go-5Kg" firstAttribute="centerX" secondItem="YBd-nv-rdq" secondAttribute="centerX" id="2h0-tO-lM8"/>
+                                                <constraint firstItem="i0A-go-5Kg" firstAttribute="centerY" secondItem="YBd-nv-rdq" secondAttribute="centerY" id="Xkq-Hp-904"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <size key="customSize" width="374" height="128"/>
+                                        <connections>
+                                            <outlet property="label" destination="i0A-go-5Kg" id="nOM-aw-4uP"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="UnH-vc-P6d"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UnH-vc-P6d" firstAttribute="trailing" secondItem="lwN-9o-R3r" secondAttribute="trailing" constant="20" id="Kbk-gS-3JF"/>
+                            <constraint firstItem="lwN-9o-R3r" firstAttribute="top" secondItem="UnH-vc-P6d" secondAttribute="top" constant="50" id="bIh-cA-DrA"/>
+                            <constraint firstItem="lwN-9o-R3r" firstAttribute="leading" secondItem="UnH-vc-P6d" secondAttribute="leading" constant="20" id="foo-ff-UZ0"/>
+                            <constraint firstItem="UnH-vc-P6d" firstAttribute="bottom" secondItem="lwN-9o-R3r" secondAttribute="bottom" id="ily-kd-wWI"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="History" id="CAR-Be-s5i">
                         <imageReference key="image" image="clock.arrow.circlepath" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="transactionsCollectionView" destination="lwN-9o-R3r" id="jTU-cr-5AC"/>
                         <outlet property="view" destination="jzr-o4-4IF" id="fUw-ob-RWx"/>
                     </connections>
                 </viewController>
@@ -182,6 +229,9 @@
         <image name="note.text.badge.plus" catalog="system" width="128" height="108"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

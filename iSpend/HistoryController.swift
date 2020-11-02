@@ -8,26 +8,100 @@
 import UIKit
 import FirebaseDatabase
 
-class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+struct Transaction {
+    var id: Int
+    var title: String
+    var total: Double
+    var incoming: Bool
+    var counterparty: String
+    var date: Date
+}
+
+class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     
     let dbRef = Database.database().reference()
     var transactions: NSArray = []
+    //var structs: [Transaction] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         transactionsCollectionView.delegate = self
         transactionsCollectionView.dataSource = self
         
-        dbRef.child("transactions").observeSingleEvent(of: .value) { [self] (snapshot) in
+        dbRef.child("transactions").observe(.value, with: { [self] (snapshot) in
             transactions = snapshot.value as? NSArray ?? []
-            //for transaction in self.transactions {
-            //    print("trans: \(transaction)\n")
-            //}
+            //structureData()
+            
             transactionsCollectionView.reloadData()
+        })
+    }
+    
+    //func structureData() {
+    //    var strcts: [Transaction] = []
+    //    for tr in transactions {
+    //        let transaction = tr as! NSDictionary
+    //
+    //        let id = transaction["id"] as! Int
+    //        let title = transaction["title"] as! String
+    //        let total = transaction["total"] as! Double
+    //        let incoming = transaction["incoming"] as! Bool
+    //        let dateString = transaction["date"] as! String
+    //
+    //        let df = DateFormatter()
+    //        df.locale = Locale(identifier: "en_US")
+    //        df.dateStyle = .medium
+    //        let date = df.date(from: dateString)!
+    //
+    //        let counterparty = transaction["counterparty"] as! String
+    //
+    //        strcts.append(Transaction(id: id, title: title, total: total, incoming: incoming, counterparty: counterparty, date: date))
+    //    }
+    //    structs = strcts
+    //}
+    
+    func setupCellContent(cell: TransactionViewCell, transaction: NSDictionary) {
+        let id = transaction["id"] as! Int
+        let title = transaction["title"] as! String
+        let total = transaction["total"] as! Double
+        let incoming = transaction["incoming"] as! Bool
+        let dateString = transaction["date"] as! String
+        let counterparty = transaction["counterparty"] as! String
+        
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "en_US")
+        df.dateStyle = .medium
+        let date = df.date(from: dateString)!
+        
+        cell.label.text = title
+        cell.total.text = String(format: "%.2f", total) + " Kč"
+        
+        if (incoming == true) {
+            cell.totalSymbol.text = "→"
+        } else {
+            cell.totalSymbol.text = "←"
+        }
+        
+        
+    }
+    
+    func setupCellStyle(cell: TransactionViewCell, transaction: NSDictionary) {
+        cell.backgroundColor = .systemBlue
+        cell.layer.cornerRadius = 10
+        cell.label.textColor = .white
+        cell.total.textColor = .white
+        
+        let incoming: Bool = transaction["incoming"] as! Bool
+        
+        if (incoming == true) {
+            cell.totalSymbol.textColor = .green
+        } else {
+            cell.totalSymbol.textColor = .systemOrange
         }
     }
+    
+    //----------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return transactions.count
@@ -37,8 +111,14 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TransactionViewCell", for: indexPath) as! TransactionViewCell
         
         let transaction = transactions[indexPath.row] as! NSDictionary
-        cell.label.text = transaction["title"] as? String
         
+        setupCellContent(cell: cell, transaction: transaction)
+        setupCellStyle(cell: cell, transaction: transaction)
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: transactionsCollectionView.frame.width - 40, height: 144.0)
+    }
 }
+

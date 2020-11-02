@@ -11,8 +11,8 @@ class TransactionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var total: UILabel!
     @IBOutlet weak var totalSymbol: UILabel!
-    
-    var incoming: Bool = false
+    @IBOutlet weak var counterparty: UILabel!
+    @IBOutlet weak var date: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

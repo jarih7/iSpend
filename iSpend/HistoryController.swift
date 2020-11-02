@@ -8,22 +8,12 @@
 import UIKit
 import FirebaseDatabase
 
-struct Transaction {
-    var id: Int
-    var title: String
-    var total: Double
-    var incoming: Bool
-    var counterparty: String
-    var date: Date
-}
-
 class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     
     let dbRef = Database.database().reference()
-    var transactions: NSArray = []
-    //var structs: [Transaction] = []
+    var transactions: NSMutableArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,35 +21,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.dataSource = self
         
         dbRef.child("transactions").observe(.value, with: { [self] (snapshot) in
-            transactions = snapshot.value as? NSArray ?? []
-            //structureData()
-            
+            transactions = snapshot.value as? NSMutableArray ?? []
+            transactions.removeObject(identicalTo: NSNull())
             transactionsCollectionView.reloadData()
         })
     }
-    
-    //func structureData() {
-    //    var strcts: [Transaction] = []
-    //    for tr in transactions {
-    //        let transaction = tr as! NSDictionary
-    //
-    //        let id = transaction["id"] as! Int
-    //        let title = transaction["title"] as! String
-    //        let total = transaction["total"] as! Double
-    //        let incoming = transaction["incoming"] as! Bool
-    //        let dateString = transaction["date"] as! String
-    //
-    //        let df = DateFormatter()
-    //        df.locale = Locale(identifier: "en_US")
-    //        df.dateStyle = .medium
-    //        let date = df.date(from: dateString)!
-    //
-    //        let counterparty = transaction["counterparty"] as! String
-    //
-    //        strcts.append(Transaction(id: id, title: title, total: total, incoming: incoming, counterparty: counterparty, date: date))
-    //    }
-    //    structs = strcts
-    //}
     
     func setupCellContent(cell: TransactionViewCell, transaction: NSDictionary) {
         let id = transaction["id"] as! Int
@@ -83,7 +49,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
             cell.totalSymbol.text = "←"
         }
         
-        
+        cell.counterparty.text = counterparty
+        cell.date.text = dateString
     }
     
     func setupCellStyle(cell: TransactionViewCell, transaction: NSDictionary) {
@@ -99,6 +66,9 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         } else {
             cell.totalSymbol.textColor = .systemOrange
         }
+        
+        cell.counterparty.textColor = .white
+        cell.date.textColor = .white
     }
     
     //----------------------------------------------------
@@ -118,7 +88,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: transactionsCollectionView.frame.width - 40, height: 144.0)
+        return CGSize(width: transactionsCollectionView.frame.width - 40, height: 100.0)
     }
 }
 

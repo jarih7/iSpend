@@ -14,6 +14,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     let dbRef = Database.database().reference()
     var transactions: NSMutableArray = []
+    var currency: String = "CZK"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         })
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dbRef.removeAllObservers()
+    }
+    
     func setupCellContent(cell: TransactionViewCell, transaction: NSDictionary) {
         let id = transaction["id"] as! Int
         let title = transaction["title"] as! String
@@ -35,17 +41,20 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         let dateString = transaction["date"] as! String
         let counterparty = transaction["counterparty"] as! String
         
-        let df = DateFormatter()
-        df.locale = Locale(identifier: "en_US")
-        df.dateStyle = .medium
-        let date = df.date(from: dateString)!
+        //let df = DateFormatter()
+        //df.locale = Locale(identifier: "en_US")
+        //df.dateStyle = .medium
+        //let date = df.date(from: dateString)!
         
+        cell.id = id
         cell.label.text = title
-        cell.total.text = String(format: "%.2f", total) + " Kč"
+        cell.total.text = String(format: "%.2f", total)
         
         if (incoming == true) {
+            cell.incoming = true
             cell.totalSymbol.text = "→"
         } else {
+            cell.incoming = false
             cell.totalSymbol.text = "←"
         }
         
@@ -89,6 +98,22 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: transactionsCollectionView.frame.width - 40, height: 100.0)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cell = sender as? TransactionViewCell {
+            let vc = segue.destination as! TransactionController
+            vc.transTitle = cell.label.text ?? "EMPTY"
+            vc.transCounterparty = cell.counterparty.text ?? "EMPTY"
+            vc.transId = cell.id
+            vc.transIncoming = cell.incoming
+            vc.transTotal = Double(cell.total.text!) ?? 0.0
+            vc.transDate = cell.date.text ?? "EMPTY"
+        }
+    }
+    
+    @IBAction func unwindToController(segue: UIStoryboardSegue) {
+        
     }
 }
 

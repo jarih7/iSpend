@@ -1,5 +1,5 @@
 //
-//  AddEntryController.swift
+//  AddTransactionController.swift
 //  iSpend
 //
 //  Created by Jaroslav Hampejs on 29/10/2020.
@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseDatabase
 
-class AddEntryController: UIViewController {
+class AddTransactionController: UIViewController {
     
     let transactionsPath = "user/transactions/"
     let dbRef = Database.database().reference()

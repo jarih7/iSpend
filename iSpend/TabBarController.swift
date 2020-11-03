@@ -13,6 +13,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         delegate = self
     }
     
+    /*
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
 
         guard let fromView = selectedViewController?.view, let toView = viewController.view else {
@@ -25,4 +26,5 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
         return true
     }
+ */
 }

@@ -14,6 +14,9 @@ class TransactionViewCell: UICollectionViewCell {
     @IBOutlet weak var counterparty: UILabel!
     @IBOutlet weak var date: UILabel!
     
+    var incoming: Bool = false
+    var id: Int = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

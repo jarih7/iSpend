@@ -42,7 +42,7 @@ class TransactionController: UIViewController {
     }
     
     @IBAction func optionsButton(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Actions", message: "What do you want to do with the Transaction?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Actions", message: "What do you want to do with this Transaction?", preferredStyle: .actionSheet)
         
         let editAction = UIAlertAction(title: "Edit", style: .default) { (UIAlertAction) in
             print("EDIT ACTION SELECTED")

@@ -34,17 +34,17 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     }
     
     func setupCellContent(cell: TransactionViewCell, transaction: NSDictionary) {
+        
         let id = transaction["id"] as! Int
         let title = transaction["title"] as! String
-        let total = transaction["total"] as! Double
+        let total = (transaction["total"] as! NSNumber).doubleValue
+        
+        //print("TOTAL TEST")
+        //dump((transaction["total"] as! NSNumber).doubleValue)
+        
         let incoming = transaction["incoming"] as! Bool
         let dateString = transaction["date"] as! String
         let counterparty = transaction["counterparty"] as! String
-        
-        //let df = DateFormatter()
-        //df.locale = Locale(identifier: "en_US")
-        //df.dateStyle = .medium
-        //let date = df.date(from: dateString)!
         
         cell.id = id
         cell.label.text = title
@@ -98,6 +98,14 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: transactionsCollectionView.frame.width - 40, height: 100.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            cell.alpha = 1
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

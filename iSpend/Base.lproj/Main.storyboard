@@ -42,8 +42,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jij-PM-xRg">
-                                <rect key="frame" x="20" y="244" width="39" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jij-PM-xRg">
+                                <rect key="frame" x="20" y="244" width="34" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -80,7 +80,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="saveButtonTapped:" destination="HRA-cR-k46" eventType="touchUpInside" id="UuY-dx-Yew"/>
+                                    <action selector="saveButtonTapped:" destination="HRA-cR-k46" eventType="touchUpInside" id="SFj-vW-c3p"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -125,12 +125,12 @@
                         <imageReference key="image" image="note.text.badge.plus" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="newCounterparty" destination="Ey6-oc-7eO" id="59Y-IZ-tau"/>
-                        <outlet property="newDate" destination="vQJ-k3-5h1" id="rKz-fx-qgq"/>
-                        <outlet property="newIncoming" destination="7ak-Ct-DhG" id="zoJ-Va-Nnk"/>
-                        <outlet property="newTitle" destination="Etp-ON-ZIy" id="QAP-rf-5nr"/>
-                        <outlet property="newTotal" destination="5jk-p1-VgT" id="33M-Ju-HoU"/>
-                        <outlet property="saveButton" destination="D9R-4d-Q9e" id="oTo-Sn-Tsz"/>
+                        <outlet property="counterpartyTextField" destination="Ey6-oc-7eO" id="sde-RE-BmS"/>
+                        <outlet property="datePicker" destination="vQJ-k3-5h1" id="91l-e3-J2y"/>
+                        <outlet property="incomingSwitch" destination="7ak-Ct-DhG" id="bgM-l4-aid"/>
+                        <outlet property="saveButton" destination="D9R-4d-Q9e" id="O1f-JL-Ebc"/>
+                        <outlet property="titleTextField" destination="Etp-ON-ZIy" id="twe-Fc-bwc"/>
+                        <outlet property="totalTextField" destination="5jk-p1-VgT" id="ZJl-X8-qbT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJd-Xf-IOg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

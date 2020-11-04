@@ -24,8 +24,15 @@ class TransactionController: UIViewController {
     var transTotal: Double = 0.0
     var transDate: String = "PLACEHOLDER"
     
+    var newTransactionId = Int()
+    let newTransactionIndexPath: String = "nextTransIndex"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dbRef.child(newTransactionIndexPath).observeSingleEvent(of: .value) { [self] (snapshot) in
+            newTransactionId = snapshot.value as! Int
+        }
         
         titleLabel.text = transTitle
         counterpartyLabel.text = transCounterparty
@@ -50,6 +57,7 @@ class TransactionController: UIViewController {
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
             dbRef.child("transactions/\(transId)").removeValue()
+            dbRef.child(newTransactionIndexPath).setValue(newTransactionId - 1)
             _ = navigationController?.popViewController(animated: true)
         }
         

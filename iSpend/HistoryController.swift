@@ -28,20 +28,15 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         })
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        dbRef.removeAllObservers()
-    }
+    //override func viewWillDisappear(_ animated: Bool) {
+    //    super.viewDidDisappear(animated)
+    //    dbRef.removeAllObservers()
+    //}
     
     func setupCellContent(cell: TransactionViewCell, transaction: NSDictionary) {
-        
         let id = transaction["id"] as! Int
         let title = transaction["title"] as! String
         let total = (transaction["total"] as! NSNumber).doubleValue
-        
-        //print("TOTAL TEST")
-        //dump((transaction["total"] as! NSNumber).doubleValue)
-        
         let incoming = transaction["incoming"] as! Bool
         let dateString = transaction["date"] as! String
         let counterparty = transaction["counterparty"] as! String
@@ -90,7 +85,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TransactionViewCell", for: indexPath) as! TransactionViewCell
         
         let transaction = transactions[indexPath.row] as! NSDictionary
-        
         setupCellContent(cell: cell, transaction: transaction)
         setupCellStyle(cell: cell, transaction: transaction)
         return cell

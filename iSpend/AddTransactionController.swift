@@ -22,26 +22,20 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     let newTransactionIndexPath: String = "nextTransIndex"
     var newTransactionId = Int()
     var newTransactionPath: String = ""
-    var newTransactionTitle: String = ""
-    var newTransactionCounterparty: String = ""
-    var newTransactionTotal: Double = 0.0
-    var newTransactionDate: Date = Date()
-    var newTransactionIncoming: Bool = false
-    
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         dateFormatter.dateStyle = .medium
-        setupFunctionality()
-        setupStyle()
         
         dbRef.child(newTransactionIndexPath).observe(.value) { [self] (snapshot) in
             newTransactionId = snapshot.value as! Int
             newTransactionPath = "\(transactionsPath)/\(newTransactionId)"
             print("NEW TRANSACTION ID UPDATED TO: \(newTransactionId)")
         }
+        
+        setupFunctionality()
+        setupStyle()
     }
     
     func setupFunctionality() {
@@ -59,6 +53,14 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         saveButton.backgroundColor = .systemBlue
         saveButton.tintColor = .white
         saveButton.layer.cornerRadius = 5
+    }
+    
+    func resetFields() {
+        titleTextField.text = ""
+        counterpartyTextField.text = ""
+        totalTextField.text = ""
+        datePicker.date = Date()
+        incomingSwitch.isOn = false
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -80,5 +82,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         print("UPDATING TRANSACTIONID TO: \(newTransactionId + 1)")
         dbRef.child(newTransactionIndexPath).setValue(newTransactionId + 1)
         tabBarController?.selectedIndex = 2
+        resetFields()
     }
 }

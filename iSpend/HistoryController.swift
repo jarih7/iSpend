@@ -22,16 +22,13 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.dataSource = self
         
         dbRef.child("transactions").observe(.value, with: { [self] (snapshot) in
+            print("TEST:")
+            dump(snapshot.value!)
             transactions = snapshot.value as? NSMutableArray ?? []
             transactions.removeObject(identicalTo: NSNull())
             transactionsCollectionView.reloadData()
         })
     }
-    
-    //override func viewWillDisappear(_ animated: Bool) {
-    //    super.viewDidDisappear(animated)
-    //    dbRef.removeAllObservers()
-    //}
     
     func setupCellContent(cell: TransactionViewCell, transaction: NSDictionary) {
         let id = transaction["id"] as! Int

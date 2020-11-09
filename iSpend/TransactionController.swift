@@ -57,7 +57,6 @@ class TransactionController: UIViewController {
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
             dbRef.child("transactions/\(transId)").removeValue()
-            dbRef.child(newTransactionIndexPath).setValue(newTransactionId - 1)
             _ = navigationController?.popViewController(animated: true)
         }
         

@@ -27,6 +27,8 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         dateFormatter.dateStyle = .medium
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
         
         dbRef.child(newTransactionIndexPath).observe(.value) { [self] (snapshot) in
             newTransactionId = snapshot.value as! Int

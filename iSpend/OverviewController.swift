@@ -17,16 +17,21 @@ class OverviewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    func setupMonthView() {
         monthView.layer.backgroundColor = UIColor.systemBlue.cgColor
         monthView.layer.cornerRadius = 10
         lastMonthLabel.textColor = .white
-        monthSum.text = "2340"
+        //monthSum.text = "2340"
         monthSum.textColor = .white
-        
+    }
+    
+    func setupWeekView() {
         weekView.layer.backgroundColor = UIColor.systemBlue.cgColor
         weekView.layer.cornerRadius = 10
         lastWeekLabel.textColor = .white
-        weekSum.text = "270"
+        //weekSum.text = "270"
         weekSum.textColor = .white
     }
 }

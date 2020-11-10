@@ -14,6 +14,7 @@ class TransactionViewCell: UICollectionViewCell {
     @IBOutlet weak var counterparty: UILabel!
     @IBOutlet weak var date: UILabel!
     
+    var doubleTotalValue: Double = 0.0
     var incoming: Bool = false
     var id: Int = 0
     

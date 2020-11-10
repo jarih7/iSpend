@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import FirebaseFirestore
 
 class AddTransactionController: UIViewController, UITextFieldDelegate {
     
@@ -17,23 +17,34 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var incomingSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIButton!
     
-    let dbRef = Database.database().reference()
-    let transactionsPath: String = "transactions"
+    let db = Firestore.firestore()
+    let transactionsPath: String = "transMap"
     let newTransactionIndexPath: String = "nextTransIndex"
-    var newTransactionId = Int()
+    var newTransactionIndex = Int()
     var newTransactionPath: String = ""
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dateFormatter.dateStyle = .medium
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "d. MM. yyyy"
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
         
-        dbRef.child(newTransactionIndexPath).observe(.value) { [self] (snapshot) in
-            newTransactionId = snapshot.value as! Int
-            newTransactionPath = "\(transactionsPath)/\(newTransactionId)"
-            print("NEW TRANSACTION ID UPDATED TO: \(newTransactionId)")
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
+            
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            
+            newTransactionIndex = data["nextTransactionIndex"] as! Int
         }
         
         setupFunctionality()
@@ -54,7 +65,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         incomingSwitch.isOn = false
         saveButton.backgroundColor = .systemBlue
         saveButton.tintColor = .white
-        saveButton.layer.cornerRadius = 5
+        saveButton.layer.cornerRadius = 8
     }
     
     func resetFields() {
@@ -70,19 +81,16 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         
         let newTransaction: NSDictionary = [
             "counterparty": counterpartyTextField.text ?? "*EMPTY*",
-            "date": dateFormatter.string(from: datePicker.date),
-            "id": newTransactionId,
+            "date": datePicker.date,
+            "id": newTransactionIndex,
             "incoming": incomingSwitch.isOn,
             "title": titleTextField.text ?? "*EMPTY*",
             "total": Double(totalTextField.text!)!
         ]
         
-        print("UPLOADING TRNSACTION DATA")
-        dbRef.child(newTransactionPath).setValue(newTransaction)
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(newTransactionIndex) : newTransaction])
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
         
-        //finally update newTransIndex
-        print("UPDATING TRANSACTIONID TO: \(newTransactionId + 1)")
-        dbRef.child(newTransactionIndexPath).setValue(newTransactionId + 1)
         tabBarController?.selectedIndex = 2
         resetFields()
     }

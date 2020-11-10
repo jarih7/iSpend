@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import FirebaseFirestore
 
 class TransactionController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
@@ -15,7 +15,7 @@ class TransactionController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var symbolLabel: UILabel!
     
-    let dbRef = Database.database().reference()
+    let db = Firestore.firestore()
     
     var transTitle: String = "PLACEHOLDER"
     var transCounterparty: String = "PLACEHOLDER"
@@ -23,21 +23,16 @@ class TransactionController: UIViewController {
     var transIncoming: Bool = false
     var transTotal: Double = 0.0
     var transDate: String = "PLACEHOLDER"
-    
-    var newTransactionId = Int()
     let newTransactionIndexPath: String = "nextTransIndex"
+    var currency: String = "CZK"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dbRef.child(newTransactionIndexPath).observeSingleEvent(of: .value) { [self] (snapshot) in
-            newTransactionId = snapshot.value as! Int
-        }
-        
         titleLabel.text = transTitle
         counterpartyLabel.text = transCounterparty
         dateLabel.text = transDate
-        priceLabel.text = String(format: "%.2f", transTotal)
+        priceLabel.text = String(format: "%.2f", transTotal) + " " + currency
         
         if (transIncoming == true) {
             symbolLabel.text = "→"
@@ -56,7 +51,8 @@ class TransactionController: UIViewController {
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
-            dbRef.child("transactions/\(transId)").removeValue()
+            //dbRef.child("transactions/\(transId)").removeValue()
+            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(transId) : FieldValue.delete()])
             _ = navigationController?.popViewController(animated: true)
         }
         

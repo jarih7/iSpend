@@ -9,23 +9,8 @@ import UIKit
 import FirebaseFirestore
 
 class OverviewController: UIViewController {
-    @IBOutlet weak var monthView: UIView!
-    @IBOutlet weak var lastMonthLabel: UILabel!
-    @IBOutlet weak var monthInSymbol: UILabel!
-    @IBOutlet weak var monthInSum: UILabel!
-    @IBOutlet weak var monthOutSymbol: UILabel!
-    @IBOutlet weak var monthOutSum: UILabel!
-    @IBOutlet weak var monthBalanceLabel: UILabel!
-    @IBOutlet weak var monthBalance: UILabel!
-    
-    @IBOutlet weak var weekView: UIView!
-    @IBOutlet weak var lastWeekLabel: UILabel!
-    @IBOutlet weak var weekInSymbol: UILabel!
-    @IBOutlet weak var weekInSum: UILabel!
-    @IBOutlet weak var weekOutSymbol: UILabel!
-    @IBOutlet weak var weekOutSum: UILabel!
-    @IBOutlet weak var weekBalanceLabel: UILabel!
-    @IBOutlet weak var weekBalance: UILabel!
+    @IBOutlet weak var monthView: MonthView!
+    @IBOutlet weak var weekView: WeekView!
     
     let db = Firestore.firestore()
     var nextTransactionIndex: Int = Int()
@@ -37,43 +22,20 @@ class OverviewController: UIViewController {
     var WIS: Int = Int()
     var WOS: Int = Int()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNeedsStatusBarAppearanceUpdate()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "d. MM. yyyy"
         
-        setupMonthView()
-        setupWeekView()
+        monthView.setupView()
+        weekView.setupView()
         startListening()
-    }
-    
-    func setupMonthView() {
-        monthView.layer.backgroundColor = UIColor.systemBlue.cgColor
-        monthView.layer.cornerRadius = 10
-        lastMonthLabel.textColor = .white
-        monthInSymbol.text = "→"
-        monthOutSymbol.text = "←"
-        monthInSymbol.textColor = .green
-        monthOutSymbol.textColor = .systemOrange
-        monthInSum.textColor = .white
-        monthOutSum.textColor = .white
-        monthBalance.textColor = .white
-        monthBalanceLabel.textColor = .white
-    }
-    
-    func setupWeekView() {
-        weekView.layer.backgroundColor = UIColor.systemBlue.cgColor
-        weekView.layer.cornerRadius = 10
-        lastWeekLabel.textColor = .white
-        weekInSymbol.text = "→"
-        weekOutSymbol.text = "←"
-        weekInSymbol.textColor = .green
-        weekOutSymbol.textColor = .systemOrange
-        weekInSum.textColor = .white
-        weekOutSum.textColor = .white
-        weekBalance.textColor = .white
-        weekBalanceLabel.textColor = .white
     }
     
     func startListening() {
@@ -94,12 +56,12 @@ class OverviewController: UIViewController {
             WIS = data["LWI"] as! Int
             WOS = data["LWO"] as! Int
             
-            monthInSum.text = MIS.description + " " + currency
-            monthOutSum.text = MOS.description + " " + currency
-            weekInSum.text = WIS.description + " " + currency
-            weekOutSum.text = WOS.description + " " + currency
-            monthBalance.text = (MIS - MOS).description + " " + currency
-            weekBalance.text = (WIS - WOS).description + " " + currency
+            monthView.monthInSum.text = MIS.description
+            monthView.monthOutSum.text = MOS.description
+            monthView.monthBalance.text = (MIS - MOS).description
+            weekView.weekInSum.text = WIS.description
+            weekView.weekOutSum.text = WOS.description
+            weekView.weekBalance.text = (WIS - WOS).description
         }
     }
 }

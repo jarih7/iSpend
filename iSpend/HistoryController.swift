@@ -34,8 +34,13 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     var LWI: Double = Double()
     var LWO: Double = Double()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNeedsStatusBarAppearanceUpdate()
         transactionsCollectionView.automaticallyAdjustsScrollIndicatorInsets = true
         transactionsCollectionView.delegate = self
         transactionsCollectionView.dataSource = self
@@ -113,7 +118,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     func setupCellContent(cell: TransactionViewCell, transaction: Transaction) {
         cell.id = transaction.id
         cell.label.text = transaction.title
-        cell.total.text = Int(transaction.total).description + " " + currency
+        cell.total.text = Int(transaction.total).description
         
         if (transaction.incoming == true) {
             cell.incoming = true
@@ -128,22 +133,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         cell.doubleTotalValue = transaction.total
     }
     
-    func setupCellStyle(cell: TransactionViewCell, transaction: Transaction) {
-        cell.backgroundColor = .systemBlue
-        cell.layer.cornerRadius = 10
-        cell.label.textColor = .white
-        cell.total.textColor = .white
-        
-        if (transaction.incoming == true) {
-            cell.totalSymbol.textColor = .green
-        } else {
-            cell.totalSymbol.textColor = .systemOrange
-        }
-        
-        cell.counterparty.textColor = .white
-        cell.date.textColor = .white
-    }
-    
     //----------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -155,20 +144,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         
         let transaction = transactions[indexPath.row] as Transaction
         setupCellContent(cell: cell, transaction: transaction)
-        setupCellStyle(cell: cell, transaction: transaction)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: transactionsCollectionView.frame.width - 32, height: 100.0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.alpha = 0
-        
-        UIView.animate(withDuration: 0.3) {
-            cell.alpha = 1
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

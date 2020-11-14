@@ -24,8 +24,13 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     var newTransactionPath: String = ""
     let dateFormatter = DateFormatter()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNeedsStatusBarAppearanceUpdate()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "d. MM. yyyy"
@@ -61,11 +66,22 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     }
     
     func setupStyle() {
+        titleTextField.textColor = .black
+        counterpartyTextField.textColor = .black
+        totalTextField.textColor = .black
+        
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         incomingSwitch.isOn = false
-        saveButton.backgroundColor = .systemBlue
+        incomingSwitch.tintColor = .systemOrange
+        incomingSwitch.layer.cornerRadius = incomingSwitch.frame.height / 2
+        incomingSwitch.backgroundColor = .systemOrange
+        
+        saveButton.backgroundColor = UIColor(red: 68/255, green: 114/255, blue: 197/255, alpha: 1)
         saveButton.tintColor = .white
         saveButton.layer.cornerRadius = 8
+        datePicker.backgroundColor = .systemBackground
+        datePicker.layer.cornerRadius = 8
+        datePicker.layer.masksToBounds = true
     }
     
     func resetFields() {
@@ -91,7 +107,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(newTransactionIndex) : newTransaction])
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
         
-        tabBarController?.selectedIndex = 2
+        tabBarController?.selectedIndex = 1
         resetFields()
     }
 }

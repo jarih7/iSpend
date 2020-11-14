@@ -26,13 +26,18 @@ class TransactionController: UIViewController {
     let newTransactionIndexPath: String = "nextTransIndex"
     var currency: String = "CZK"
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setNeedsStatusBarAppearanceUpdate()
         titleLabel.text = transTitle
         counterpartyLabel.text = transCounterparty
         dateLabel.text = transDate
-        priceLabel.text = String(format: "%.2f", transTotal) + " " + currency
+        priceLabel.text = String(format: "%.2f", transTotal)
+        priceLabel.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
         
         if (transIncoming == true) {
             symbolLabel.text = "→"
@@ -51,7 +56,6 @@ class TransactionController: UIViewController {
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
-            //dbRef.child("transactions/\(transId)").removeValue()
             db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(transId) : FieldValue.delete()])
             _ = navigationController?.popViewController(animated: true)
         }

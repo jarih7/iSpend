@@ -53,8 +53,6 @@ class RatesController: UIViewController {
         dateFormatter.timeStyle = .medium
         dateFormatter.locale = .current
         
-        getERData()
-        
         eurLabel.text = "EUR"
         usdLabel.text = "USD"
         gbpLabel.text = "GBP"
@@ -74,6 +72,10 @@ class RatesController: UIViewController {
         usdView.setupViewStyle()
         gbpView.setupViewStyle()
         jpyView.setupViewStyle()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getERData()
     }
     
     func getERData() {
@@ -105,5 +107,6 @@ class RatesController: UIViewController {
         eurValueLabel.text = String(format: "%.2f", eurVal)
         usdValueLabel.text = String(format: "%.2f", usdVal)
         gbpValueLabel.text = String(format: "%.2f", gbpVal)
-        jpyValueLabel.text = String(format: "%.2f", jpyVal)    }
+        jpyValueLabel.text = String(format: "%.2f", jpyVal)
+    }
 }

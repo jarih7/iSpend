@@ -24,8 +24,19 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     var newTransactionPath: String = ""
     let dateFormatter = DateFormatter()
     
+    var passedTitle: String = ""
+    var passedConterparty: String = ""
+    var passedTotal: String = ""
+    var passedDate: Date = Date()
+    var passedIncoming: Bool = false
+    var passedUpdate: Bool = false
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func viewDidLoad() {
@@ -54,6 +65,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         
         setupFunctionality()
         setupStyle()
+        setupContent()
     }
     
     func setupFunctionality() {
@@ -99,6 +111,14 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         datePicker.backgroundColor = .systemBackground
         datePicker.layer.cornerRadius = 8
         datePicker.layer.masksToBounds = true
+    }
+    
+    func setupContent() {
+        titleTextField.text = passedTitle
+        counterpartyTextField.text = passedConterparty
+        totalTextField.text = passedTotal
+        datePicker.date = passedDate
+        incomingSwitch.isOn = passedIncoming
     }
     
     func resetFields() {

@@ -26,12 +26,17 @@ class TransactionController: UIViewController {
     let newTransactionIndexPath: String = "nextTransIndex"
     var currency: String = "CZK"
     
+    let dateFormatter = DateFormatter()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "d. MM. yyyy"
         setNeedsStatusBarAppearanceUpdate()
         titleLabel.text = transTitle
         counterpartyLabel.text = transCounterparty
@@ -51,18 +56,27 @@ class TransactionController: UIViewController {
     @IBAction func optionsButton(_ sender: UIButton) {
         let alert = UIAlertController(title: "Actions", message: "What do you want to do with this Transaction?", preferredStyle: .actionSheet)
         
-        let editAction = UIAlertAction(title: "Edit", style: .default) { (UIAlertAction) in
+        let editAction = UIAlertAction(title: "Edit", style: .default) { [self] (UIAlertAction) in
             print("EDIT ACTION SELECTED")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let addTC = storyboard.instantiateViewController(identifier: "AddTransactionController") as! AddTransactionController
+            
+            addTC.passedTitle = transTitle
+            addTC.passedConterparty = transCounterparty
+            addTC.passedTotal = String(format: "%.2f", transTotal)
+            addTC.passedDate = dateFormatter.date(from: transDate)!
+            addTC.passedIncoming = transIncoming
+            addTC.passedUpdate = true
+            
+            self.show(addTC, sender: self)
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
             db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(transId) : FieldValue.delete()])
-            _ = navigationController?.popViewController(animated: true)
+            navigationController?.popViewController(animated: true)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (UIAlertAction) in
-            print("CANCEL ACTION SELECTED")
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(editAction)
         alert.addAction(deleteAction)

@@ -66,9 +66,21 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     }
     
     func setupStyle() {
-        titleTextField.textColor = .black
-        counterpartyTextField.textColor = .black
-        totalTextField.textColor = .black
+        titleTextField.textColor = .white
+        counterpartyTextField.textColor = .white
+        totalTextField.textColor = .white
+        
+        titleTextField.layer.cornerRadius = 10.0
+        counterpartyTextField.layer.cornerRadius = 10.0
+        totalTextField.layer.cornerRadius = 10.0
+        
+        titleTextField.layer.masksToBounds = true
+        counterpartyTextField.layer.masksToBounds = true
+        totalTextField.layer.masksToBounds = true
+        
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightText])
+        counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightText])
+        totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightText])
         
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         incomingSwitch.isOn = false
@@ -79,6 +91,11 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         saveButton.backgroundColor = UIColor(red: 68/255, green: 114/255, blue: 197/255, alpha: 1)
         saveButton.tintColor = .white
         saveButton.layer.cornerRadius = 8
+        saveButton.layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
+        saveButton.layer.shadowOffset = CGSize(width: 3, height: 5)
+        saveButton.layer.shadowRadius = 8
+        saveButton.layer.shadowOpacity = 1
+        
         datePicker.backgroundColor = .systemBackground
         datePicker.layer.cornerRadius = 8
         datePicker.layer.masksToBounds = true

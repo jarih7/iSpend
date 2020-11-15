@@ -58,10 +58,10 @@ class OverviewController: UIViewController {
             
             monthView.monthInSum.text = MIS.description
             monthView.monthOutSum.text = MOS.description
-            monthView.monthBalance.text = (MIS - MOS).description
+            monthView.monthBalance.text = (MIS - MOS) < 0 ? (MIS - MOS).description : "+" + (MIS - MOS).description
             weekView.weekInSum.text = WIS.description
             weekView.weekOutSum.text = WOS.description
-            weekView.weekBalance.text = (WIS - WOS).description
+            weekView.weekBalance.text = (WIS - WOS) < 0 ? (WIS - WOS).description : "+" + (WIS - WOS).description
         }
     }
 }

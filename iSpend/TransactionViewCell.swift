@@ -29,7 +29,7 @@ class TransactionViewCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        backgroundColor = UIColor(red: 68/255, green: 114/255, blue: 197/255, alpha: 1)
+        backgroundColor = UIColor(red: 70/255, green: 116/255, blue: 194/255, alpha: 1)
         layer.cornerRadius = 10
         
         label.textColor = .white

@@ -8,8 +8,6 @@
 import UIKit
 
 class ERView: UIView {
-    
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -18,7 +16,7 @@ class ERView: UIView {
         super.init(frame: frame)
     }
     
-    func setupView(currencyCode: String) {
+    func setupViewStyle() {
         layer.cornerRadius = 10
         layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
         layer.shadowOffset = CGSize(width: 3, height: 5)

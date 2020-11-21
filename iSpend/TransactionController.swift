@@ -61,6 +61,8 @@ class TransactionController: UIViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let addTC = storyboard.instantiateViewController(identifier: "AddTransactionController") as! AddTransactionController
             
+            addTC.headerText = "Edit Transaction"
+            addTC.passedIndex = transId
             addTC.passedTitle = transTitle
             addTC.passedConterparty = transCounterparty
             addTC.passedTotal = String(format: "%.2f", transTotal)
@@ -68,11 +70,12 @@ class TransactionController: UIViewController {
             addTC.passedIncoming = transIncoming
             addTC.passedUpdate = true
             
-            self.show(addTC, sender: self)
+            present(addTC, animated: true, completion: nil)
+            navigationController?.popViewController(animated: true)
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
-            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(transId) : FieldValue.delete()])
+            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + transId.description : FieldValue.delete()])
             navigationController?.popViewController(animated: true)
         }
         

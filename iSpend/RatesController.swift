@@ -104,9 +104,9 @@ class RatesController: UIViewController {
     }
     
     func updateValues() {
-        eurValueLabel.text = String(format: "%.2f", eurVal)
-        usdValueLabel.text = String(format: "%.2f", usdVal)
-        gbpValueLabel.text = String(format: "%.2f", gbpVal)
-        jpyValueLabel.text = String(format: "%.2f", jpyVal)
+        eurValueLabel.text = String(format: "%.4f", eurVal)
+        usdValueLabel.text = String(format: "%.4f", usdVal)
+        gbpValueLabel.text = String(format: "%.4f", gbpVal)
+        jpyValueLabel.text = String(format: "%.4f", jpyVal)
     }
 }

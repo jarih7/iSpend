@@ -10,12 +10,16 @@ import FirebaseFirestore
 
 class AddTransactionController: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var counterpartyTextField: UITextField!
     @IBOutlet weak var totalTextField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var incomingSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    var headerText: String = "New Transaction"
     
     let db = Firestore.firestore()
     let transactionsPath: String = "transMap"
@@ -24,6 +28,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     var newTransactionPath: String = ""
     let dateFormatter = DateFormatter()
     
+    var passedIndex: Int = 0
     var passedTitle: String = ""
     var passedConterparty: String = ""
     var passedTotal: String = ""
@@ -66,6 +71,10 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         setupFunctionality()
         setupStyle()
         setupContent()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        scrollView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     func setupFunctionality() {
@@ -114,6 +123,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     }
     
     func setupContent() {
+        headerLabel.text = headerText
         titleTextField.text = passedTitle
         counterpartyTextField.text = passedConterparty
         totalTextField.text = passedTotal
@@ -131,20 +141,27 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         //CHECK IF ALL NECESARY DATA WAS RECEIVED!
+        let usingTransIndex = passedUpdate == false ? newTransactionIndex : passedIndex
         
         let newTransaction: NSDictionary = [
             "counterparty": counterpartyTextField.text ?? "*EMPTY*",
             "date": datePicker.date,
-            "id": newTransactionIndex,
+            "id": usingTransIndex,
             "incoming": incomingSwitch.isOn,
             "title": titleTextField.text ?? "*EMPTY*",
             "total": Double(totalTextField.text!)!
         ]
         
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + String(newTransactionIndex) : newTransaction])
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + usingTransIndex.description : newTransaction])
         
-        tabBarController?.selectedIndex = 1
+        if (passedUpdate == false) {
+            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
+        } else {
+            passedUpdate = false
+            dismiss(animated: true, completion: nil)
+        }
+        
+        headerLabel.text = "New Transaction"
         resetFields()
     }
 }

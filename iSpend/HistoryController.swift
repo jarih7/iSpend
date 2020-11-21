@@ -48,6 +48,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         startListening()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        transactionsCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 16.0, right: 16.0)
+    }
+    
     func startListening() {
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
             guard let document = documentSnapshot else {
@@ -71,7 +76,15 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
             }
             
             transactions.sort { (tr1, tr2) -> Bool in
-                tr1.date.compare(tr2.date) == .orderedDescending ? true : false
+                if (tr1.date.compare(tr2.date) == .orderedDescending) {
+                    return true
+                } else if (tr1.date.compare(tr2.date) == .orderedAscending) {
+                    return false
+                } else if (tr1.id > tr2.id) {
+                    return true
+                } else {
+                    return false
+                }
             }
             
             updateTotals()
@@ -149,6 +162,20 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: transactionsCollectionView.frame.width - 32, height: 100.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 88.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let historyViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? HistoryViewHeader {
+            historyViewHeader.headerLabel.text = "History"
+            historyViewHeader.headerLabel.textColor = .white
+            historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 45.0, weight: .heavy)
+            return historyViewHeader
+        }
+        return UICollectionReusableView()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

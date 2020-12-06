@@ -22,10 +22,6 @@ class OverviewController: UIViewController {
     var WIS: Int = Int()
     var WOS: Int = Int()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()

@@ -42,9 +42,9 @@ class TransactionViewCell: UICollectionViewCell {
         }
         
         total.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .bold)
-        counterpartyLabel.textColor = .white
+        counterpartyLabel.textColor = .lightText
         counterparty.textColor = .white
-        dateLabel.textColor = .white
+        dateLabel.textColor = .lightText
         date.textColor = .white
     }
 }

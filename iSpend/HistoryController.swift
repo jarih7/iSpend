@@ -17,7 +17,7 @@ struct Transaction {
     var total: Double
 }
 
-class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     
@@ -33,10 +33,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     var LMO: Double = Double()
     var LWI: Double = Double()
     var LWO: Double = Double()
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,11 +157,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 100.0)
+        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 90.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 88.0)
+        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 90.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -181,12 +177,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? TransactionViewCell {
             let vc = segue.destination as! TransactionController
-            vc.transTitle = cell.label.text ?? "EMPTY"
-            vc.transCounterparty = cell.counterparty.text ?? "EMPTY"
             vc.transId = cell.id
-            vc.transIncoming = cell.incoming
-            vc.transTotal = cell.doubleTotalValue
-            vc.transDate = cell.date.text ?? "EMPTY"
         }
     }
     

@@ -19,8 +19,8 @@ class ERView: UIView {
     func setupViewStyle() {
         layer.cornerRadius = 10
         layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 5)
-        layer.shadowRadius = 8
-        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 2, height: 4)
+        layer.shadowRadius = 12
+        layer.shadowOpacity = 0.8
     }
 }

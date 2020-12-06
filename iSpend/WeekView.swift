@@ -40,7 +40,7 @@ class WeekView: UIView {
         weekInSum.textColor = .white
         weekOutSum.textColor = .white
         weekBalance.textColor = .white
-        weekBalanceLabel.textColor = .white
+        weekBalanceLabel.textColor = .lightText
         weekCurrency.textColor = .white
         weekInCurrency.textColor = .white
         weekOutCurrency.textColor = .white
@@ -51,8 +51,8 @@ class WeekView: UIView {
         weekOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
         layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 5)
-        layer.shadowRadius = 8
-        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 2, height: 4)
+        layer.shadowRadius = 12
+        layer.shadowOpacity = 0.8
     }
 }

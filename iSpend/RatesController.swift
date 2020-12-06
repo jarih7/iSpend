@@ -34,6 +34,7 @@ class RatesController: UIViewController {
     @IBOutlet weak var jpyValueLabel: UILabel!
     @IBOutlet weak var baseLabel4: UILabel!
     
+    @IBOutlet weak var lastUpdatedLabelTitle: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     
     var usdVal: Double = Double()
@@ -42,9 +43,6 @@ class RatesController: UIViewController {
     var jpyVal: Double = Double()
     var lastUpdated: Date = Date()
     var dateFormatter = DateFormatter()
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +65,9 @@ class RatesController: UIViewController {
         usdValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
         gbpValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
         jpyValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
+        
+        lastUpdatedLabelTitle.textColor = .lightText
+        lastUpdatedLabel.textColor = .lightText
         
         eurView.setupViewStyle()
         usdView.setupViewStyle()

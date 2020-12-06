@@ -40,7 +40,7 @@ class MonthView: UIView {
         monthInSum.textColor = .white
         monthOutSum.textColor = .white
         monthBalance.textColor = .white
-        monthBalanceLabel.textColor = .white
+        monthBalanceLabel.textColor = .lightText
         monthCurrency.textColor = .white
         monthInCurrency.textColor = .white
         monthOutCurrency.textColor = .white
@@ -51,8 +51,8 @@ class MonthView: UIView {
         monthOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
         layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 5)
-        layer.shadowRadius = 8
-        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 2, height: 4)
+        layer.shadowRadius = 12
+        layer.shadowOpacity = 0.8
     }
 }

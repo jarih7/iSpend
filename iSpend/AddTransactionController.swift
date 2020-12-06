@@ -9,7 +9,6 @@ import UIKit
 import FirebaseFirestore
 
 class AddTransactionController: UIViewController, UITextFieldDelegate {
-    
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var counterpartyTextField: UITextField!
@@ -18,6 +17,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var incomingSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var dismissButton: UIButton!
     
     var headerText: String = "New Transaction"
     
@@ -36,10 +36,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     var passedIncoming: Bool = false
     var passedUpdate: Bool = false
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -52,6 +48,12 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         dateFormatter.dateFormat = "d. MM. yyyy"
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
+        
+        if (passedUpdate == false) {
+            dismissButton.isHidden = true
+        } else {
+            dismissButton.isHidden = false
+        }
         
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
             
@@ -156,6 +158,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         
         if (passedUpdate == false) {
             db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
+            tabBarController?.selectedIndex = 1
         } else {
             passedUpdate = false
             dismiss(animated: true, completion: nil)
@@ -164,4 +167,9 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         headerLabel.text = "New Transaction"
         resetFields()
     }
+    
+    @IBAction func dismissButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

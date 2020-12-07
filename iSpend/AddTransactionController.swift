@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import CoreLocation
 import FirebaseFirestore
 
-class AddTransactionController: UIViewController, UITextFieldDelegate {
+class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var counterpartyTextField: UITextField!
@@ -18,10 +19,14 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var locationButton: UIButton!
     
     var headerText: String = "New Transaction"
     
     let db = Firestore.firestore()
+    let locationManager = CLLocationManager()
+    var myLocation: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
+    
     let transactionsPath: String = "transMap"
     let newTransactionIndexPath: String = "nextTransIndex"
     var newTransactionIndex = Int()
@@ -43,6 +48,10 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "d. MM. yyyy"
@@ -77,11 +86,18 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         scrollView.setContentOffset(CGPoint.zero, animated: true)
+        locationManager.startUpdatingLocation()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        locationManager.stopUpdatingLocation()
     }
     
     func setupFunctionality() {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
+        locationButton.isSelected = myLocation == GeoPoint(latitude: 0, longitude: 0) ? false : true
         
         titleTextField.delegate = self
         counterpartyTextField.delegate = self
@@ -89,6 +105,10 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
     }
     
     func setupStyle() {
+        locationButton.setImage(UIImage(systemName: "location.fill"), for: .selected)
+        locationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
+        locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .lightText : .white
+        
         titleTextField.textColor = .white
         counterpartyTextField.textColor = .white
         totalTextField.textColor = .white
@@ -150,6 +170,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
             "date": datePicker.date,
             "id": usingTransIndex,
             "incoming": incomingSwitch.isOn,
+            "location": myLocation,
             "title": titleTextField.text ?? "*EMPTY*",
             "total": Double(totalTextField.text!)!
         ]
@@ -172,4 +193,16 @@ class AddTransactionController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
+        locationButton.isSelected = !locationButton.isSelected
+        var newLocation: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
+        
+        if (locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways) {
+            if (locationButton.isSelected == true) {
+                newLocation = GeoPoint(latitude: locationManager.location!.coordinate.latitude, longitude: locationManager.location!.coordinate.longitude)
+            }
+            myLocation = newLocation
+        }
+        locationButton.tintColor = locationButton.isSelected ? .white : .lightText
+    }
 }

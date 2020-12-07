@@ -16,6 +16,7 @@
 		64B15E22255E84200066528C /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B15E21255E84200066528C /* SettingsController.swift */; };
 		64B15E25255E85330066528C /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B15E24255E85330066528C /* MonthView.swift */; };
 		64B15E28255E861D0066528C /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B15E27255E861D0066528C /* WeekView.swift */; };
+		64B17946257D380100BA52E6 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B17945257D380100BA52E6 /* Transaction.swift */; };
 		64C1FCEE2550116600539E83 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C1FCED2550116600539E83 /* TabBarController.swift */; };
 		64E3C342255EBBDC00919524 /* RatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E3C341255EBBDC00919524 /* RatesController.swift */; };
 		64E3C345255EC0C900919524 /* ERView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E3C344255EC0C900919524 /* ERView.swift */; };
@@ -38,6 +39,7 @@
 		64B15E21255E84200066528C /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		64B15E24255E85330066528C /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 		64B15E27255E861D0066528C /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		64B17945257D380100BA52E6 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		64C1FCED2550116600539E83 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		64E3C341255EBBDC00919524 /* RatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesController.swift; sourceTree = "<group>"; };
 		64E3C344255EC0C900919524 /* ERView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				64EA08E52549ADFB003AC8A4 /* OverviewController.swift */,
 				6400D3CB254B4511002BF999 /* AddTransactionController.swift */,
 				6400D3CF254B46F2002BF999 /* HistoryController.swift */,
+				64B17945257D380100BA52E6 /* Transaction.swift */,
 				649C40272567FC6800B5C516 /* HistoryViewHeader.swift */,
 				64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */,
 				64EA08E72549ADFB003AC8A4 /* Main.storyboard */,
@@ -264,6 +267,7 @@
 				64A80B10254F3AB800D89C05 /* TransactionViewCell.swift in Sources */,
 				6400D3D0254B46F2002BF999 /* HistoryController.swift in Sources */,
 				64E3C342255EBBDC00919524 /* RatesController.swift in Sources */,
+				64B17946257D380100BA52E6 /* Transaction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

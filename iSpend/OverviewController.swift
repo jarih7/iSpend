@@ -17,10 +17,10 @@ class OverviewController: UIViewController {
     let dateFormatter = DateFormatter()
     var currency: String = "CZK"
     
-    var MIS: Int = Int()
-    var MOS: Int = Int()
-    var WIS: Int = Int()
-    var WOS: Int = Int()
+    var MIS: Double = Double()
+    var MOS: Double = Double()
+    var WIS: Double = Double()
+    var WOS: Double = Double()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,17 +47,17 @@ class OverviewController: UIViewController {
                 return
             }
             
-            MIS = data["LMI"] as! Int
-            MOS = data["LMO"] as! Int
-            WIS = data["LWI"] as! Int
-            WOS = data["LWO"] as! Int
+            MIS = data["LMI"] as! Double
+            MOS = data["LMO"] as! Double
+            WIS = data["LWI"] as! Double
+            WOS = data["LWO"] as! Double
             
-            monthView.monthInSum.text = MIS.description
-            monthView.monthOutSum.text = MOS.description
-            monthView.monthBalance.text = (MIS - MOS) < 0 ? (MIS - MOS).description : "+" + (MIS - MOS).description
-            weekView.weekInSum.text = WIS.description
-            weekView.weekOutSum.text = WOS.description
-            weekView.weekBalance.text = (WIS - WOS) < 0 ? (WIS - WOS).description : "+" + (WIS - WOS).description
+            monthView.monthInSum.text = Int(MIS).description
+            monthView.monthOutSum.text = Int(MOS).description
+            monthView.monthBalance.text = (MIS - MOS) < 0 ? Int(MIS - MOS).description : "+" + Int(MIS - MOS).description
+            weekView.weekInSum.text = Int(WIS).description
+            weekView.weekOutSum.text = Int(WOS).description
+            weekView.weekBalance.text = (WIS - WOS) < 0 ? Int(WIS - WOS).description : "+" + Int(WIS - WOS).description
         }
     }
 }

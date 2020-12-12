@@ -11,8 +11,11 @@ import FirebaseFirestore
 class OverviewController: UIViewController {
     @IBOutlet weak var monthView: MonthView!
     @IBOutlet weak var weekView: WeekView!
+    @IBOutlet weak var lastTransactionView: LastTransactionView!
+    @IBOutlet weak var locationBadge: UIButton!
     
     let db = Firestore.firestore()
+    var listener: ListenerRegistration? = nil
     var nextTransactionIndex: Int = Int()
     let dateFormatter = DateFormatter()
     var currency: String = "CZK"
@@ -21,6 +24,8 @@ class OverviewController: UIViewController {
     var MOS: Double = Double()
     var WIS: Double = Double()
     var WOS: Double = Double()
+    var LTId: Int = Int()
+    var lastTransaction: Transaction? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +36,20 @@ class OverviewController: UIViewController {
         
         monthView.setupView()
         weekView.setupView()
+        lastTransactionView.setupView()
+        //startListening()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         startListening()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        listener?.remove()
+    }
+    
     func startListening() {
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
+        listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -51,14 +65,51 @@ class OverviewController: UIViewController {
             MOS = data["LMO"] as! Double
             WIS = data["LWI"] as! Double
             WOS = data["LWO"] as! Double
+            LTId = data["LTId"] as! Int
             
-            monthView.monthInSum.text = Int(MIS).description
-            monthView.monthOutSum.text = Int(MOS).description
-            monthView.monthBalance.text = (MIS - MOS) < 0 ? Int(MIS - MOS).description : "+" + Int(MIS - MOS).description
-            weekView.weekInSum.text = Int(WIS).description
-            weekView.weekOutSum.text = Int(WOS).description
-            weekView.weekBalance.text = (WIS - WOS) < 0 ? Int(WIS - WOS).description : "+" + Int(WIS - WOS).description
+            let map = data["transMap"] as! Dictionary<String, Any>
+            let transactionData = map[String(LTId)]! as! [String : Any]
+            
+            lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
+            
+            prepareOverviewBlocks()
+            prepareLastTransactionBlock()
         }
+    }
+    
+    func prepareOverviewBlocks() {
+        monthView.monthInSum.text = Int(MIS).description
+        monthView.monthOutSum.text = Int(MOS).description
+        monthView.monthBalance.text = (MIS - MOS) < 0 ? Int(MIS - MOS).description : "+" + Int(MIS - MOS).description
+        weekView.weekInSum.text = Int(WIS).description
+        weekView.weekOutSum.text = Int(WOS).description
+        weekView.weekBalance.text = (WIS - WOS) < 0 ? Int(WIS - WOS).description : "+" + Int(WIS - WOS).description
+    }
+    
+    func prepareLastTransactionBlock() {
+        lastTransactionView.ltTitle.text = lastTransaction?.title
+        lastTransactionView.ltTotal.text = Int(lastTransaction?.total ?? 0).description
+        
+        if (lastTransaction?.incoming == true) {
+            lastTransactionView.ltIncomingSymbol.text = "→"
+            lastTransactionView.ltIncomingSymbol.textColor = .systemGreen
+        } else {
+            lastTransactionView.ltIncomingSymbol.text = "←"
+            lastTransactionView.ltIncomingSymbol.textColor = .systemOrange
+        }
+        
+        lastTransactionView.ltCounterparty.text = lastTransaction?.counterparty
+        lastTransactionView.ltDate.text = dateFormatter.string(from: lastTransaction?.date ?? Date())
+        
+        locationBadge.isHidden = (lastTransaction?.latitude == 0 && lastTransaction?.longitude == 0) ? true : false
+    }
+    
+    @IBAction func lastTransactionTapped(_ sender: LastTransactionView) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let transactionVC = storyBoard.instantiateViewController(identifier: "TransactionController") as! TransactionController
+        transactionVC.transId = lastTransaction!.id
+        transactionVC.isQuickView = true
+        present(transactionVC, animated: true, completion: nil)
     }
 }
 

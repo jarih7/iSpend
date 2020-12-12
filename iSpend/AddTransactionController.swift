@@ -113,9 +113,9 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.textColor = .white
         totalTextField.textColor = .white
         
-        titleTextField.layer.cornerRadius = 10.0
-        counterpartyTextField.layer.cornerRadius = 10.0
-        totalTextField.layer.cornerRadius = 10.0
+        titleTextField.layer.cornerRadius = 7
+        counterpartyTextField.layer.cornerRadius = 7
+        totalTextField.layer.cornerRadius = 7
         
         titleTextField.layer.masksToBounds = true
         counterpartyTextField.layer.masksToBounds = true
@@ -133,14 +133,14 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         
         saveButton.backgroundColor = UIColor(red: 68/255, green: 114/255, blue: 197/255, alpha: 1)
         saveButton.tintColor = .white
-        saveButton.layer.cornerRadius = 8
+        saveButton.layer.cornerRadius = 7
         saveButton.layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        saveButton.layer.shadowOffset = CGSize(width: 3, height: 5)
-        saveButton.layer.shadowRadius = 8
-        saveButton.layer.shadowOpacity = 1
+        saveButton.layer.shadowOffset = CGSize(width: 2, height: 4)
+        saveButton.layer.shadowRadius = 5
+        saveButton.layer.shadowOpacity = 0.9
         
         datePicker.backgroundColor = .systemBackground
-        datePicker.layer.cornerRadius = 8
+        datePicker.layer.cornerRadius = 7
         datePicker.layer.masksToBounds = true
     }
     
@@ -162,9 +162,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        //CHECK IF ALL NECESARY DATA WAS RECEIVED!
         let usingTransIndex = passedUpdate == false ? newTransactionIndex : passedIndex
-        
         let newTransaction: NSDictionary = [
             "counterparty": counterpartyTextField.text ?? "*EMPTY*",
             "date": datePicker.date,
@@ -172,7 +170,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             "incoming": incomingSwitch.isOn,
             "location": myLocation,
             "title": titleTextField.text ?? "*EMPTY*",
-            "total": Double(totalTextField.text!)!
+            "total": Double(totalTextField.text?.replacingOccurrences(of: ",", with: ".") ?? "0")!
         ]
         
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + usingTransIndex.description : newTransaction])

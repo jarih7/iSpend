@@ -22,7 +22,8 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     @IBOutlet weak var symbolLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var locationSymbol: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var dismissButton: UIButton!
     
     let db = Firestore.firestore()
     var listener: ListenerRegistration? = nil
@@ -38,6 +39,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     let locationButtonOffSymbolName: String = "location.circle.fill"
     let locationSet: String = "location"
     let locationNotSet: String = "no location"
+    var isQuickView: Bool = false
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -46,6 +48,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
+        backButton.isHidden = isQuickView ? true : false
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "d. MM. yyyy"
@@ -55,7 +58,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         mapView.delegate = self
         locationManager.delegate = self
         locationLabel.isHidden = true
-        locationSymbol.isHidden = true
+        dismissButton.isHidden = isQuickView ? false : true
         
         listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self]
             (documentSnapshot, error) in
@@ -108,6 +111,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         dateLabelTitle.textColor = .lightText
         counterpartyLabelTitle.textColor = .lightText
         currencyLabel.textColor = .lightText
+        locationLabel.textColor = .lightText
         
         if (transaction?.incoming == true) {
             symbolLabel.text = "→"
@@ -118,11 +122,9 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         }
         
         locationLabel.isHidden = (transaction?.latitude == 0 && transaction?.longitude == 0) ? true : false
-        locationSymbol.isHidden = (transaction?.latitude == 0 && transaction?.longitude == 0) ? true : false
         mapView.isHidden = (transaction?.latitude == 0 && transaction?.longitude == 0) ? true : false
         
-        mapView.layer.masksToBounds = true
-        mapView.layer.cornerRadius = 10
+        mapView.layer.cornerRadius = 7
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
@@ -168,6 +170,10 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func dismissButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

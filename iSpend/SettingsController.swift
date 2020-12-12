@@ -14,7 +14,7 @@ class SettingsController: UIViewController {
     @IBOutlet weak var copyrightLabel: UILabel!
     
     let appName: String = "iSpend™"
-    let versionNumber: String = "0.7"
+    let versionNumber: String = "0.8"
     
     override func viewDidLoad() {
         super.viewDidLoad()

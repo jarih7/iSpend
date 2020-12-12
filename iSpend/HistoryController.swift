@@ -74,6 +74,12 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                 }
             }
             
+            
+            if let lastTransaction: Transaction = transactions.first {
+                let lastTransactionId: Int = lastTransaction.id
+                db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LTId" : lastTransactionId])
+            }
+            
             updateTotals()
             transactionsCollectionView.reloadData()
         }

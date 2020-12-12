@@ -92,6 +92,7 @@ class RatesController: UIViewController {
                         gbpVal = 1 / parsed.rates["GBP"]!
                         jpyVal = 1 / parsed.rates["JPY"]!
                         lastUpdated = Date()
+                        
                         DispatchQueue.main.async {
                             updateValues()
                             lastUpdatedLabel.text = dateFormatter.string(from: lastUpdated)

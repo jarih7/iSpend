@@ -41,10 +41,12 @@ class OverviewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("STARTED LISTENNING FROM OVERVIEW...")
         startListening()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        print("STOPPED LISTENNING FROM OVERVIEW...\n")
         listener?.remove()
     }
     
@@ -67,13 +69,21 @@ class OverviewController: UIViewController {
             WOS = data["LWO"] as! Double
             LTId = data["LTId"] as! Int
             
-            let map = data["transMap"] as! Dictionary<String, Any>
-            let transactionData = map[String(LTId)]! as! [String : Any]
-            
-            lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
-            
             prepareOverviewBlocks()
-            prepareLastTransactionBlock()
+            
+            let map = data["transMap"] as! Dictionary<String, Any>
+            if let transactionData = map[String(LTId)] as? [String : Any] {
+                print("ITEM IS THERE")
+                lastTransactionView.isHidden = false
+                locationBadge.isHidden = false
+                lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
+                
+                prepareLastTransactionBlock()
+            } else {
+                print("ITEM NOT THERE!")
+                lastTransactionView.isHidden = true
+                locationBadge.isHidden = true
+            }
         }
     }
     

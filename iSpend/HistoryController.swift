@@ -13,7 +13,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     
     let db = Firestore.firestore()
-    var transactions: Array<Transaction> = []
+    var listener: ListenerRegistration? = nil
+    var transactions: [Transaction] = []
     var nextTransactionIndex: Int = 999
     let dateFormatter = DateFormatter()
     var dateComponentDays = DateComponents()
@@ -25,6 +26,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     var LWI: Double = Double()
     var LWO: Double = Double()
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("STARTED LISTENNING FROM HISTORY...")
+        startListening()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
@@ -32,7 +38,12 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.delegate = self
         transactionsCollectionView.dataSource = self
         setupDateFormatter()
-        startListening()
+        //startListening()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("STOPPED LISTENNING FROM HISTORY...\n")
+        listener?.remove()
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,7 +52,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     }
     
     func startListening() {
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
+        listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
                 return
@@ -67,10 +78,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                     return true
                 } else if (tr1.date.compare(tr2.date) == .orderedAscending) {
                     return false
-                } else if (tr1.id > tr2.id) {
-                    return true
                 } else {
-                    return false
+                    return tr1.id > tr2.id
                 }
             }
             

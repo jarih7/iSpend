@@ -28,8 +28,11 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     let db = Firestore.firestore()
     var listener: ListenerRegistration? = nil
     var transaction: Transaction? = nil
+    var transactions: [Transaction] = []
     
     let locationManager = CLLocationManager()
+    var dateComponentDays = DateComponents()
+    var dateComponentMonts = DateComponents()
 
     var transId: Int = 0
     let currency: String = "CZK"
@@ -41,8 +44,23 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     let locationNotSet: String = "no location"
     var isQuickView: Bool = false
     
+    var LMI: Double = Double()
+    var LMO: Double = Double()
+    var LWI: Double = Double()
+    var LWO: Double = Double()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("STARTED LISTENNING FROM TRANSACTION DETAIL...")
+        startListening()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("STOPPED LISTENNING FROM TRANSACTION DETAIL...\n")
+        listener?.remove()
     }
     
     override func viewDidLoad() {
@@ -59,7 +77,10 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         locationManager.delegate = self
         locationLabel.isHidden = true
         dismissButton.isHidden = isQuickView ? false : true
-        
+        //startListening()
+    }
+    
+    func startListening() {
         listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self]
             (documentSnapshot, error) in
             guard let document = documentSnapshot else {
@@ -73,9 +94,9 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
             }
             
             let map = data["transMap"] as! Dictionary<String, Any>
-            let transactionData = map[String(transId)]! as! [String : Any]
-            
-            transaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
+            if let transactionData = map[String(transId)] as? [String : Any] {
+                transaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
+            }
             
             let location = MKPointAnnotation()
             location.coordinate = CLLocationCoordinate2D(latitude: transaction!.latitude, longitude: transaction!.longitude)
@@ -160,8 +181,58 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
             listener?.remove()
-            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + transId.description : FieldValue.delete()])
-            navigationController?.popViewController(animated: true)
+            
+            //update LTId
+            if (isQuickView == true) {
+                //that means this Transaction is the latest one -> I have to update the id of the new latest Transaction
+                db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        let map = data!["transMap"]! as! Dictionary<String, Any>
+                        var procItem: [String:Any] = [:]
+                        transactions.removeAll()
+                        
+                        for item in map {
+                            procItem = item.value as! [String : Any]
+                            transactions.append(Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45))
+                        }
+                        
+                        transactions.sort { (tr1, tr2) -> Bool in
+                            if (tr1.date.compare(tr2.date) == .orderedDescending) {
+                                return true
+                            } else if (tr1.date.compare(tr2.date) == .orderedAscending) {
+                                return false
+                            } else {
+                                return tr1.id > tr2.id
+                            }
+                        }
+                        
+                        transactions.remove(at: 0)
+                        
+                        if let newLastTransaction: Transaction = transactions.first {
+                            let newLastTransactionId: Int = newLastTransaction.id
+                            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(
+                                ["LTId" : newLastTransactionId,
+                                 "transMap." + transId.description : FieldValue.delete()])
+                            //db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + transId.description : FieldValue.delete()])
+                        } else {
+                            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(
+                                ["LTId" : -1,
+                                 "transMap." + transId.description : FieldValue.delete()])
+                        }
+                        
+                        updateTotals()
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            }
+            
+            if (isQuickView == true) {
+                dismiss(animated: true, completion: nil)
+            } else {
+                navigationController?.popViewController(animated: true)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -170,6 +241,36 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func updateTotals() {
+        dateComponentDays.day = -7
+        dateComponentMonts.month = -1
+        
+        LMI = 0.0
+        LMO = 0.0
+        LWI = 0.0
+        LWO = 0.0
+        
+        for item in transactions {
+            if (item.date > Calendar.current.date(byAdding: dateComponentDays, to: Date())!) {
+                if (item.incoming == true) {
+                    LWI += item.total
+                    LMI += item.total
+                } else {
+                    LWO += item.total
+                    LMO += item.total
+                }
+            } else if (item.date > Calendar.current.date(byAdding: dateComponentMonts, to: Date())!) {
+                if (item.incoming == true) {
+                    LMI += item.total
+                } else {
+                    LMO += item.total
+                }
+            }
+        }
+        
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LMI" : LMI, "LMO" : LMO, "LWI" : LWI, "LWO" : LWO])
     }
     
     @IBAction func dismissButtonTapped(_ sender: UIButton) {

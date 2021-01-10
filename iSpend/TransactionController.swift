@@ -148,9 +148,8 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
             symbolLabel.textColor = .systemOrange
         }
         
-        locationLabel.isHidden = (transaction?.latitude == 0 && transaction?.longitude == 0) ? true : false
-        mapView.isHidden = (transaction?.latitude == 0 && transaction?.longitude == 0) ? true : false
-        
+        locationLabel.isHidden = (transaction?.locationEnabled())! ? false : true
+        mapView.isHidden = (transaction?.locationEnabled())! ? false : true
         mapView.layer.cornerRadius = 7
     }
     

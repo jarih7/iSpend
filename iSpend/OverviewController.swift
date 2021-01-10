@@ -117,7 +117,7 @@ class OverviewController: UIViewController {
         lastTransactionView.ltCounterparty.text = lastTransaction?.counterparty
         lastTransactionView.ltDate.text = dateFormatter.string(from: lastTransaction?.date ?? Date())
         
-        locationBadge.isHidden = (lastTransaction?.latitude == 0 && lastTransaction?.longitude == 0) ? true : false
+        locationBadge.isHidden = (lastTransaction?.locationEnabled())! ? false : true
     }
     
     @IBAction func lastTransactionTapped(_ sender: LastTransactionView) {

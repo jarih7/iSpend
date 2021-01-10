@@ -150,7 +150,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         
         locationLabel.isHidden = (transaction?.locationEnabled())! ? false : true
         mapView.isHidden = (transaction?.locationEnabled())! ? false : true
-        mapView.layer.cornerRadius = 7
+        mapView.layer.cornerRadius = 10
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool

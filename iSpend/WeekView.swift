@@ -30,7 +30,7 @@ class WeekView: UIView {
     }
     
     func setupView() {
-        layer.cornerRadius = 7
+        layer.cornerRadius = 10
         lastWeekLabel.text = "Last Week"
         lastWeekLabel.textColor = .white
         weekInSymbol.text = "→"
@@ -52,7 +52,7 @@ class WeekView: UIView {
         weekBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
         layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
         layer.shadowOffset = CGSize(width: 2, height: 4)
-        layer.shadowRadius = 7
+        layer.shadowRadius = 10
         layer.shadowOpacity = 0.9
     }
 }

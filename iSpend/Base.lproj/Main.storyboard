@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hG5-yK-w41">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hG5-yK-w41">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -411,12 +411,26 @@
                                     <constraint firstItem="HKO-7g-3wt" firstAttribute="centerY" secondItem="oIk-gA-s3U" secondAttribute="centerY" id="lZg-eu-OBf"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AbD-ub-ndu">
+                                <rect key="frame" x="322" y="11" width="42" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" image="arrow.clockwise.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="21" scale="large" weight="semibold"/>
+                                </state>
+                                <connections>
+                                    <action selector="updateButtonTapped:" destination="IIT-Ez-bCx" eventType="touchUpInside" id="mm1-Z2-vUm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="edL-oB-lYW"/>
                         <color key="backgroundColor" red="0.19215686274509802" green="0.3411764705882353" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="EaP-3T-HmN" firstAttribute="leading" secondItem="VpH-FG-p9g" secondAttribute="leading" id="1Wi-kN-Mjv"/>
+                            <constraint firstItem="AbD-ub-ndu" firstAttribute="top" secondItem="edL-oB-lYW" secondAttribute="top" constant="11" id="3g9-Ss-IzJ"/>
                             <constraint firstItem="8e3-BZ-HhT" firstAttribute="top" secondItem="txE-8v-J1P" secondAttribute="bottom" constant="20" id="4nh-Cn-iaX"/>
+                            <constraint firstItem="edL-oB-lYW" firstAttribute="trailing" secondItem="AbD-ub-ndu" secondAttribute="trailing" constant="11" id="8od-Ie-N0Q"/>
                             <constraint firstItem="TR9-bp-AGh" firstAttribute="leading" secondItem="3c0-He-din" secondAttribute="leading" id="9q0-KD-N9s"/>
                             <constraint firstItem="BJF-KH-kmM" firstAttribute="leading" secondItem="5nF-K3-F2x" secondAttribute="trailing" constant="4" id="CN3-bi-cH4"/>
                             <constraint firstItem="Sn0-eg-99V" firstAttribute="top" secondItem="8e3-BZ-HhT" secondAttribute="bottom" constant="20" id="I2f-pF-NSc"/>
@@ -468,6 +482,7 @@
                         <outlet property="jpyView" destination="oIk-gA-s3U" id="bnj-jd-iFF"/>
                         <outlet property="lastUpdatedLabel" destination="BJF-KH-kmM" id="GOr-SA-gCy"/>
                         <outlet property="lastUpdatedLabelTitle" destination="5nF-K3-F2x" id="pOZ-th-Yw4"/>
+                        <outlet property="updateButton" destination="AbD-ub-ndu" id="5cG-rq-4kW"/>
                         <outlet property="usdLabel" destination="a50-Tu-hx4" id="txc-vN-b06"/>
                         <outlet property="usdValueLabel" destination="oJr-Oc-srN" id="3KU-77-lts"/>
                         <outlet property="usdView" destination="8e3-BZ-HhT" id="y72-vA-Adp"/>
@@ -862,7 +877,7 @@
                                     <outlet property="ltcounterpartyLabel" destination="6Jm-YL-ywg" id="6y4-Sg-1gt"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H2a-wa-iwU">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H2a-wa-iwU">
                                 <rect key="frame" x="341.5" y="332" width="25.5" height="24.5"/>
                                 <state key="normal" image="location.circle.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
@@ -971,6 +986,14 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrY-Be-aiz">
+                                                    <rect key="frame" x="119" y="66.5" width="16.5" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" image="location" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="dAU-DB-FKr" firstAttribute="top" secondItem="XJ4-eS-1SZ" secondAttribute="bottom" id="5sO-Ib-ZLt"/>
@@ -992,7 +1015,9 @@
                                                 <constraint firstItem="fG5-Kg-Gz5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i0A-go-5Kg" secondAttribute="trailing" constant="8" symbolic="YES" id="e71-Cf-zbu"/>
                                                 <constraint firstItem="fG5-Kg-Gz5" firstAttribute="leading" secondItem="m1t-qu-2D4" secondAttribute="trailing" constant="5" id="eeg-a3-Dds"/>
                                                 <constraint firstItem="m1t-qu-2D4" firstAttribute="centerY" secondItem="fG5-Kg-Gz5" secondAttribute="centerY" id="kTJ-UM-A5Z"/>
+                                                <constraint firstItem="JrY-Be-aiz" firstAttribute="centerY" secondItem="dAU-DB-FKr" secondAttribute="centerY" id="l6c-H4-prP"/>
                                                 <constraint firstItem="NdD-hz-eMt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XJ4-eS-1SZ" secondAttribute="trailing" constant="8" symbolic="YES" id="mUJ-t3-6Po"/>
+                                                <constraint firstItem="JrY-Be-aiz" firstAttribute="leading" secondItem="dAU-DB-FKr" secondAttribute="trailing" constant="5" id="pbq-cD-bKg"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
@@ -1001,6 +1026,7 @@
                                             <outlet property="date" destination="Bem-qh-Y9B" id="AOg-nn-XmR"/>
                                             <outlet property="dateLabel" destination="NdD-hz-eMt" id="Xgi-1O-NiQ"/>
                                             <outlet property="label" destination="i0A-go-5Kg" id="nOM-aw-4uP"/>
+                                            <outlet property="locationBadge" destination="JrY-Be-aiz" id="7nB-sv-th4"/>
                                             <outlet property="total" destination="fG5-Kg-Gz5" id="Jk2-jN-gVU"/>
                                             <outlet property="totalSymbol" destination="m1t-qu-2D4" id="7or-yt-DBR"/>
                                             <segue destination="etN-9F-Lvg" kind="show" id="kBI-Ri-EWh"/>
@@ -1011,8 +1037,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nadpísek" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opB-8f-8Uw">
-                                            <rect key="frame" x="0.0" y="16" width="72" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nadpis" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opB-8f-8Uw">
+                                            <rect key="frame" x="0.0" y="16" width="53.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1076,7 +1102,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cS0-Nr-SUz">
-                                                <rect key="frame" x="16" y="50" width="76" height="42"/>
+                                                <rect key="frame" x="16" y="50" width="75" height="42"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1300,6 +1326,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.clockwise.circle.fill" catalog="system" width="128" height="121"/>
         <image name="arrow.left.arrow.right.square" catalog="system" width="128" height="114"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="doc.text.magnifyingglass" catalog="system" width="113" height="128"/>
@@ -1308,6 +1335,7 @@
         <image name="eurosign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
+        <image name="location" catalog="system" width="128" height="121"/>
         <image name="location.circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="note.text.badge.plus" catalog="system" width="128" height="108"/>

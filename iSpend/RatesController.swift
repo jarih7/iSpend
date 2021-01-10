@@ -34,6 +34,7 @@ class RatesController: UIViewController {
     @IBOutlet weak var jpyValueLabel: UILabel!
     @IBOutlet weak var baseLabel4: UILabel!
     
+    @IBOutlet weak var updateButton: UIButton!
     @IBOutlet weak var lastUpdatedLabelTitle: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     
@@ -47,7 +48,7 @@ class RatesController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
-        dateFormatter.dateStyle = .medium
+        dateFormatter.dateStyle = .none
         dateFormatter.timeStyle = .medium
         dateFormatter.locale = .current
         
@@ -65,6 +66,7 @@ class RatesController: UIViewController {
         usdValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
         gbpValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
         jpyValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
+        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
         
         lastUpdatedLabelTitle.textColor = .lightText
         lastUpdatedLabel.textColor = .lightText
@@ -73,13 +75,25 @@ class RatesController: UIViewController {
         usdView.setupViewStyle()
         gbpView.setupViewStyle()
         jpyView.setupViewStyle()
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors =
+            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
+             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getERData()
     }
     
+    @IBAction func updateButtonTapped(_ sender: UIButton) {
+        getERData()
+    }
+    
     func getERData() {
+        print("GETTING ER DATA")
         if let url = URL(string: "https://api.exchangeratesapi.io/latest?symbols=EUR,USD,GBP,JPY&base=CZK") {
             URLSession.shared.dataTask(with: url) { [self]
                 data, response, error in

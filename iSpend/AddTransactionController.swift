@@ -105,6 +105,13 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     }
     
     func setupStyle() {
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors =
+            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
+             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
+        
         locationButton.setImage(UIImage(systemName: "location.fill"), for: .selected)
         locationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
         locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .lightText : .white

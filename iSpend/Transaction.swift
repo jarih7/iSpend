@@ -16,4 +16,8 @@ struct Transaction {
     var longitude: Double
     var title: String
     var total: Double
+    
+    func locationEnabled() -> Bool {
+        return (latitude == 0 && longitude == 0) ? false : true
+    }
 }

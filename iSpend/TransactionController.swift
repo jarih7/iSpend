@@ -77,7 +77,13 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         locationManager.delegate = self
         locationLabel.isHidden = true
         dismissButton.isHidden = isQuickView ? false : true
-        //startListening()
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors =
+            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
+             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
     }
     
     func startListening() {
@@ -241,6 +247,10 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func getAndSortTransactions() {
+        
     }
     
     func updateTotals() {

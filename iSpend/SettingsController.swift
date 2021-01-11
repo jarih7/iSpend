@@ -18,18 +18,19 @@ class SettingsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemGroupedBackground
         appNameLabel.text = appName
-        appNameLabel.textColor = .lightText
-        versionLabel.textColor = .lightText
+        appNameLabel.textColor = .secondaryLabel
+        versionLabel.textColor = .secondaryLabel
         versionNumberLabel.text = versionNumber
-        versionNumberLabel.textColor = .lightText
-        copyrightLabel.textColor = .lightText
+        versionNumberLabel.textColor = .secondaryLabel
+        copyrightLabel.textColor = .secondaryLabel
         
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors =
-            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
-             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
-        view.layer.insertSublayer(gradient, at: 0)
+        //let gradient = CAGradientLayer()
+        //gradient.frame = view.bounds
+        //gradient.colors =
+        //    [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
+        //     UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
+        //view.layer.insertSublayer(gradient, at: 0)
     }
 }

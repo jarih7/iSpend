@@ -30,29 +30,20 @@ class WeekView: UIView {
     }
     
     func setupView() {
+        clipsToBounds = true
+        backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
         lastWeekLabel.text = "Last Week"
-        lastWeekLabel.textColor = .white
         weekInSymbol.text = "→"
         weekOutSymbol.text = "←"
-        weekInSymbol.textColor = .green
+        weekInSymbol.textColor = .systemGreen
         weekOutSymbol.textColor = .systemOrange
-        weekInSum.textColor = .white
-        weekOutSum.textColor = .white
-        weekBalance.textColor = .white
-        weekBalanceLabel.textColor = .lightText
-        weekCurrency.textColor = .white
-        weekInCurrency.textColor = .white
-        weekOutCurrency.textColor = .white
+        weekBalanceLabel.textColor = .secondaryLabel
         weekCurrency.text = currency
         weekInCurrency.text = currency
         weekOutCurrency.text = currency
         weekInSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
-        layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowOffset = CGSize(width: 2, height: 4)
-        layer.shadowRadius = 10
-        layer.shadowOpacity = 0.9
     }
 }

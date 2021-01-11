@@ -19,6 +19,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var dismissButtonBackground: UIButton!
     @IBOutlet weak var locationButton: UIButton!
     
     var headerText: String = "New Transaction"
@@ -60,8 +61,10 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         
         if (passedUpdate == false) {
             dismissButton.isHidden = true
+            dismissButtonBackground.isHidden = true
         } else {
             dismissButton.isHidden = false
+            dismissButtonBackground.isHidden = false
         }
         
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
@@ -105,20 +108,9 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     }
     
     func setupStyle() {
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors =
-            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
-             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
-        view.layer.insertSublayer(gradient, at: 0)
-        
         locationButton.setImage(UIImage(systemName: "location.fill"), for: .selected)
         locationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
-        locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .lightText : .white
-        
-        titleTextField.textColor = .white
-        counterpartyTextField.textColor = .white
-        totalTextField.textColor = .white
+        locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .systemGray : .systemBlue
         
         titleTextField.layer.cornerRadius = 10
         counterpartyTextField.layer.cornerRadius = 10
@@ -128,9 +120,9 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.layer.masksToBounds = true
         totalTextField.layer.masksToBounds = true
         
-        titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightText])
-        counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightText])
-        totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightText])
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
+        counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
+        totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         incomingSwitch.isOn = false
@@ -141,10 +133,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         saveButton.backgroundColor = UIColor(red: 68/255, green: 114/255, blue: 197/255, alpha: 1)
         saveButton.tintColor = .white
         saveButton.layer.cornerRadius = 10
-        saveButton.layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        saveButton.layer.shadowOffset = CGSize(width: 2, height: 4)
-        saveButton.layer.shadowRadius = 7
-        saveButton.layer.shadowOpacity = 0.9
         
         datePicker.backgroundColor = .systemBackground
         datePicker.layer.cornerRadius = 10
@@ -208,6 +196,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             }
             myLocation = newLocation
         }
-        locationButton.tintColor = locationButton.isSelected ? .white : .lightText
+        locationButton.tintColor = locationButton.isSelected ? .systemBlue : .systemGray
     }
 }

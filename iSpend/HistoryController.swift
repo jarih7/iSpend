@@ -38,13 +38,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.delegate = self
         transactionsCollectionView.dataSource = self
         setupDateFormatter()
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors =
-            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
-             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
-        view.layer.insertSublayer(gradient, at: 0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -175,7 +168,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 90.0)
+        return CGSize(width: transactionsCollectionView.frame.width - 32, height: 100.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -185,7 +178,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let historyViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? HistoryViewHeader {
             historyViewHeader.headerLabel.text = "History"
-            historyViewHeader.headerLabel.textColor = .white
+            historyViewHeader.headerLabel.textColor = .label
             historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 45.0, weight: .heavy)
             return historyViewHeader
         }

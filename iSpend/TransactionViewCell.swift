@@ -30,22 +30,24 @@ class TransactionViewCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        backgroundColor = UIColor(red: 70/255, green: 116/255, blue: 194/255, alpha: 1)
+        backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
         
-        label.textColor = .white
-        total.textColor = .white
+        label.textColor = .label
+        total.textColor = .label
         
         if (incoming == true) {
-            totalSymbol.textColor = .green
+            totalSymbol.textColor = .systemGreen
         } else {
             totalSymbol.textColor = .systemOrange
         }
         
         total.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .bold)
-        counterpartyLabel.textColor = .lightText
-        counterparty.textColor = .white
-        dateLabel.textColor = .lightText
-        date.textColor = .white
+        counterpartyLabel.textColor = .secondaryLabel
+        counterparty.textColor = .label
+        dateLabel.textColor = .secondaryLabel
+        date.textColor = .label
+        
+        locationBadge.tintColor = .systemBlue
     }
 }

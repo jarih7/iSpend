@@ -15,6 +15,7 @@ class LastTransactionView: UIControl {
     @IBOutlet weak var ltDateLabel: UILabel!
     @IBOutlet weak var ltCounterparty: UILabel!
     @IBOutlet weak var ltDate: UILabel!
+    @IBOutlet weak var locationBadge: UIButton!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,12 +26,14 @@ class LastTransactionView: UIControl {
     }
     
     func setupView() {
+        backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
-        ltcounterpartyLabel.textColor = .lightText
-        ltDateLabel.textColor = .lightText
-        layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowOffset = CGSize(width: 2, height: 4)
-        layer.shadowRadius = 10
-        layer.shadowOpacity = 1
+        
+        ltTitle.textColor = .label
+        ltTotal.textColor = .label
+        ltCounterparty.textColor = .label
+        ltDate.textColor = .label
+        ltcounterpartyLabel.textColor = .secondaryLabel
+        ltDateLabel.textColor = .secondaryLabel
     }
 }

@@ -22,8 +22,11 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     @IBOutlet weak var symbolLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationLabel: UILabel!
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var dismissButtonBackground: UIButton!
+    @IBOutlet weak var optionsButton: UIButton!
     
     let db = Firestore.firestore()
     var listener: ListenerRegistration? = nil
@@ -77,13 +80,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         locationManager.delegate = self
         locationLabel.isHidden = true
         dismissButton.isHidden = isQuickView ? false : true
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors =
-            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
-             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
-        view.layer.insertSublayer(gradient, at: 0)
+        dismissButtonBackground.isHidden = isQuickView ? false : true
     }
     
     func startListening() {
@@ -130,15 +127,25 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     }
     
     func setupView() {
+        view.backgroundColor = .systemBackground
+        backButton.tintColor = .systemBlue
+        backButton.setTitleColor(.systemBlue, for: .normal)
+        dismissButton.tintColor = .systemGray5
+        dismissButtonBackground.tintColor = .systemGray
+        optionsButton.tintColor = .systemBlue
         titleLabel.text = transaction?.title
+        titleLabel.textColor = .label
         counterpartyLabel.text = transaction?.counterparty
+        counterpartyLabel.textColor = .label
         dateLabel.text = dateFormatter.string(from: transaction!.date)
         priceLabel.text = String(format: "%.2f", transaction!.total)
-        totalLabelTitle.textColor = .lightText
-        dateLabelTitle.textColor = .lightText
-        counterpartyLabelTitle.textColor = .lightText
-        currencyLabel.textColor = .lightText
-        locationLabel.textColor = .lightText
+        totalLabelTitle.textColor = .secondaryLabel
+        dateLabelTitle.textColor = .secondaryLabel
+        counterpartyLabelTitle.textColor = .secondaryLabel
+        dateLabel.textColor = .label
+        priceLabel.textColor = .label
+        currencyLabel.textColor = .secondaryLabel
+        locationLabel.textColor = .secondaryLabel
         
         if (transaction?.incoming == true) {
             symbolLabel.text = "→"

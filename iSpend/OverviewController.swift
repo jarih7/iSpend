@@ -12,7 +12,6 @@ class OverviewController: UIViewController {
     @IBOutlet weak var monthView: MonthView!
     @IBOutlet weak var weekView: WeekView!
     @IBOutlet weak var lastTransactionView: LastTransactionView!
-    @IBOutlet weak var locationBadge: UIButton!
     
     let db = Firestore.firestore()
     var listener: ListenerRegistration? = nil
@@ -37,13 +36,6 @@ class OverviewController: UIViewController {
         monthView.setupView()
         weekView.setupView()
         lastTransactionView.setupView()
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors =
-            [UIColor.init(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor,
-             UIColor.init(red: 49/255, green: 87/255, blue: 149/255, alpha: 1).cgColor]
-        view.layer.insertSublayer(gradient, at: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,14 +73,12 @@ class OverviewController: UIViewController {
             if let transactionData = map[String(LTId)] as? [String : Any] {
                 print("ITEM IS THERE")
                 lastTransactionView.isHidden = false
-                locationBadge.isHidden = false
                 lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
                 
                 prepareLastTransactionBlock()
             } else {
                 print("ITEM NOT THERE!")
                 lastTransactionView.isHidden = true
-                locationBadge.isHidden = true
             }
         }
     }
@@ -114,10 +104,14 @@ class OverviewController: UIViewController {
             lastTransactionView.ltIncomingSymbol.textColor = .systemOrange
         }
         
+        if (lastTransaction?.locationEnabled() == true) {
+            lastTransactionView.locationBadge.isHidden = false
+        } else {
+            lastTransactionView.locationBadge.isHidden = true
+        }
+        
         lastTransactionView.ltCounterparty.text = lastTransaction?.counterparty
         lastTransactionView.ltDate.text = dateFormatter.string(from: lastTransaction?.date ?? Date())
-        
-        locationBadge.isHidden = (lastTransaction?.locationEnabled())! ? false : true
     }
     
     @IBAction func lastTransactionTapped(_ sender: LastTransactionView) {

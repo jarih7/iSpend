@@ -18,6 +18,9 @@ class MonthView: UIView {
     @IBOutlet weak var monthCurrency: UILabel!
     @IBOutlet weak var monthInCurrency: UILabel!
     @IBOutlet weak var monthOutCurrency: UILabel!
+    @IBOutlet weak var date1: UILabel!
+    @IBOutlet weak var date2: UILabel!
+    @IBOutlet weak var blurView: UIView!
     
     var currency: String = "CZK"
     
@@ -30,29 +33,26 @@ class MonthView: UIView {
     }
     
     func setupView() {
+        clipsToBounds = true
+        backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
         lastMonthLabel.text = "Last Month"
-        lastMonthLabel.textColor = .white
         monthInSymbol.text = "→"
         monthOutSymbol.text = "←"
-        monthInSymbol.textColor = .green
+        monthInSymbol.textColor = .systemGreen
         monthOutSymbol.textColor = .systemOrange
-        monthInSum.textColor = .white
-        monthOutSum.textColor = .white
-        monthBalance.textColor = .white
-        monthBalanceLabel.textColor = .lightText
-        monthCurrency.textColor = .white
-        monthInCurrency.textColor = .white
-        monthOutCurrency.textColor = .white
+        monthBalanceLabel.textColor = .secondaryLabel
         monthCurrency.text = currency
         monthInCurrency.text = currency
         monthOutCurrency.text = currency
         monthInSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
-        layer.shadowColor = UIColor(red: 32/255, green: 56/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowOffset = CGSize(width: 2, height: 4)
-        layer.shadowRadius = 10
-        layer.shadowOpacity = 0.9
+        
+        //let blurEffect = UIBlurEffect(style: .regular)
+        //let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //blurEffectView.frame = bounds
+        //blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        //insertSubview(blurEffectView, at: 4)
     }
 }

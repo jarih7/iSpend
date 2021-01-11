@@ -747,7 +747,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.27450980392156865" green="0.45490196078431372" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.26499027009999998" green="0.44715315100000003" blue="0.77091020349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="2KB-WN-ulY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jj3-y1-MEt" secondAttribute="trailing" constant="8" symbolic="YES" id="5Dp-EF-olF"/>
                                     <constraint firstItem="wUd-cv-oTf" firstAttribute="firstBaseline" secondItem="qFZ-cC-JYJ" secondAttribute="firstBaseline" id="5kF-wO-KQN"/>
@@ -885,7 +885,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hbS-qq-Zc3"/>
-                        <color key="backgroundColor" red="0.19215686274509802" green="0.3411764705882353" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.18405482170000001" green="0.33497303719999999" blue="0.59233504530000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kFs-B6-ecp" firstAttribute="top" secondItem="hbS-qq-Zc3" secondAttribute="top" constant="16" id="0IP-84-ULG"/>

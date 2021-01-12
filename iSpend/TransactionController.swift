@@ -38,6 +38,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     var dateComponentMonts = DateComponents()
 
     var transId: Int = 0
+    var LTId: Int = Int()
     let currency: String = "CZK"
     let dateFormatter = DateFormatter()
     var hasLocation: Bool = false
@@ -59,6 +60,8 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+        print("SEEING TRANSACTION ID: \(transId)")
+        print("LTId: \(LTId)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,6 +100,9 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
             }
             
             let map = data["transMap"] as! Dictionary<String, Any>
+            LTId = data["LTId"] as? Int ?? -1
+            print("GOT LTId: \(LTId)")
+            
             if let transactionData = map[String(transId)] as? [String : Any] {
                 transaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
             }
@@ -195,7 +201,8 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
             listener?.remove()
             
             //update LTId
-            if (isQuickView == true) {
+            if (transId == LTId) {
+                print("DELETING THE LATEST ONE")
                 //that means this Transaction is the latest one -> I have to update the id of the new latest Transaction
                 db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").getDocument { (document, error) in
                     if let document = document, document.exists {
@@ -226,7 +233,6 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
                             db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(
                                 ["LTId" : newLastTransactionId,
                                  "transMap." + transId.description : FieldValue.delete()])
-                            //db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + transId.description : FieldValue.delete()])
                         } else {
                             db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(
                                 ["LTId" : -1,
@@ -238,6 +244,10 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
                         print("Document does not exist")
                     }
                 }
+            } else {
+                //transaction being deleted is not the latest one
+                print("NOT DELETING THE LATEST ONE")
+                db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + transId.description : FieldValue.delete()])
             }
             
             if (isQuickView == true) {

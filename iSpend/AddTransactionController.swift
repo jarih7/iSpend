@@ -25,6 +25,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     var headerText: String = "New Transaction"
     
     let db = Firestore.firestore()
+    var listener: ListenerRegistration? = nil
     let locationManager = CLLocationManager()
     var myLocation: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
     
@@ -67,7 +68,26 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             dismissButtonBackground.isHidden = false
         }
         
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
+        setupFunctionality()
+        setupStyle()
+        setupContent()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("STARTED LISTENNING FROM ADD_NEW_TRANSACTION...\n")
+        startListening()
+        scrollView.setContentOffset(CGPoint.zero, animated: true)
+        locationManager.startUpdatingLocation()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("STOPPED LISTENNING FROM ADD_NEW_TRANSACTION...\n")
+        listener?.remove()
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func startListening() {
+        listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -81,19 +101,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             
             newTransactionIndex = data["nextTransactionIndex"] as! Int
         }
-        
-        setupFunctionality()
-        setupStyle()
-        setupContent()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        scrollView.setContentOffset(CGPoint.zero, animated: true)
-        locationManager.startUpdatingLocation()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        locationManager.stopUpdatingLocation()
     }
     
     func setupFunctionality() {
@@ -108,17 +115,16 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     }
     
     func setupStyle() {
+        dismissButton.tintColor = .systemGray4
+        dismissButtonBackground.tintColor = .systemGray
+        
         locationButton.setImage(UIImage(systemName: "location.fill"), for: .selected)
         locationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
         locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .systemGray : .systemBlue
         
-        titleTextField.layer.cornerRadius = 10
-        counterpartyTextField.layer.cornerRadius = 10
-        totalTextField.layer.cornerRadius = 10
-        
-        titleTextField.layer.masksToBounds = true
-        counterpartyTextField.layer.masksToBounds = true
-        totalTextField.layer.masksToBounds = true
+        titleTextField.layer.cornerRadius = 5
+        counterpartyTextField.layer.cornerRadius = 5
+        totalTextField.layer.cornerRadius = 5
         
         titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])

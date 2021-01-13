@@ -75,7 +75,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         backButton.isHidden = isQuickView ? true : false
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. MM. yyyy"
+        dateFormatter.dateFormat = "d. M. yyyy"
         priceLabel.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
         currencyLabel.text = "(\(currency))"
         mapView.isHidden = true

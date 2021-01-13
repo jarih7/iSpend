@@ -16,6 +16,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     @IBOutlet weak var totalTextField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var incomingSwitch: UISwitch!
+    @IBOutlet weak var incomingSegmentControl: UISegmentedControl!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dismissButton: UIButton!
@@ -131,12 +132,13 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
-        incomingSwitch.isOn = false
-        incomingSwitch.tintColor = .systemOrange
-        incomingSwitch.layer.cornerRadius = incomingSwitch.frame.height / 2
-        incomingSwitch.backgroundColor = .systemOrange
+        //incomingSwitch.isOn = false
+        incomingSegmentControl.selectedSegmentIndex = 1
+        //incomingSwitch.tintColor = .systemOrange
+        //incomingSwitch.layer.cornerRadius = incomingSwitch.frame.height / 2
+        //incomingSwitch.backgroundColor = .systemOrange
         
-        saveButton.backgroundColor = UIColor(red: 68/255, green: 114/255, blue: 197/255, alpha: 1)
+        saveButton.backgroundColor = .systemBlue
         saveButton.tintColor = .white
         saveButton.layer.cornerRadius = 10
         
@@ -151,7 +153,8 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.text = passedConterparty
         totalTextField.text = passedTotal
         datePicker.date = passedDate
-        incomingSwitch.isOn = passedIncoming
+        //incomingSwitch.isOn = passedIncoming
+        incomingSegmentControl.selectedSegmentIndex = passedIncoming ? 0 : 1
     }
     
     func resetFields() {
@@ -159,7 +162,8 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.text = ""
         totalTextField.text = ""
         datePicker.date = Date()
-        incomingSwitch.isOn = false
+        //incomingSwitch.isOn = false
+        incomingSegmentControl.selectedSegmentIndex = 1
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -168,7 +172,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             "counterparty": counterpartyTextField.text ?? "*EMPTY*",
             "date": datePicker.date,
             "id": usingTransIndex,
-            "incoming": incomingSwitch.isOn,
+            "incoming": incomingSegmentControl.selectedSegmentIndex == 0 ? true : false,
             "location": myLocation,
             "title": titleTextField.text ?? "*EMPTY*",
             "total": Double(totalTextField.text?.replacingOccurrences(of: ",", with: ".") ?? "0")!

@@ -24,6 +24,8 @@ class OverviewController: UIViewController {
     var WIS: Double = Double()
     var WOS: Double = Double()
     var LTId: Int = Int()
+    var LMFromDate: Date = Date()
+    var LMToDate: Date = Date()
     var lastTransaction: Transaction? = nil
     
     override func viewDidLoad() {
@@ -31,7 +33,7 @@ class OverviewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. MM. yyyy"
+        dateFormatter.dateFormat = "d. M. yyyy"
         
         monthView.setupView()
         weekView.setupView()
@@ -66,6 +68,8 @@ class OverviewController: UIViewController {
             WIS = data["LWI"] as! Double
             WOS = data["LWO"] as! Double
             LTId = data["LTId"] as! Int
+            LMFromDate = Date(timeIntervalSince1970: TimeInterval((data["LMFD"] as! Timestamp).seconds))
+            LMToDate = Date(timeIntervalSince1970: TimeInterval((data["LMTD"] as! Timestamp).seconds))
             
             prepareOverviewBlocks()
             
@@ -73,6 +77,7 @@ class OverviewController: UIViewController {
             if let transactionData = map[String(LTId)] as? [String : Any] {
                 print("ITEM IS THERE")
                 lastTransactionView.isHidden = false
+                
                 lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
                 
                 prepareLastTransactionBlock()
@@ -84,6 +89,9 @@ class OverviewController: UIViewController {
     }
     
     func prepareOverviewBlocks() {
+        monthView.fromDate.text = dateFormatter.string(from: LMFromDate)
+        monthView.toDate.text = dateFormatter.string(from: LMToDate)
+        
         monthView.monthInSum.text = Int(MIS).description
         monthView.monthOutSum.text = Int(MOS).description
         monthView.monthBalance.text = (MIS - MOS) < 0 ? Int(MIS - MOS).description : "+" + Int(MIS - MOS).description
@@ -93,7 +101,7 @@ class OverviewController: UIViewController {
     }
     
     func prepareLastTransactionBlock() {
-        lastTransactionView.ltTitle.text = lastTransaction?.title
+        lastTransactionView.ltTitle.text = lastTransaction?.title ?? "Title"
         lastTransactionView.ltTotal.text = Int(lastTransaction?.total ?? 0).description
         
         if (lastTransaction?.incoming == true) {
@@ -110,7 +118,7 @@ class OverviewController: UIViewController {
             lastTransactionView.locationBadge.isHidden = true
         }
         
-        lastTransactionView.ltCounterparty.text = lastTransaction?.counterparty
+        lastTransactionView.ltCounterparty.text = lastTransaction?.counterparty ?? "Counterparty title"
         lastTransactionView.ltDate.text = dateFormatter.string(from: lastTransaction?.date ?? Date())
     }
     

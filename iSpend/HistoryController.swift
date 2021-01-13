@@ -26,6 +26,9 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     var LWI: Double = Double()
     var LWO: Double = Double()
     
+    var LMFromDate: Date = Date()
+    var LMToDate: Date = Date()
+    
     override func viewWillAppear(_ animated: Bool) {
         print("STARTED LISTENNING FROM HISTORY...")
         startListening()
@@ -72,13 +75,15 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                 transactions.append(Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45))
             }
             
-            transactions.sort { (tr1, tr2) -> Bool in
-                if (tr1.date.compare(tr2.date) == .orderedDescending) {
-                    return true
-                } else if (tr1.date.compare(tr2.date) == .orderedAscending) {
-                    return false
-                } else {
-                    return tr1.id > tr2.id
+            if (!transactions.isEmpty) {
+                transactions.sort { (tr1, tr2) -> Bool in
+                    if (tr1.date.compare(tr2.date) == .orderedDescending) {
+                        return true
+                    } else if (tr1.date.compare(tr2.date) == .orderedAscending) {
+                        return false
+                    } else {
+                        return tr1.id > tr2.id
+                    }
                 }
             }
             
@@ -86,6 +91,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
             if let lastTransaction: Transaction = transactions.first {
                 let lastTransactionId: Int = lastTransaction.id
                 db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LTId" : lastTransactionId])
+            } else {
+                db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LTId" : -1])
             }
             
             updateTotals()
@@ -117,16 +124,25 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                 } else {
                     LMO += item.total
                 }
+                
+                //get dates from, to
+                if (item.date.compare(LMFromDate) == .orderedAscending) {
+                    LMFromDate = item.date
+                }
+                
+                if (item.date.compare(LMToDate) == .orderedDescending) {
+                    LMToDate = item.date
+                }
             }
         }
         
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LMI" : LMI, "LMO" : LMO, "LWI" : LWI, "LWO" : LWO])
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LMI" : LMI, "LMO" : LMO, "LWI" : LWI, "LWO" : LWO, "LMFD" : LMFromDate, "LMTD" : LMToDate])
     }
     
     func setupDateFormatter() {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. MM. yyyy"
+        dateFormatter.dateFormat = "d. M. yyyy"
     }
     
     func setupCellContent(cell: TransactionViewCell, transaction: Transaction) {

@@ -9,6 +9,8 @@ import UIKit
 
 class MonthView: UIView {
     @IBOutlet weak var lastMonthLabel: UILabel!
+    @IBOutlet weak var fromDate: UILabel!
+    @IBOutlet weak var toDate: UILabel!
     @IBOutlet weak var monthInSymbol: UILabel!
     @IBOutlet weak var monthInSum: UILabel!
     @IBOutlet weak var monthOutSymbol: UILabel!
@@ -20,7 +22,6 @@ class MonthView: UIView {
     @IBOutlet weak var monthOutCurrency: UILabel!
     @IBOutlet weak var date1: UILabel!
     @IBOutlet weak var date2: UILabel!
-    @IBOutlet weak var blurView: UIView!
     
     var currency: String = "CZK"
     
@@ -48,11 +49,5 @@ class MonthView: UIView {
         monthInSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
-        
-        //let blurEffect = UIBlurEffect(style: .regular)
-        //let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        //blurEffectView.frame = bounds
-        //blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-        //insertSubview(blurEffectView, at: 4)
     }
 }

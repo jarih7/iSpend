@@ -212,6 +212,7 @@
                         <outlet property="dismissButton" destination="5BG-AN-YZZ" id="2fL-pM-mUI"/>
                         <outlet property="dismissButtonBackground" destination="4BW-3b-rLJ" id="mBT-rk-yM7"/>
                         <outlet property="headerLabel" destination="KtP-h8-3hu" id="lRh-K3-FDd"/>
+                        <outlet property="incomingSegmentControl" destination="bGR-rz-kiV" id="P0r-uh-4kK"/>
                         <outlet property="incomingSwitch" destination="7ak-Ct-DhG" id="bgM-l4-aid"/>
                         <outlet property="locationButton" destination="vwI-yr-uec" id="ptU-jL-kDC"/>
                         <outlet property="saveButton" destination="D9R-4d-Q9e" id="O1f-JL-Ebc"/>
@@ -618,6 +619,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Transaction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vG-US-ca0">
+                                <rect key="frame" x="16" y="382.5" width="217" height="33.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFs-B6-ecp">
+                                <rect key="frame" x="16" y="16" width="205" height="54"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2u-Yu-fIY" userLabel="Month View" customClass="MonthView" customModule="iSpend" customModuleProvider="target">
                                 <rect key="frame" x="16" y="90" width="343" height="150"/>
                                 <subviews>
@@ -672,23 +686,25 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAa-Rk-7F9">
-                                        <rect key="frame" x="12" y="41" width="36" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="12" y="41" width="30.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAK-Eb-Ced">
-                                        <rect key="frame" x="53" y="41" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="47.5" y="40" width="37.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZE-yj-qHq">
-                                        <rect key="frame" x="100" y="41" width="16" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="90" y="41" width="13" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyb-Wd-Qn8">
-                                        <rect key="frame" x="121" y="41" width="44" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="108" y="40" width="39.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -737,6 +753,7 @@
                                 <connections>
                                     <outlet property="date1" destination="AAK-Eb-Ced" id="nvy-6y-E28"/>
                                     <outlet property="date2" destination="wyb-Wd-Qn8" id="2A8-Jx-jHW"/>
+                                    <outlet property="fromDate" destination="AAK-Eb-Ced" id="Zlu-NQ-AZB"/>
                                     <outlet property="lastMonthLabel" destination="csp-4w-uel" id="t1D-dT-x3W"/>
                                     <outlet property="monthBalance" destination="dWK-7y-CPc" id="6X1-zr-HV6"/>
                                     <outlet property="monthBalanceLabel" destination="oeQ-Bf-W6I" id="iac-qY-kl2"/>
@@ -747,6 +764,7 @@
                                     <outlet property="monthOutCurrency" destination="5ke-q5-wbF" id="nau-YZ-RCB"/>
                                     <outlet property="monthOutSum" destination="nM4-ct-Bcm" id="cLh-Z9-W9t"/>
                                     <outlet property="monthOutSymbol" destination="uAL-cY-ueX" id="1VD-ih-KTJ"/>
+                                    <outlet property="toDate" destination="wyb-Wd-Qn8" id="KMC-gm-roQ"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ovg-ad-z3g" userLabel="Week View" customClass="WeekView" customModule="iSpend" customModuleProvider="target">
@@ -847,13 +865,6 @@
                                     <outlet property="weekOutSymbol" destination="O2l-de-Pmx" id="tVR-vA-fTw"/>
                                 </connections>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFs-B6-ecp">
-                                <rect key="frame" x="16" y="16" width="205" height="54"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EUb-pD-FKc" customClass="LastTransactionView" customModule="iSpend" customModuleProvider="target">
                                 <rect key="frame" x="16" y="426" width="343" height="100"/>
                                 <subviews>
@@ -936,12 +947,6 @@
                                     <outlet property="ltcounterpartyLabel" destination="6Jm-YL-ywg" id="6y4-Sg-1gt"/>
                                 </connections>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Transaction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vG-US-ca0">
-                                <rect key="frame" x="16" y="382.5" width="217" height="33.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hbS-qq-Zc3"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>

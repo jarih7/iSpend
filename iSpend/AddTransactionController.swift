@@ -178,9 +178,11 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             "total": Double(totalTextField.text?.replacingOccurrences(of: ",", with: ".") ?? "0")!
         ]
         
+        print("writing to firestore")
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + usingTransIndex.description : newTransaction])
         
         if (passedUpdate == false) {
+            print("writing to firestore")
             db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
             tabBarController?.selectedIndex = 1
         } else {

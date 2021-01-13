@@ -35,5 +35,10 @@ class LastTransactionView: UIControl {
         ltDate.textColor = .label
         ltcounterpartyLabel.textColor = .secondaryLabel
         ltDateLabel.textColor = .secondaryLabel
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowRadius = 7
+        layer.shadowOpacity = 0.1
     }
 }

@@ -12,6 +12,7 @@ class OverviewController: UIViewController {
     @IBOutlet weak var monthView: MonthView!
     @IBOutlet weak var weekView: WeekView!
     @IBOutlet weak var lastTransactionView: LastTransactionView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let db = Firestore.firestore()
     var listener: ListenerRegistration? = nil

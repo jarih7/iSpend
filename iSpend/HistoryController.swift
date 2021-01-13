@@ -136,6 +136,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
             }
         }
         
+        print("writing to firestore")
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LMI" : LMI, "LMO" : LMO, "LWI" : LWI, "LWO" : LWO, "LMFD" : LMFromDate, "LMTD" : LMToDate])
     }
     

@@ -20,11 +20,12 @@ class OverviewController: UIViewController {
     let dateFormatter = DateFormatter()
     var currency: String = "CZK"
     
-    var MIS: Double = Double()
-    var MOS: Double = Double()
-    var WIS: Double = Double()
-    var WOS: Double = Double()
+    var LMI: Double = Double()
+    var LMO: Double = Double()
+    var LWI: Double = Double()
+    var LWO: Double = Double()
     var LTId: Int = Int()
+    
     var LMFromDate: Date = Date()
     var LMToDate: Date = Date()
     var lastTransaction: Transaction? = nil
@@ -64,26 +65,29 @@ class OverviewController: UIViewController {
                 return
             }
             
-            MIS = data["LMI"] as! Double
-            MOS = data["LMO"] as! Double
-            WIS = data["LWI"] as! Double
-            WOS = data["LWO"] as! Double
+            LMI = data["LMI"] as! Double
+            LMO = data["LMO"] as! Double
+            LWI = data["LWI"] as! Double
+            LWO = data["LWO"] as! Double
             LTId = data["LTId"] as! Int
+            
             LMFromDate = Date(timeIntervalSince1970: TimeInterval((data["LMFD"] as! Timestamp).seconds))
             LMToDate = Date(timeIntervalSince1970: TimeInterval((data["LMTD"] as! Timestamp).seconds))
+            
+            //print("TEST LMI, LMO, LWI, LWO: \(LMI), \(LMO), \(LWI), \(LWO)")
             
             prepareOverviewBlocks()
             
             let map = data["transMap"] as! Dictionary<String, Any>
             if let transactionData = map[String(LTId)] as? [String : Any] {
-                print("ITEM IS THERE")
+                //print("ITEM IS THERE")
                 lastTransactionView.isHidden = false
                 
                 lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
                 
                 prepareLastTransactionBlock()
             } else {
-                print("ITEM NOT THERE!")
+                //print("ITEM NOT THERE!")
                 lastTransactionView.isHidden = true
             }
         }
@@ -93,12 +97,12 @@ class OverviewController: UIViewController {
         monthView.fromDate.text = dateFormatter.string(from: LMFromDate)
         monthView.toDate.text = dateFormatter.string(from: LMToDate)
         
-        monthView.monthInSum.text = Int(MIS).description
-        monthView.monthOutSum.text = Int(MOS).description
-        monthView.monthBalance.text = (MIS - MOS) < 0 ? Int(MIS - MOS).description : "+" + Int(MIS - MOS).description
-        weekView.weekInSum.text = Int(WIS).description
-        weekView.weekOutSum.text = Int(WOS).description
-        weekView.weekBalance.text = (WIS - WOS) < 0 ? Int(WIS - WOS).description : "+" + Int(WIS - WOS).description
+        monthView.monthInSum.text = Int(LMI).description
+        monthView.monthOutSum.text = Int(LMO).description
+        monthView.monthBalance.text = (LMI - LMO) < 0 ? Int(LMI - LMO).description : "+" + Int(LMI - LMO).description
+        weekView.weekInSum.text = Int(LWI).description
+        weekView.weekOutSum.text = Int(LWO).description
+        weekView.weekBalance.text = (LWI - LWO) < 0 ? Int(LWI - LWO).description : "+" + Int(LWI - LWO).description
     }
     
     func prepareLastTransactionBlock() {

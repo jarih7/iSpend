@@ -21,6 +21,7 @@
 		64C1FCEE2550116600539E83 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C1FCED2550116600539E83 /* TabBarController.swift */; };
 		64E3C342255EBBDC00919524 /* RatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E3C341255EBBDC00919524 /* RatesController.swift */; };
 		64E3C345255EC0C900919524 /* ERView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E3C344255EC0C900919524 /* ERView.swift */; };
+		64E6CB4825B0565800230DE5 /* BaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6CB4725B0565800230DE5 /* BaseProtocol.swift */; };
 		64EA08E22549ADFB003AC8A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA08E12549ADFB003AC8A4 /* AppDelegate.swift */; };
 		64EA08E42549ADFB003AC8A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA08E32549ADFB003AC8A4 /* SceneDelegate.swift */; };
 		64EA08E62549ADFB003AC8A4 /* OverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA08E52549ADFB003AC8A4 /* OverviewController.swift */; };
@@ -45,6 +46,7 @@
 		64C1FCED2550116600539E83 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		64E3C341255EBBDC00919524 /* RatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesController.swift; sourceTree = "<group>"; };
 		64E3C344255EC0C900919524 /* ERView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERView.swift; sourceTree = "<group>"; };
+		64E6CB4725B0565800230DE5 /* BaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProtocol.swift; sourceTree = "<group>"; };
 		64EA08DE2549ADFB003AC8A4 /* iSpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EA08E12549ADFB003AC8A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64EA08E32549ADFB003AC8A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				64EA08E52549ADFB003AC8A4 /* OverviewController.swift */,
 				6400D3CB254B4511002BF999 /* AddTransactionController.swift */,
 				6400D3CF254B46F2002BF999 /* HistoryController.swift */,
+				64E6CB4725B0565800230DE5 /* BaseProtocol.swift */,
 				64B17945257D380100BA52E6 /* Transaction.swift */,
 				649C40272567FC6800B5C516 /* HistoryViewHeader.swift */,
 				64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E6CB4825B0565800230DE5 /* BaseProtocol.swift in Sources */,
 				64B15E22255E84200066528C /* SettingsController.swift in Sources */,
 				64B15E25255E85330066528C /* MonthView.swift in Sources */,
 				649C40282567FC6800B5C516 /* HistoryViewHeader.swift in Sources */,

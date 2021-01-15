@@ -15,7 +15,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     @IBOutlet weak var counterpartyTextField: UITextField!
     @IBOutlet weak var totalTextField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var incomingSwitch: UISwitch!
     @IBOutlet weak var incomingSegmentControl: UISegmentedControl!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -89,7 +88,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     
     func startListening() {
         listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
-            
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
                 return
@@ -132,14 +130,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
-        //incomingSwitch.isOn = false
         incomingSegmentControl.selectedSegmentIndex = 1
-        //incomingSwitch.tintColor = .systemOrange
-        //incomingSwitch.layer.cornerRadius = incomingSwitch.frame.height / 2
-        //incomingSwitch.backgroundColor = .systemOrange
-        
-        saveButton.backgroundColor = .systemBlue
-        saveButton.tintColor = .white
         saveButton.layer.cornerRadius = 10
         
         datePicker.backgroundColor = .systemBackground
@@ -153,7 +144,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.text = passedConterparty
         totalTextField.text = passedTotal
         datePicker.date = passedDate
-        //incomingSwitch.isOn = passedIncoming
         incomingSegmentControl.selectedSegmentIndex = passedIncoming ? 0 : 1
     }
     
@@ -162,7 +152,8 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.text = ""
         totalTextField.text = ""
         datePicker.date = Date()
-        //incomingSwitch.isOn = false
+        locationButton.isSelected = false
+        locationButton.tintColor = .systemGray
         incomingSegmentControl.selectedSegmentIndex = 1
     }
     
@@ -178,12 +169,18 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             "total": Double(totalTextField.text?.replacingOccurrences(of: ",", with: ".") ?? "0")!
         ]
         
-        print("writing to firestore")
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["transMap." + usingTransIndex.description : newTransaction])
+        //prepare updatedDataToUpload
+        var updatedData: [String:Any] = [:]
+        updatedData["transMap." + usingTransIndex.description] = newTransaction
         
         if (passedUpdate == false) {
-            print("writing to firestore")
-            db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["nextTransactionIndex" : newTransactionIndex + 1])
+            updatedData["nextTransactionIndex"] = newTransactionIndex + 1
+        }
+        
+        print("writing to firestore5 and 6")
+        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(updatedData) //TADY BY SE MĚLO ZAKTUALIZOVAT UŽ VŠECHNO! UPDATETOTALS() TADY NĚJAK VYUŽÍT??
+        
+        if (passedUpdate == false) {
             tabBarController?.selectedIndex = 1
         } else {
             passedUpdate = false

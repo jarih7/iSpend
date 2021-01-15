@@ -8,30 +8,42 @@
 import UIKit
 import FirebaseFirestore
 
-class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
+class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, BaseProtocol {
     
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     
-    let db = Firestore.firestore()
-    var listener: ListenerRegistration? = nil
-    var transactions: [Transaction] = []
+    var db = Firestore.firestore()//
+    var listener: ListenerRegistration? = nil//
+    var transactions: [Transaction] = []//
+    var changedValues: [String:Any] = [:]//
+    
+    let dateFormatter = DateFormatter()//
+    var dateComponentDays = DateComponents()//
+    var dateComponentMonts = DateComponents()//
+    
+    var currency: String = "CZK"//
     var nextTransactionIndex: Int = 999
-    let dateFormatter = DateFormatter()
-    var dateComponentDays = DateComponents()
-    var dateComponentMonts = DateComponents()
-    var currency: String = "CZK"
+    var LTId: Int = Int()//
     
-    var LMI: Double = Double()
-    var LMO: Double = Double()
-    var LWI: Double = Double()
-    var LWO: Double = Double()
+    var LMI: Double = Double()//
+    var LMO: Double = Double()//
+    var LWI: Double = Double()//
+    var LWO: Double = Double()//
     
-    var LMFromDate: Date = Date()
-    var LMToDate: Date = Date()
+    var updatedLMI: Double = Double()//
+    var updatedLMO: Double = Double()//
+    var updatedLWI: Double = Double()//
+    var updatedLWO: Double = Double()//
+    
+    var LMFromDate: Date = Date()//
+    var LMToDate: Date = Date()//
+    
+    var updatedLMFromDate: Date = Date()//
+    var updatedLMToDate: Date = Date()//
     
     override func viewWillAppear(_ animated: Bool) {
-        print("STARTED LISTENNING FROM HISTORY...")
-        startListening()
+        //print("STARTED LISTENNING FROM HISTORY...")
+        //startListening()
     }
     
     override func viewDidLoad() {
@@ -41,11 +53,14 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.delegate = self
         transactionsCollectionView.dataSource = self
         setupDateFormatter()
+        
+        startListening()
+        print("STARTED LISTENNING FROM HISTORY...")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("STOPPED LISTENNING FROM HISTORY...\n")
-        listener?.remove()
+        //print("STOPPED LISTENNING FROM HISTORY...\n")
+        //listener?.remove()
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,17 +80,24 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                 return
             }
             
+            LMI = data["LMI"] as! Double
+            LMO = data["LMO"] as! Double
+            LWI = data["LWI"] as! Double
+            LWO = data["LWO"] as! Double
+            LTId = data["LTId"] as! Int
             nextTransactionIndex = data["nextTransactionIndex"] as! Int
+            
             let map = data["transMap"] as! Dictionary<String, Any>
             var procItem: [String:Any] = [:]
-            
             transactions.removeAll()
+            
             for item in map {
                 procItem = item.value as! [String : Any]
                 transactions.append(Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45))
             }
             
             if (!transactions.isEmpty) {
+                print("SORTING TRANSACTIONS1")
                 transactions.sort { (tr1, tr2) -> Bool in
                     if (tr1.date.compare(tr2.date) == .orderedDescending) {
                         return true
@@ -87,63 +109,28 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                 }
             }
             
-            
             if let lastTransaction: Transaction = transactions.first {
                 let lastTransactionId: Int = lastTransaction.id
-                db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LTId" : lastTransactionId])
+                if (LTId != lastTransactionId) {
+                    //change happened that is not reflected in here yet
+                    print("writing to firestore1")
+                    db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LTId" : lastTransactionId])
+                    updateTotals()
+                }
             } else {
-                db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LTId" : -1])
+                print("NO TRANSACTIONS LEFT 2")
             }
             
-            updateTotals()
             transactionsCollectionView.reloadData()
         }
-    }
-    
-    func updateTotals() {
-        dateComponentDays.day = -7
-        dateComponentMonts.month = -1
-        
-        LMI = 0.0
-        LMO = 0.0
-        LWI = 0.0
-        LWO = 0.0
-        
-        for item in transactions {
-            if (item.date > Calendar.current.date(byAdding: dateComponentDays, to: Date())!) {
-                if (item.incoming == true) {
-                    LWI += item.total
-                    LMI += item.total
-                } else {
-                    LWO += item.total
-                    LMO += item.total
-                }
-            } else if (item.date > Calendar.current.date(byAdding: dateComponentMonts, to: Date())!) {
-                if (item.incoming == true) {
-                    LMI += item.total
-                } else {
-                    LMO += item.total
-                }
-                
-                //get dates from, to
-                if (item.date.compare(LMFromDate) == .orderedAscending) {
-                    LMFromDate = item.date
-                }
-                
-                if (item.date.compare(LMToDate) == .orderedDescending) {
-                    LMToDate = item.date
-                }
-            }
-        }
-        
-        print("writing to firestore")
-        db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(["LMI" : LMI, "LMO" : LMO, "LWI" : LWI, "LWO" : LWO, "LMFD" : LMFromDate, "LMTD" : LMToDate])
     }
     
     func setupDateFormatter() {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "d. M. yyyy"
+        dateComponentDays.day = -7
+        dateComponentMonts.month = -1
     }
     
     func setupCellContent(cell: TransactionViewCell, transaction: Transaction) {

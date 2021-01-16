@@ -60,8 +60,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setNeedsStatusBarAppearanceUpdate()
-        
+        setNeedsStatusBarAppearanceUpdate()
         setupDateFormatter()
         setupFunctionality()
         setupStyle()

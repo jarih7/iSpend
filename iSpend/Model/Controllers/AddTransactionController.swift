@@ -60,7 +60,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
+        //setNeedsStatusBarAppearanceUpdate()
         
         setupDateFormatter()
         setupFunctionality()
@@ -167,6 +167,8 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         incomingSegmentControl.selectedSegmentIndex = 1
+        
+        saveButton.layer.masksToBounds = false
         saveButton.layer.cornerRadius = 10
         
         datePicker.backgroundColor = .systemBackground

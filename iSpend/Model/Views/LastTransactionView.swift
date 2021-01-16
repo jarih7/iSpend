@@ -28,17 +28,23 @@ class LastTransactionView: UIControl {
     func setupView() {
         backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
-        
+        setupLabels()
+        setupShadows()
+    }
+    
+    func setupLabels() {
         ltTitle.textColor = .label
         ltTotal.textColor = .label
         ltCounterparty.textColor = .label
         ltDate.textColor = .label
         ltcounterpartyLabel.textColor = .secondaryLabel
         ltDateLabel.textColor = .secondaryLabel
-        
+    }
+    
+    func setupShadows() {
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .zero
-        layer.shadowRadius = 7
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 5
         layer.shadowOpacity = 0.1
     }
 }

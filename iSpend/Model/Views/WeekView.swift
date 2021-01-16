@@ -32,7 +32,11 @@ class WeekView: UIView {
     func setupView() {
         backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
-        
+        setupLabels()
+        setupShadows()
+    }
+    
+    func setupLabels() {
         lastWeekLabel.text = "Last Week"
         weekInSymbol.text = "→"
         weekOutSymbol.text = "←"
@@ -45,10 +49,12 @@ class WeekView: UIView {
         weekInSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
-        
+    }
+    
+    func setupShadows() {
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .zero
-        layer.shadowRadius = 7
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 5
         layer.shadowOpacity = 0.1
     }
 }

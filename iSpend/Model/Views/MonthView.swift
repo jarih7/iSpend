@@ -36,7 +36,11 @@ class MonthView: UIView {
     func setupView() {
         backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
-        
+        setupLabels()
+        setupShadows()
+    }
+    
+    func setupLabels() {
         lastMonthLabel.text = "Last Month"
         monthInSymbol.text = "→"
         monthOutSymbol.text = "←"
@@ -49,10 +53,12 @@ class MonthView: UIView {
         monthInSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         monthBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
-        
+    }
+    
+    func setupShadows() {
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .zero
-        layer.shadowRadius = 7
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 5
         layer.shadowOpacity = 0.1
     }
 }

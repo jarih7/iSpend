@@ -47,29 +47,9 @@ class RatesController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
-        dateFormatter.dateStyle = .none
-        dateFormatter.timeStyle = .medium
-        dateFormatter.locale = .current
-        
-        eurLabel.text = "EUR"
-        usdLabel.text = "USD"
-        gbpLabel.text = "GBP"
-        jpyLabel.text = "JPY"
-        
-        baseLabel1.text = "CZK"
-        baseLabel2.text = "CZK"
-        baseLabel3.text = "CZK"
-        baseLabel4.text = "CZK"
-        
-        eurValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
-        usdValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
-        gbpValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
-        jpyValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
-        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
-        
-        lastUpdatedLabelTitle.textColor = .secondaryLabel
-        lastUpdatedLabel.textColor = .secondaryLabel
+        setupDateFormatter()
+        setupLabels()
+        setupShadows()
         
         eurView.setupViewStyle()
         usdView.setupViewStyle()
@@ -112,10 +92,44 @@ class RatesController: UIViewController {
         }
     }
     
+    func setupDateFormatter() {
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .medium
+        dateFormatter.locale = .current
+    }
+    
+    func setupLabels() {
+        eurLabel.text = "EUR"
+        usdLabel.text = "USD"
+        gbpLabel.text = "GBP"
+        jpyLabel.text = "JPY"
+        
+        baseLabel1.text = "CZK"
+        baseLabel2.text = "CZK"
+        baseLabel3.text = "CZK"
+        baseLabel4.text = "CZK"
+        
+        eurValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
+        usdValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
+        gbpValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
+        jpyValueLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .bold)
+        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
+        
+        lastUpdatedLabelTitle.textColor = .secondaryLabel
+        lastUpdatedLabel.textColor = .secondaryLabel
+    }
+    
     func updateValues() {
         eurValueLabel.text = String(format: "%.4f", eurVal)
         usdValueLabel.text = String(format: "%.4f", usdVal)
         gbpValueLabel.text = String(format: "%.4f", gbpVal)
         jpyValueLabel.text = String(format: "%.4f", jpyVal)
+    }
+    
+    func setupShadows() {
+        updateButton.layer.shadowColor = UIColor.black.cgColor
+        updateButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        updateButton.layer.shadowRadius = 5
+        updateButton.layer.shadowOpacity = 0.1
     }
 }

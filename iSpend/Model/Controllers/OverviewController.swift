@@ -11,6 +11,7 @@ import FirebaseFirestore
 class OverviewController: UIViewController {
     @IBOutlet weak var monthView: MonthView!
     @IBOutlet weak var weekView: WeekView!
+    @IBOutlet weak var lastTransactionLabel: UILabel!
     @IBOutlet weak var lastTransactionView: LastTransactionView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -80,12 +81,14 @@ class OverviewController: UIViewController {
     func updateLastTransaction() {
         if let transactionData = map[String(LTId)] as? [String:Any] {
             lastTransactionView.isHidden = false
+            lastTransactionLabel.isHidden = false
             lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
             
             prepareLastTransactionBlock()
         } else {
             print("NO LAST ITEM")
             lastTransactionView.isHidden = true
+            lastTransactionLabel.isHidden = true
         }
     }
     

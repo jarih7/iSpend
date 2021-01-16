@@ -10,7 +10,7 @@ import MapKit
 import CoreLocation
 import FirebaseFirestore
 
-class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate, MKMapViewDelegate, BaseProtocol {
+class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var counterpartyLabelTitle: UILabel!
     @IBOutlet weak var counterpartyLabel: UILabel!

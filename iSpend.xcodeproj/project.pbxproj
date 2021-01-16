@@ -21,7 +21,6 @@
 		64C1FCEE2550116600539E83 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C1FCED2550116600539E83 /* TabBarController.swift */; };
 		64E3C342255EBBDC00919524 /* RatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E3C341255EBBDC00919524 /* RatesController.swift */; };
 		64E3C345255EC0C900919524 /* ERView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E3C344255EC0C900919524 /* ERView.swift */; };
-		64E6CB4825B0565800230DE5 /* BaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6CB4725B0565800230DE5 /* BaseProtocol.swift */; };
 		64EA08E22549ADFB003AC8A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA08E12549ADFB003AC8A4 /* AppDelegate.swift */; };
 		64EA08E42549ADFB003AC8A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA08E32549ADFB003AC8A4 /* SceneDelegate.swift */; };
 		64EA08E62549ADFB003AC8A4 /* OverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA08E52549ADFB003AC8A4 /* OverviewController.swift */; };
@@ -46,7 +45,6 @@
 		64C1FCED2550116600539E83 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		64E3C341255EBBDC00919524 /* RatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesController.swift; sourceTree = "<group>"; };
 		64E3C344255EC0C900919524 /* ERView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERView.swift; sourceTree = "<group>"; };
-		64E6CB4725B0565800230DE5 /* BaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProtocol.swift; sourceTree = "<group>"; };
 		64EA08DE2549ADFB003AC8A4 /* iSpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EA08E12549ADFB003AC8A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64EA08E32549ADFB003AC8A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +73,10 @@
 		64A133642549F9DF001717AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				64FB08C525B32DE0000F0DBC /* Delegates */,
+				64FB08C325B32D52000F0DBC /* Views */,
+				64FB08C225B32D19000F0DBC /* Controllers */,
+				64FB08C125B32CDC000F0DBC /* Storyboards */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -101,30 +103,57 @@
 			isa = PBXGroup;
 			children = (
 				64A133642549F9DF001717AD /* Model */,
-				64EA08E12549ADFB003AC8A4 /* AppDelegate.swift */,
-				64EA08E32549ADFB003AC8A4 /* SceneDelegate.swift */,
-				64EA08E52549ADFB003AC8A4 /* OverviewController.swift */,
-				6400D3CB254B4511002BF999 /* AddTransactionController.swift */,
-				6400D3CF254B46F2002BF999 /* HistoryController.swift */,
-				64E6CB4725B0565800230DE5 /* BaseProtocol.swift */,
 				64B17945257D380100BA52E6 /* Transaction.swift */,
-				649C40272567FC6800B5C516 /* HistoryViewHeader.swift */,
-				64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */,
-				64EA08E72549ADFB003AC8A4 /* Main.storyboard */,
-				64E3C344255EC0C900919524 /* ERView.swift */,
-				64E3C341255EBBDC00919524 /* RatesController.swift */,
-				64B15E24255E85330066528C /* MonthView.swift */,
-				64259524257FFD81006E3193 /* LastTransactionView.swift */,
-				64B15E27255E861D0066528C /* WeekView.swift */,
-				64B15E21255E84200066528C /* SettingsController.swift */,
-				641DC7B425514D1D00FF11F3 /* TransactionController.swift */,
-				64C1FCED2550116600539E83 /* TabBarController.swift */,
 				64EA08EA2549ADFC003AC8A4 /* Assets.xcassets */,
-				64EA08EC2549ADFC003AC8A4 /* LaunchScreen.storyboard */,
 				64089E62254DC14300483B4F /* GoogleService-Info.plist */,
 				64EA08EF2549ADFC003AC8A4 /* Info.plist */,
 			);
 			path = iSpend;
+			sourceTree = "<group>";
+		};
+		64FB08C125B32CDC000F0DBC /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				64EA08EC2549ADFC003AC8A4 /* LaunchScreen.storyboard */,
+				64EA08E72549ADFB003AC8A4 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		64FB08C225B32D19000F0DBC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6400D3CB254B4511002BF999 /* AddTransactionController.swift */,
+				6400D3CF254B46F2002BF999 /* HistoryController.swift */,
+				64EA08E52549ADFB003AC8A4 /* OverviewController.swift */,
+				64E3C341255EBBDC00919524 /* RatesController.swift */,
+				64B15E21255E84200066528C /* SettingsController.swift */,
+				64C1FCED2550116600539E83 /* TabBarController.swift */,
+				641DC7B425514D1D00FF11F3 /* TransactionController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		64FB08C325B32D52000F0DBC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				64E3C344255EC0C900919524 /* ERView.swift */,
+				649C40272567FC6800B5C516 /* HistoryViewHeader.swift */,
+				64259524257FFD81006E3193 /* LastTransactionView.swift */,
+				64B15E24255E85330066528C /* MonthView.swift */,
+				64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */,
+				64B15E27255E861D0066528C /* WeekView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		64FB08C525B32DE0000F0DBC /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				64EA08E12549ADFB003AC8A4 /* AppDelegate.swift */,
+				64EA08E32549ADFB003AC8A4 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		7BB38F5050EA6AF5BE2AC61C /* Pods */ = {
@@ -259,7 +288,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64E6CB4825B0565800230DE5 /* BaseProtocol.swift in Sources */,
 				64B15E22255E84200066528C /* SettingsController.swift in Sources */,
 				64B15E25255E85330066528C /* MonthView.swift in Sources */,
 				649C40282567FC6800B5C516 /* HistoryViewHeader.swift in Sources */,

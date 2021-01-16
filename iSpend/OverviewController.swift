@@ -16,9 +16,11 @@ class OverviewController: UIViewController {
     
     let db = Firestore.firestore()
     var listener: ListenerRegistration? = nil
+    var lastTransaction: Transaction? = nil
     var nextTransactionIndex: Int = Int()
     let dateFormatter = DateFormatter()
     var currency: String = "CZK"
+    var map: [String:Any] = [:]
     
     var LMI: Double = Double()
     var LMO: Double = Double()
@@ -28,15 +30,11 @@ class OverviewController: UIViewController {
     
     var LMFromDate: Date = Date()
     var LMToDate: Date = Date()
-    var lastTransaction: Transaction? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. M. yyyy"
-        
+        setupDateFormatter()
         monthView.setupView()
         weekView.setupView()
         lastTransactionView.setupView()
@@ -70,27 +68,31 @@ class OverviewController: UIViewController {
             LWI = data["LWI"] as! Double
             LWO = data["LWO"] as! Double
             LTId = data["LTId"] as! Int
-            
             LMFromDate = Date(timeIntervalSince1970: TimeInterval((data["LMFD"] as! Timestamp).seconds))
             LMToDate = Date(timeIntervalSince1970: TimeInterval((data["LMTD"] as! Timestamp).seconds))
-            
-            //print("TEST LMI, LMO, LWI, LWO: \(LMI), \(LMO), \(LWI), \(LWO)")
+            map = data["transMap"] as! Dictionary<String, Any>
             
             prepareOverviewBlocks()
-            
-            let map = data["transMap"] as! Dictionary<String, Any>
-            if let transactionData = map[String(LTId)] as? [String : Any] {
-                //print("ITEM IS THERE")
-                lastTransactionView.isHidden = false
-                
-                lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
-                
-                prepareLastTransactionBlock()
-            } else {
-                //print("ITEM NOT THERE!")
-                lastTransactionView.isHidden = true
-            }
+            updateLastTransaction()
         }
+    }
+    
+    func updateLastTransaction() {
+        if let transactionData = map[String(LTId)] as? [String:Any] {
+            lastTransactionView.isHidden = false
+            lastTransaction = Transaction(counterparty: transactionData["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((transactionData["date"] as! Timestamp).seconds)), id: transactionData["id"] as? Int ?? 999999, incoming: transactionData["incoming"] as? Bool ?? false, latitude: (transactionData["location"] as! GeoPoint).latitude, longitude: (transactionData["location"] as! GeoPoint).longitude, title: transactionData["title"] as? String ?? "TITLE ERROR", total: transactionData["total"] as? Double ?? 123.45)
+            
+            prepareLastTransactionBlock()
+        } else {
+            print("NO LAST ITEM")
+            lastTransactionView.isHidden = true
+        }
+    }
+    
+    func setupDateFormatter() {
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "d. M. yyyy"
     }
     
     func prepareOverviewBlocks() {

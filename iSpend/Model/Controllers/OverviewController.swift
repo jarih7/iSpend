@@ -28,7 +28,6 @@ class OverviewController: UIViewController {
     var LWI: Double = Double()
     var LWO: Double = Double()
     var LTId: Int = Int()
-    
     var LMFromDate: Date = Date()
     var LMToDate: Date = Date()
     
@@ -43,6 +42,8 @@ class OverviewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("STARTED LISTENNING FROM OVERVIEW...")
+        print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
+        DataManagement.sharedInstance.ts = "*HAVE BEEN TO OVERVIEW*"
         startListening()
     }
     

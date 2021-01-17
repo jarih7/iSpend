@@ -28,7 +28,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     override func viewWillAppear(_ animated: Bool) {
         print("STARTED LISTENNING FROM HISTORY...")
-        //getMapDataFirst()
+        print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
+        DataManagement.sharedInstance.ts = "*HAVE BEEN TO HISTORY*"
         startListening()
     }
     

@@ -54,10 +54,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     var passedIncoming: Bool = false
     var passedUpdate: Bool = false
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()

@@ -214,7 +214,7 @@
         <!--Market-->
         <scene sceneID="Ya4-7c-N2z">
             <objects>
-                <viewController id="IIT-Ez-bCx" customClass="RatesController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RatesController" id="IIT-Ez-bCx" customClass="RatesController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tKY-sG-pNb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -528,7 +528,7 @@
         <!--Settings-->
         <scene sceneID="OhK-S1-3cg">
             <objects>
-                <viewController id="ysv-fX-K3F" customClass="SettingsController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsController" id="ysv-fX-K3F" customClass="SettingsController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fC2-Fa-nb5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -600,7 +600,7 @@
         <!--Overview-->
         <scene sceneID="YNJ-CW-u1V">
             <objects>
-                <viewController id="dRP-FJ-1Ss" customClass="OverviewController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OverviewController" id="dRP-FJ-1Ss" customClass="OverviewController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9np-9E-dlP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1367,7 +1367,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Ywx-aN-TKH">
             <objects>
-                <tabBarController id="hG5-yK-w41" customClass="TabBarController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="hG5-yK-w41" customClass="TabBarController" customModule="iSpend" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ymF-u8-ldT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1387,7 +1387,7 @@
         <!--History Navigation Controller-->
         <scene sceneID="der-cM-8Vl">
             <objects>
-                <navigationController title="History Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Pdf-UG-aVl" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="HistoryNavigationController" title="History Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Pdf-UG-aVl" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="History" id="CAR-Be-s5i">
                         <imageReference key="image" image="rectangle.stack" catalog="system" symbolScale="large"/>
                     </tabBarItem>

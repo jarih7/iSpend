@@ -12,6 +12,7 @@
 		64089E63254DC14300483B4F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64089E62254DC14300483B4F /* GoogleService-Info.plist */; };
 		641DC7B525514D1D00FF11F3 /* TransactionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641DC7B425514D1D00FF11F3 /* TransactionController.swift */; };
 		64259525257FFD81006E3193 /* LastTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64259524257FFD81006E3193 /* LastTransactionView.swift */; };
+		6487EC8825B4391000B32CEB /* DataManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487EC8725B4391000B32CEB /* DataManagement.swift */; };
 		649C40282567FC6800B5C516 /* HistoryViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649C40272567FC6800B5C516 /* HistoryViewHeader.swift */; };
 		64A80B10254F3AB800D89C05 /* TransactionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */; };
 		64B15E22255E84200066528C /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B15E21255E84200066528C /* SettingsController.swift */; };
@@ -36,6 +37,7 @@
 		64089E62254DC14300483B4F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		641DC7B425514D1D00FF11F3 /* TransactionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionController.swift; sourceTree = "<group>"; };
 		64259524257FFD81006E3193 /* LastTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTransactionView.swift; sourceTree = "<group>"; };
+		6487EC8725B4391000B32CEB /* DataManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagement.swift; sourceTree = "<group>"; };
 		649C40272567FC6800B5C516 /* HistoryViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewHeader.swift; sourceTree = "<group>"; };
 		64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewCell.swift; sourceTree = "<group>"; };
 		64B15E21255E84200066528C /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -73,10 +75,10 @@
 		64A133642549F9DF001717AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				64FB08C525B32DE0000F0DBC /* Delegates */,
-				64FB08C325B32D52000F0DBC /* Views */,
 				64FB08C225B32D19000F0DBC /* Controllers */,
+				64FB08C525B32DE0000F0DBC /* Delegates */,
 				64FB08C125B32CDC000F0DBC /* Storyboards */,
+				64FB08C325B32D52000F0DBC /* Views */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -102,11 +104,12 @@
 		64EA08E02549ADFB003AC8A4 /* iSpend */ = {
 			isa = PBXGroup;
 			children = (
-				64A133642549F9DF001717AD /* Model */,
-				64B17945257D380100BA52E6 /* Transaction.swift */,
 				64EA08EA2549ADFC003AC8A4 /* Assets.xcassets */,
+				6487EC8725B4391000B32CEB /* DataManagement.swift */,
+				64B17945257D380100BA52E6 /* Transaction.swift */,
 				64089E62254DC14300483B4F /* GoogleService-Info.plist */,
 				64EA08EF2549ADFC003AC8A4 /* Info.plist */,
+				64A133642549F9DF001717AD /* Model */,
 			);
 			path = iSpend;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6487EC8825B4391000B32CEB /* DataManagement.swift in Sources */,
 				64B15E22255E84200066528C /* SettingsController.swift in Sources */,
 				64B15E25255E85330066528C /* MonthView.swift in Sources */,
 				649C40282567FC6800B5C516 /* HistoryViewHeader.swift in Sources */,

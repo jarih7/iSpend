@@ -42,8 +42,8 @@ class OverviewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("STARTED LISTENNING FROM OVERVIEW...")
-        print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
-        DataManagement.sharedInstance.ts = "*HAVE BEEN TO OVERVIEW*"
+        //print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
+        //DataManagement.sharedInstance.ts = "*HAVE BEEN TO OVERVIEW*"
         startListening()
     }
     

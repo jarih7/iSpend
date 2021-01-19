@@ -28,8 +28,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     override func viewWillAppear(_ animated: Bool) {
         print("STARTED LISTENNING FROM HISTORY...")
-        print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
-        DataManagement.sharedInstance.ts = "*HAVE BEEN TO HISTORY*"
+        //print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
+        //DataManagement.sharedInstance.ts = "*HAVE BEEN TO HISTORY*"
         startListening()
     }
     
@@ -38,6 +38,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         setNeedsStatusBarAppearanceUpdate()
         setupCollectionView()
         setupDateFormatter()
+        transactionsCollectionView.delaysContentTouches = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

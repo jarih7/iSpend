@@ -16,17 +16,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iSpend_white" translatesAutoresizingMaskIntoConstraints="NO" id="FrO-Qh-mzE">
-                                <rect key="frame" x="0.0" y="146" width="375" height="375"/>
+                                <rect key="frame" x="56.5" y="202.5" width="262.5" height="262.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="FrO-Qh-mzE" secondAttribute="height" multiplier="1:1" id="hwu-4g-gsK"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.25921326880000001" green="0.51935845609999998" blue="0.92623668910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.25098039215686274" green="0.45490196078431372" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="FrO-Qh-mzE" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="Cj9-Wd-fKf"/>
+                            <constraint firstItem="FrO-Qh-mzE" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.7" id="Cj9-Wd-fKf"/>
                             <constraint firstItem="FrO-Qh-mzE" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="DhD-oc-6I3"/>
                             <constraint firstItem="FrO-Qh-mzE" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="GGV-js-hqX"/>
                         </constraints>

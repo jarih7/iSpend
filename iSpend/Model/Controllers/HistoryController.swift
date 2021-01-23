@@ -12,26 +12,9 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     
-    var db = Firestore.firestore()
-    var listener: ListenerRegistration? = nil
-    var transactions: [Transaction] = []
-    var changedValues: [String:Any] = [:]
-    var map: [String:Any] = [:]
-    var newerMap: [String:Any] = [:]
-    var procItem: [String:Any] = [:]
-    
     let dateFormatter = DateFormatter()
     var dateComponentDays = DateComponents()
     var dateComponentMonts = DateComponents()
-    
-    var currency: String = "CZK"
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("STARTED LISTENNING FROM HISTORY...")
-        //print("SHARED TEST: \(DataManagement.sharedInstance.ts)")
-        //DataManagement.sharedInstance.ts = "*HAVE BEEN TO HISTORY*"
-        startListening()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,69 +22,16 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         setupCollectionView()
         setupDateFormatter()
         transactionsCollectionView.delaysContentTouches = false
+        DataManagement.sharedInstance.updateHistoryData = updateHistoryData
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        print("STOPPED LISTENNING FROM HISTORY...\n")
-        listener?.remove()
+    func updateHistoryData() {
+        transactionsCollectionView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         transactionsCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 16.0, right: 16.0)
-    }
-    
-    func startListening() {
-        listener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener { [self] (documentSnapshot, error) in
-            guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-            }
-            
-            guard let data = document.data() else {
-                print("Document data was empty.")
-                return
-            }
-            
-            newerMap = data["transMap"] as! Dictionary<String, Any>
-            
-            //check for any updates
-            if (!((map as NSDictionary).isEqual(to: newerMap))) {
-                print("⛔️ MAPS NOT EQUAL")
-                map = newerMap
-                print("✴️ LOCAL MAP UPDATED")
-                fillMapWithUpdatedTransactions()
-                sortTransactions()
-            }
-            
-            print("✅ MAPS ARE EQUAL")
-            transactionsCollectionView.reloadData()
-        }
-    }
-    
-    func sortTransactions() {
-        if (!transactions.isEmpty) {
-            print("SORTING TRANSACTIONS1")
-            transactions.sort { (tr1, tr2) -> Bool in
-                if (tr1.date.compare(tr2.date) == .orderedDescending) {
-                    return true
-                } else if (tr1.date.compare(tr2.date) == .orderedAscending) {
-                    return false
-                } else {
-                    return tr1.id > tr2.id
-                }
-            }
-        }
-    }
-    
-    func fillMapWithUpdatedTransactions() {
-        transactions.removeAll()
-        procItem = [:]
-        
-        for item in newerMap {
-            procItem = item.value as! [String:Any]
-            transactions.append(Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45))
-        }
     }
     
     func setupCollectionView() {
@@ -145,13 +75,13 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     //----------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return transactions.count
+        return DataManagement.sharedInstance.transactions.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TransactionViewCell", for: indexPath) as! TransactionViewCell
         
-        let transaction = transactions[indexPath.row] as Transaction
+        let transaction = DataManagement.sharedInstance.transactions[indexPath.row] as Transaction
         setupCellContent(cell: cell, transaction: transaction)
         return cell
     }

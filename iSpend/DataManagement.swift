@@ -23,8 +23,11 @@ final class DataManagement {
     var presentedTransaction: Transaction? = nil
     var updatedTransactions: [Transaction] = []
     
+    var lastWeekTransactions: [Transaction] = []
+    var lastMonthTransactions: [Transaction] = []
     var transactions: [Transaction] = [] {
         didSet {
+            updateWeekAndMonthTransactions()
             updateOveriewData?()
             updateHistoryData?()
             updateTransactionDetailData?(false)
@@ -52,6 +55,10 @@ final class DataManagement {
     deinit {
         metadataListener?.remove()
         mainListener?.remove()
+    }
+    
+    func updateWeekAndMonthTransactions() {
+        
     }
     
     func addOrUpdateTransaction(transaction: NSDictionary, updating: Bool, nextIndex: Int) {
@@ -193,6 +200,8 @@ final class DataManagement {
         
         mainListener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
             
+            print("*** MAIN LISTENING ***")
+            
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
                 return
@@ -203,16 +212,23 @@ final class DataManagement {
                 return
             }
             
-            print("*** MAIN LISTENING ***")
-            
             map = data["transMap"] as! Dictionary<String, Any>
             
             updatedTransactions.removeAll()
+            lastMonthTransactions.removeAll()
+            lastWeekTransactions.removeAll()
             procItem = [:]
             
             for item in map {
                 procItem = item.value as! [String:Any]
                 updatedTransactions.append(Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45))
+                
+                if (updatedTransactions.last!.date > Calendar.current.date(byAdding: dateComponentDays, to: Date())!) {
+                    lastWeekTransactions.append(updatedTransactions.last!)
+                    lastMonthTransactions.append(updatedTransactions.last!)
+                } else if (updatedTransactions.last!.date > Calendar.current.date(byAdding: dateComponentMonts, to: Date())!) {
+                    lastMonthTransactions.append(updatedTransactions.last!)
+                }
             }
             
             sortTransactions()

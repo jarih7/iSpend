@@ -696,12 +696,20 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adg-ak-sHB">
+                                                <rect key="frame" x="320" y="13.5" width="11" height="22"/>
+                                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                                <state key="normal" image="chevron.right" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="Tje-3r-3eR" firstAttribute="leading" secondItem="64W-sw-9dQ" secondAttribute="trailing" constant="2" id="1m1-sg-UD1"/>
                                             <constraint firstItem="uAL-cY-ueX" firstAttribute="leading" secondItem="S2u-Yu-fIY" secondAttribute="leading" constant="12" id="710-R5-Akc"/>
                                             <constraint firstAttribute="height" constant="150" id="7RA-be-SnQ"/>
+                                            <constraint firstItem="adg-ak-sHB" firstAttribute="centerY" secondItem="csp-4w-uel" secondAttribute="centerY" id="7eX-dU-Wi9"/>
                                             <constraint firstItem="nM4-ct-Bcm" firstAttribute="firstBaseline" secondItem="dWK-7y-CPc" secondAttribute="firstBaseline" id="9MY-g8-shj"/>
                                             <constraint firstItem="XZE-yj-qHq" firstAttribute="leading" secondItem="AAK-Eb-Ced" secondAttribute="trailing" constant="5" id="9YB-Ig-egN"/>
                                             <constraint firstItem="fyX-Xj-QfP" firstAttribute="leading" secondItem="uAL-cY-ueX" secondAttribute="leading" id="AJr-nO-Lhj"/>
@@ -729,12 +737,15 @@
                                             <constraint firstItem="csp-4w-uel" firstAttribute="leading" secondItem="S2u-Yu-fIY" secondAttribute="leading" constant="12" id="tM1-WR-d60"/>
                                             <constraint firstItem="wyb-Wd-Qn8" firstAttribute="firstBaseline" secondItem="GAa-Rk-7F9" secondAttribute="firstBaseline" id="uQO-j1-DWs"/>
                                             <constraint firstItem="AAK-Eb-Ced" firstAttribute="firstBaseline" secondItem="GAa-Rk-7F9" secondAttribute="firstBaseline" id="uXk-qw-iaa"/>
+                                            <constraint firstAttribute="trailing" secondItem="adg-ak-sHB" secondAttribute="trailing" constant="12" id="v48-9u-bmQ"/>
                                             <constraint firstItem="AAK-Eb-Ced" firstAttribute="leading" secondItem="GAa-Rk-7F9" secondAttribute="trailing" constant="5" id="vUr-ZA-qZp"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="csp-4w-uel" secondAttribute="trailing" constant="12" id="wgQ-3W-oLv"/>
                                             <constraint firstItem="fyX-Xj-QfP" firstAttribute="centerY" secondItem="64W-sw-9dQ" secondAttribute="centerY" id="xej-Og-f4G"/>
                                             <constraint firstItem="wyb-Wd-Qn8" firstAttribute="leading" secondItem="XZE-yj-qHq" secondAttribute="trailing" constant="5" id="y9a-Y4-hAE"/>
                                         </constraints>
                                         <connections>
+                                            <action selector="lastMonthTapped:" destination="dRP-FJ-1Ss" eventType="touchUpInside" id="FG3-Q9-iiI"/>
+                                            <outlet property="chevron" destination="adg-ak-sHB" id="wUm-UN-TYR"/>
                                             <outlet property="date1" destination="AAK-Eb-Ced" id="nvy-6y-E28"/>
                                             <outlet property="date2" destination="wyb-Wd-Qn8" id="2A8-Jx-jHW"/>
                                             <outlet property="fromDate" destination="AAK-Eb-Ced" id="Zlu-NQ-AZB"/>
@@ -804,6 +815,14 @@
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3RL-gi-bKW">
+                                                <rect key="frame" x="320" y="13.5" width="11" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                                <state key="normal" image="chevron.right" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <constraints>
@@ -814,7 +833,9 @@
                                             <constraint firstItem="sin-Yi-rLS" firstAttribute="firstBaseline" secondItem="qFZ-cC-JYJ" secondAttribute="firstBaseline" id="JBJ-Ei-Utp"/>
                                             <constraint firstItem="sin-Yi-rLS" firstAttribute="leading" secondItem="qFZ-cC-JYJ" secondAttribute="trailing" constant="2" id="JXM-hd-vrc"/>
                                             <constraint firstItem="lmH-y0-wb6" firstAttribute="leading" secondItem="jj3-y1-MEt" secondAttribute="trailing" constant="2" id="NOG-hS-yZC"/>
+                                            <constraint firstAttribute="trailing" secondItem="3RL-gi-bKW" secondAttribute="trailing" constant="12" id="P8T-Lb-tMU"/>
                                             <constraint firstAttribute="trailing" secondItem="sin-Yi-rLS" secondAttribute="trailing" constant="12" id="PrD-Np-9SF"/>
+                                            <constraint firstItem="3RL-gi-bKW" firstAttribute="centerY" secondItem="PWC-ui-krn" secondAttribute="centerY" id="TCM-yu-F05"/>
                                             <constraint firstItem="O2l-de-Pmx" firstAttribute="centerY" secondItem="wUd-cv-oTf" secondAttribute="centerY" id="Tph-R7-OTY"/>
                                             <constraint firstAttribute="trailing" secondItem="2KB-WN-ulY" secondAttribute="trailing" constant="12" id="V5T-8O-jh3"/>
                                             <constraint firstItem="O2l-de-Pmx" firstAttribute="leading" secondItem="Ovg-ad-z3g" secondAttribute="leading" constant="12" id="XZe-OC-YgR"/>
@@ -834,6 +855,8 @@
                                             <constraint firstItem="jj3-y1-MEt" firstAttribute="leading" secondItem="wUd-cv-oTf" secondAttribute="leading" id="yA7-SX-QTR"/>
                                         </constraints>
                                         <connections>
+                                            <action selector="lastWeekTapped:" destination="dRP-FJ-1Ss" eventType="touchUpInside" id="aCt-XL-YQP"/>
+                                            <outlet property="chevron" destination="3RL-gi-bKW" id="ugv-SF-KtW"/>
                                             <outlet property="lastWeekLabel" destination="PWC-ui-krn" id="SbK-kb-iQv"/>
                                             <outlet property="weekBalance" destination="qFZ-cC-JYJ" id="sdz-wQ-qFQ"/>
                                             <outlet property="weekBalanceLabel" destination="2KB-WN-ulY" id="ef0-pW-CGX"/>
@@ -855,12 +878,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXa-Yx-kxz">
-                                                <rect key="frame" x="267" y="12" width="48" height="24"/>
+                                                <rect key="frame" x="267" y="13" width="48" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="symbol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WqX-wf-BD4">
-                                                <rect key="frame" x="194" y="13" width="68" height="22"/>
+                                                <rect key="frame" x="194" y="14" width="68" height="22"/>
                                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -893,7 +916,7 @@
                                                 <state key="normal" image="location.fill" catalog="system"/>
                                             </button>
                                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP4-5A-6i5">
-                                                <rect key="frame" x="320" y="13" width="11" height="22"/>
+                                                <rect key="frame" x="320" y="14" width="11" height="22"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                 <state key="normal" image="chevron.right" catalog="system">
@@ -904,7 +927,6 @@
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="6Jm-YL-ywg" firstAttribute="leading" secondItem="WF0-Jg-XNi" secondAttribute="leading" id="0qd-Xd-0NN"/>
-                                            <constraint firstItem="uXa-Yx-kxz" firstAttribute="top" secondItem="EUb-pD-FKc" secondAttribute="top" constant="12" id="5hT-No-oHy"/>
                                             <constraint firstItem="NII-f2-NF6" firstAttribute="leading" secondItem="EUb-pD-FKc" secondAttribute="leading" constant="12" id="60w-qV-b6k"/>
                                             <constraint firstItem="cgB-kT-zBb" firstAttribute="top" secondItem="mco-Ar-XH5" secondAttribute="bottom" id="F49-0X-Zjb"/>
                                             <constraint firstItem="WqX-wf-BD4" firstAttribute="centerY" secondItem="uXa-Yx-kxz" secondAttribute="centerY" id="IHl-Qx-9c2"/>
@@ -917,6 +939,7 @@
                                             <constraint firstItem="jP4-5A-6i5" firstAttribute="leading" secondItem="uXa-Yx-kxz" secondAttribute="trailing" constant="5" id="bvx-74-ZVF"/>
                                             <constraint firstItem="uXa-Yx-kxz" firstAttribute="leading" secondItem="WqX-wf-BD4" secondAttribute="trailing" constant="5" id="eH9-AV-2b0"/>
                                             <constraint firstItem="WF0-Jg-XNi" firstAttribute="top" secondItem="6Jm-YL-ywg" secondAttribute="bottom" id="eWe-RC-P40"/>
+                                            <constraint firstItem="WqX-wf-BD4" firstAttribute="firstBaseline" secondItem="NII-f2-NF6" secondAttribute="firstBaseline" id="eYs-LW-qse"/>
                                             <constraint firstItem="mco-Ar-XH5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Jm-YL-ywg" secondAttribute="trailing" constant="5" id="kzJ-Gw-0gK"/>
                                             <constraint firstItem="NII-f2-NF6" firstAttribute="top" secondItem="EUb-pD-FKc" secondAttribute="top" constant="12" id="nHV-CN-MRA"/>
                                             <constraint firstItem="jP4-5A-6i5" firstAttribute="centerY" secondItem="uXa-Yx-kxz" secondAttribute="centerY" id="nta-hV-4x8"/>
@@ -1000,13 +1023,13 @@
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p9b-Lk-d8H">
                                     <size key="itemSize" width="374" height="100"/>
-                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="50" height="70"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TransactionViewCell" id="BiF-cV-2fR" customClass="TransactionViewCell" customModule="iSpend" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="50" width="374" height="100"/>
+                                        <rect key="frame" x="0.5" y="70" width="374" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="szF-Dn-JRi">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
@@ -1111,12 +1134,12 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="Header" id="95a-hJ-Rdu" customClass="HistoryViewHeader" customModule="iSpend" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nadpis" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opB-8f-8Uw">
-                                            <rect key="frame" x="0.0" y="16" width="53.5" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="0.0" y="16" width="92" height="33.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1131,19 +1154,43 @@
                                     </connections>
                                 </collectionReusableView>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdv-dr-TG9" userLabel="background">
+                                <rect key="frame" x="327.5" y="19.5" width="28" height="28"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal" image="circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewI-v9-2Ob">
+                                <rect key="frame" x="318.5" y="11" width="45.5" height="44.5"/>
+                                <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" image="xmark.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" scale="large" weight="semibold"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissButtonTapped:" destination="sge-og-SHw" eventType="touchUpInside" id="9kd-NX-t10"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UnH-vc-P6d"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="lwN-9o-R3r" firstAttribute="height" secondItem="UnH-vc-P6d" secondAttribute="height" id="3kO-R1-K6C"/>
                             <constraint firstItem="UnH-vc-P6d" firstAttribute="trailing" secondItem="lwN-9o-R3r" secondAttribute="trailing" id="7cJ-F1-JvV"/>
+                            <constraint firstItem="UnH-vc-P6d" firstAttribute="trailing" secondItem="ewI-v9-2Ob" secondAttribute="trailing" constant="11" id="Z5y-Mk-Hhj"/>
+                            <constraint firstItem="ewI-v9-2Ob" firstAttribute="top" secondItem="UnH-vc-P6d" secondAttribute="top" constant="11" id="eeA-hL-LR6"/>
                             <constraint firstItem="UnH-vc-P6d" firstAttribute="bottom" secondItem="lwN-9o-R3r" secondAttribute="bottom" id="ily-kd-wWI"/>
                             <constraint firstItem="lwN-9o-R3r" firstAttribute="leading" secondItem="UnH-vc-P6d" secondAttribute="leading" id="mK5-y9-cCT"/>
+                            <constraint firstItem="gdv-dr-TG9" firstAttribute="centerY" secondItem="ewI-v9-2Ob" secondAttribute="centerY" id="r0L-A9-fBo"/>
+                            <constraint firstItem="gdv-dr-TG9" firstAttribute="centerX" secondItem="ewI-v9-2Ob" secondAttribute="centerX" id="r0e-x9-2gg"/>
                             <constraint firstItem="lwN-9o-R3r" firstAttribute="width" secondItem="jzr-o4-4IF" secondAttribute="width" id="sjl-Tj-vK1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aLo-oM-l2C"/>
                     <connections>
+                        <outlet property="dismissButton" destination="ewI-v9-2Ob" id="5mg-pN-C84"/>
+                        <outlet property="dismissButtonBackground" destination="gdv-dr-TG9" id="12w-xG-TY1"/>
                         <outlet property="transactionsCollectionView" destination="lwN-9o-R3r" id="jTU-cr-5AC"/>
                         <outlet property="view" destination="jzr-o4-4IF" id="fUw-ob-RWx"/>
                     </connections>
@@ -1167,14 +1214,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxW-0S-jKo" userLabel="dismissBackground">
-                                                <rect key="frame" x="20" y="19.5" width="28" height="28"/>
+                                                <rect key="frame" x="20" y="19.5" width="27.5" height="27.5"/>
                                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                                 <state key="normal" image="circle.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zo2-fN-WCa">
-                                                <rect key="frame" x="11.5" y="11.5" width="45.5" height="44.5"/>
+                                                <rect key="frame" x="11" y="11" width="45.5" height="44.5"/>
                                                 <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
                                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                 <state key="normal" image="xmark.circle.fill" catalog="system">
@@ -1233,11 +1280,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eo7-tI-Pb3">
-                                                <rect key="frame" x="324.5" y="12" width="39.5" height="32"/>
+                                                <rect key="frame" x="321.5" y="10" width="42.5" height="36.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="tintColor" systemColor="systemBlueColor"/>
+                                                <color key="tintColor" systemColor="systemGrayColor"/>
                                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                                <state key="normal" image="ellipsis" catalog="system">
+                                                <state key="normal" image="slider.horizontal.3" catalog="system">
                                                     <color key="titleColor" systemColor="systemBlueColor"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="21" scale="large" weight="semibold"/>
                                                 </state>
@@ -1285,6 +1332,7 @@
                                             <constraint firstItem="okt-Ha-y3x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bGL-9e-eCN" secondAttribute="trailing" constant="10" id="5nP-S9-Iao"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fLp-uD-gSA" secondAttribute="trailing" constant="16" id="6ph-PN-WT7"/>
                                             <constraint firstItem="vU7-y9-Kqd" firstAttribute="trailing" secondItem="rd2-1a-OIz" secondAttribute="trailing" id="70G-5f-gR2"/>
+                                            <constraint firstItem="zo2-fN-WCa" firstAttribute="leading" secondItem="NvM-4S-XET" secondAttribute="leading" constant="11" id="7Rn-Ky-2Xd"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g1c-sd-hcH" secondAttribute="trailing" constant="16" id="802-PV-Qo0"/>
                                             <constraint firstItem="Jak-Ep-YE9" firstAttribute="top" secondItem="g1c-sd-hcH" secondAttribute="bottom" constant="-2" id="A05-bb-r0s"/>
                                             <constraint firstItem="g1c-sd-hcH" firstAttribute="leading" secondItem="uok-Gj-0vM" secondAttribute="leading" id="Ay9-oP-Y7I"/>
@@ -1306,6 +1354,7 @@
                                             <constraint firstItem="g9t-JY-pcV" firstAttribute="top" secondItem="Jak-Ep-YE9" secondAttribute="bottom" constant="5" id="YFy-oc-Hbu"/>
                                             <constraint firstItem="Eo7-tI-Pb3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uok-Gj-0vM" secondAttribute="trailing" constant="16" id="Zk8-DR-VaM"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cS0-Nr-SUz" secondAttribute="trailing" constant="16" id="Zp1-R0-yge"/>
+                                            <constraint firstItem="zo2-fN-WCa" firstAttribute="top" secondItem="NvM-4S-XET" secondAttribute="top" constant="11" id="cMm-bl-uGD"/>
                                             <constraint firstItem="HeQ-gc-l4q" firstAttribute="leading" secondItem="uok-Gj-0vM" secondAttribute="leading" id="eBU-0p-rgo"/>
                                             <constraint firstItem="cS0-Nr-SUz" firstAttribute="leading" secondItem="uok-Gj-0vM" secondAttribute="leading" id="f7i-CN-B2c"/>
                                             <constraint firstItem="HeQ-gc-l4q" firstAttribute="top" secondItem="fLp-uD-gSA" secondAttribute="bottom" constant="8" id="frX-by-2pw"/>
@@ -1417,12 +1466,12 @@
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="eurosign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="rectangle.badge.plus" catalog="system" width="128" height="95"/>
         <image name="rectangle.stack" catalog="system" width="128" height="122"/>
+        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
         <image name="sterlingsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="yensign.circle.fill" catalog="system" width="128" height="121"/>

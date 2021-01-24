@@ -7,8 +7,9 @@
 
 import UIKit
 
-class WeekView: UIView {
+class WeekView: UIControl {
     @IBOutlet weak var lastWeekLabel: UILabel!
+    @IBOutlet weak var chevron: UIButton!
     @IBOutlet weak var weekInSymbol: UILabel!
     @IBOutlet weak var weekInSum: UILabel!
     @IBOutlet weak var weekOutSymbol: UILabel!

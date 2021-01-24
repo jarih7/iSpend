@@ -7,8 +7,9 @@
 
 import UIKit
 
-class MonthView: UIView {
+class MonthView: UIControl {
     @IBOutlet weak var lastMonthLabel: UILabel!
+    @IBOutlet weak var chevron: UIButton!
     @IBOutlet weak var fromDate: UILabel!
     @IBOutlet weak var toDate: UILabel!
     @IBOutlet weak var monthInSymbol: UILabel!

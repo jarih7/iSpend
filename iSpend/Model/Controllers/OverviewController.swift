@@ -24,6 +24,7 @@ class OverviewController: UIViewController {
         monthView.setupView()
         weekView.setupView()
         lastTransactionView.setupView()
+        scrollView.delaysContentTouches = false
         DataManagement.sharedInstance.updateOveriewData = updateOveriewData
     }
     
@@ -92,6 +93,7 @@ class OverviewController: UIViewController {
         let transactionVC = storyBoard.instantiateViewController(identifier: "TransactionController") as! TransactionController
         transactionVC.transId = DataManagement.sharedInstance.transactions.first!.id
         transactionVC.isQuickView = true
+        
         present(transactionVC, animated: true, completion: nil)
     }
     
@@ -99,6 +101,7 @@ class OverviewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
         vc.display = viewType.week
+
         present(vc, animated: true, completion: nil)
     }
     
@@ -106,6 +109,7 @@ class OverviewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
         vc.display = viewType.month
+        
         present(vc, animated: true, completion: nil)
     }
 }

@@ -64,9 +64,8 @@ class TransactionViewCell: UICollectionViewCell {
     }
     
     func shring(down: Bool) {
-        UIView.animate(withDuration: 0.15, delay: 0, options: .allowUserInteraction) {
+        UIView.animate(withDuration: 0.12, delay: 0, options: .allowUserInteraction) {
             self.transform = down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
-            self.layer.backgroundColor = UIColor.cyan.cgColor
         } completion: { _ in }
     }
     

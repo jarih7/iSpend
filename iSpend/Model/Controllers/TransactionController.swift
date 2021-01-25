@@ -98,8 +98,6 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         dismissButton.tintColor = .systemGray5
         dismissButtonBackground.isHidden = isQuickView ? false : true
         dismissButtonBackground.tintColor = .systemGray
-
-        optionsButton.tintColor = .systemGray
         
         titleLabel.textColor = .label
         counterpartyLabel.textColor = .label

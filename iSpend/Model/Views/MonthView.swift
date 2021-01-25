@@ -62,4 +62,16 @@ class MonthView: UIControl {
         layer.shadowRadius = 5
         layer.shadowOpacity = 0.1
     }
+    
+    func shring(down: Bool) {
+        UIView.animate(withDuration: 0.12, delay: 0, options: .allowUserInteraction) {
+            self.transform = down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
+        } completion: { _ in }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            shring(down: isHighlighted)
+        }
+    }
 }

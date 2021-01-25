@@ -94,11 +94,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4BW-3b-rLJ" userLabel="dismiss button bg">
-                                        <rect key="frame" x="325.5" y="18.5" width="31" height="30"/>
+                                        <rect key="frame" x="324" y="17" width="34" height="33"/>
                                         <color key="tintColor" systemColor="systemGrayColor"/>
-                                        <state key="normal">
-                                            <imageReference key="image" image="circle.fill" catalog="system" symbolScale="large"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="21"/>
+                                        <state key="normal" image="circle.fill" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="23" scale="large" weight="semibold"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5BG-AN-YZZ">
@@ -106,7 +105,7 @@
                                         <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                         <state key="normal" image="xmark.circle.fill" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" scale="large" weight="bold"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" scale="large" weight="semibold"/>
                                         </state>
                                         <connections>
                                             <action selector="dismissButtonTapped:" destination="HRA-cR-k46" eventType="touchUpInside" id="Pzm-f7-xTz"/>
@@ -655,8 +654,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iO2-dz-OtK">
-                                                <rect key="frame" x="237" y="108.5" width="94" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <rect key="frame" x="244.5" y="111.5" width="86.5" height="26.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tje-3r-3eR">
@@ -670,7 +670,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BAL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWK-7y-CPc" userLabel="Month Sum">
-                                                <rect key="frame" x="177.5" y="104" width="57.5" height="36"/>
+                                                <rect key="frame" x="185" y="104" width="57.5" height="36"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -796,8 +796,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sin-Yi-rLS">
-                                                <rect key="frame" x="237" y="71" width="94" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <rect key="frame" x="244.5" y="74" width="86.5" height="26.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmH-y0-wb6">
@@ -811,7 +812,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BAL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFZ-cC-JYJ" userLabel="Week Sum">
-                                                <rect key="frame" x="177" y="66.5" width="58" height="36"/>
+                                                <rect key="frame" x="184.5" y="66.5" width="58" height="36"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1155,10 +1156,10 @@
                                 </collectionReusableView>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdv-dr-TG9" userLabel="background">
-                                <rect key="frame" x="327.5" y="19.5" width="28" height="28"/>
+                                <rect key="frame" x="324.5" y="17" width="34" height="33"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" image="circle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="23" scale="large" weight="semibold"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewI-v9-2Ob">
@@ -1214,10 +1215,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxW-0S-jKo" userLabel="dismissBackground">
-                                                <rect key="frame" x="20" y="19.5" width="27.5" height="27.5"/>
+                                                <rect key="frame" x="17" y="17" width="34" height="33"/>
                                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                                 <state key="normal" image="circle.fill" catalog="system">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="23" scale="large" weight="semibold"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zo2-fN-WCa">
@@ -1280,11 +1281,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eo7-tI-Pb3">
-                                                <rect key="frame" x="321.5" y="10" width="42.5" height="36.5"/>
+                                                <rect key="frame" x="324" y="12" width="40" height="32"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="tintColor" systemColor="systemGrayColor"/>
                                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                                <state key="normal" image="slider.horizontal.3" catalog="system">
+                                                <state key="normal" image="ellipsis" catalog="system">
                                                     <color key="titleColor" systemColor="systemBlueColor"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="21" scale="large" weight="semibold"/>
                                                 </state>
@@ -1336,14 +1336,12 @@
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g1c-sd-hcH" secondAttribute="trailing" constant="16" id="802-PV-Qo0"/>
                                             <constraint firstItem="Jak-Ep-YE9" firstAttribute="top" secondItem="g1c-sd-hcH" secondAttribute="bottom" constant="-2" id="A05-bb-r0s"/>
                                             <constraint firstItem="g1c-sd-hcH" firstAttribute="leading" secondItem="uok-Gj-0vM" secondAttribute="leading" id="Ay9-oP-Y7I"/>
-                                            <constraint firstItem="vxW-0S-jKo" firstAttribute="leading" secondItem="NvM-4S-XET" secondAttribute="leading" constant="20" symbolic="YES" id="DI4-B3-hSB"/>
                                             <constraint firstItem="fLp-uD-gSA" firstAttribute="top" secondItem="bGL-9e-eCN" secondAttribute="bottom" constant="10" id="FTx-S7-DUm"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Jak-Ep-YE9" secondAttribute="trailing" constant="16" id="GeD-px-gWA"/>
                                             <constraint firstItem="cS0-Nr-SUz" firstAttribute="top" secondItem="uok-Gj-0vM" secondAttribute="bottom" constant="15" id="HsE-5K-dx0"/>
                                             <constraint firstItem="Eo7-tI-Pb3" firstAttribute="centerY" secondItem="uok-Gj-0vM" secondAttribute="centerY" id="I0D-6V-ldy"/>
                                             <constraint firstItem="g9t-JY-pcV" firstAttribute="leading" secondItem="uok-Gj-0vM" secondAttribute="leading" id="MBl-3k-aSQ"/>
                                             <constraint firstItem="g1c-sd-hcH" firstAttribute="top" secondItem="cS0-Nr-SUz" secondAttribute="bottom" constant="10" id="McH-fv-VAN"/>
-                                            <constraint firstItem="vxW-0S-jKo" firstAttribute="top" secondItem="NvM-4S-XET" secondAttribute="top" constant="19.5" id="OGv-1R-mvB"/>
                                             <constraint firstItem="zo2-fN-WCa" firstAttribute="centerX" secondItem="vxW-0S-jKo" secondAttribute="centerX" id="QMX-w3-Bgd"/>
                                             <constraint firstItem="fLp-uD-gSA" firstAttribute="leading" secondItem="uok-Gj-0vM" secondAttribute="leading" id="Qik-IV-QgF"/>
                                             <constraint firstAttribute="trailing" secondItem="Eo7-tI-Pb3" secondAttribute="trailing" constant="11" id="Srt-bl-W8h"/>
@@ -1466,12 +1464,12 @@
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="eurosign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="rectangle.badge.plus" catalog="system" width="128" height="95"/>
         <image name="rectangle.stack" catalog="system" width="128" height="122"/>
-        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
         <image name="sterlingsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="yensign.circle.fill" catalog="system" width="128" height="121"/>

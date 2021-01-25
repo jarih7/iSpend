@@ -29,6 +29,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         
+        dismissButtonBackground.layer.shadowColor = UIColor.black.cgColor
+        dismissButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
+        dismissButtonBackground.layer.shadowRadius = 5
+        dismissButtonBackground.layer.shadowOpacity = 0.1
+        
         if (display == viewType.week || display == viewType.month) {
             dismissButton.isHidden = false
             dismissButtonBackground.isHidden = false
@@ -126,10 +131,10 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
             
             if (display == viewType.month) {
                 historyViewHeader.headerLabel.text = "Last Month"
-                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 28.0, weight: .bold)
+                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 30.0, weight: .bold)
             } else if (display == viewType.week) {
                 historyViewHeader.headerLabel.text = "Last Week"
-                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 28.0, weight: .bold)
+                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 30.0, weight: .bold)
             } else {
                 historyViewHeader.headerLabel.text = "History"
                 historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 45.0, weight: .heavy)

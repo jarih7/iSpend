@@ -231,7 +231,7 @@
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oIk-gA-s3U" customClass="ERView" customModule="iSpend" customModuleProvider="target">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oIk-gA-s3U" customClass="ERView" customModule="iSpend" customModuleProvider="target">
                                 <rect key="frame" x="16" y="323.5" width="343" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKO-7g-3wt">
@@ -275,8 +275,8 @@
                                     <constraint firstItem="24H-yS-zlJ" firstAttribute="centerX" secondItem="XYt-xU-NOU" secondAttribute="centerX" id="IvP-yM-OQ4"/>
                                     <constraint firstItem="HKO-7g-3wt" firstAttribute="leading" secondItem="XYt-xU-NOU" secondAttribute="trailing" constant="8" id="Yi7-mz-PfC"/>
                                     <constraint firstItem="FVi-bS-ATo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oIk-gA-s3U" secondAttribute="leading" constant="10" id="cbe-H2-Zgd"/>
-                                    <constraint firstItem="FVi-bS-ATo" firstAttribute="centerY" secondItem="HKO-7g-3wt" secondAttribute="centerY" id="ktZ-h0-CP0"/>
                                     <constraint firstItem="HKO-7g-3wt" firstAttribute="centerY" secondItem="oIk-gA-s3U" secondAttribute="centerY" id="lZg-eu-OBf"/>
+                                    <constraint firstItem="FVi-bS-ATo" firstAttribute="firstBaseline" secondItem="HKO-7g-3wt" secondAttribute="firstBaseline" id="nqa-as-Yr6"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="last updated at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5nF-K3-F2x">
@@ -453,10 +453,87 @@
                                     <action selector="updateButtonTapped:" destination="IIT-Ez-bCx" eventType="touchUpInside" id="mm1-Z2-vUm"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6F6-Vb-zi8">
+                                <rect key="frame" x="16" y="425.5" width="343" height="182.5"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="on3-5n-VMh">
+                                    <size key="itemSize" width="343" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="ERViewCell" id="dbd-Lq-Tz4" customClass="ERViewCell" customModule="iSpend" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SbN-Gi-3m2">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IeS-Bs-yss">
+                                                    <rect key="frame" x="14" y="13" width="25" height="24"/>
+                                                    <color key="tintColor" systemColor="systemGrayColor"/>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="circle.fill" catalog="system" symbolScale="large"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wmg-DK-6xR">
+                                                    <rect key="frame" x="10" y="9" width="33" height="32"/>
+                                                    <color key="tintColor" systemColor="secondarySystemBackgroundColor"/>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="dollarsign.circle.fill" catalog="system" symbolScale="large"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="22" weight="semibold"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0L1-Dz-q3L">
+                                                    <rect key="frame" x="51" y="10" width="64" height="30"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CZK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BsS-lb-rq5">
+                                                    <rect key="frame" x="293" y="15" width="40" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVz-3G-dWH">
+                                                    <rect key="frame" x="182" y="10" width="106" height="30"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="PVz-3G-dWH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SbN-Gi-3m2" secondAttribute="leading" constant="10" id="0NA-4L-9EL"/>
+                                                <constraint firstItem="BsS-lb-rq5" firstAttribute="leading" secondItem="PVz-3G-dWH" secondAttribute="trailing" constant="5" id="0gk-Kc-DEI"/>
+                                                <constraint firstItem="PVz-3G-dWH" firstAttribute="firstBaseline" secondItem="0L1-Dz-q3L" secondAttribute="firstBaseline" id="7HG-tL-6Yd"/>
+                                                <constraint firstItem="0L1-Dz-q3L" firstAttribute="leading" secondItem="Wmg-DK-6xR" secondAttribute="trailing" constant="8" id="7OE-Sa-cTo"/>
+                                                <constraint firstItem="IeS-Bs-yss" firstAttribute="centerX" secondItem="Wmg-DK-6xR" secondAttribute="centerX" id="7fH-hi-1q4"/>
+                                                <constraint firstItem="Wmg-DK-6xR" firstAttribute="leading" secondItem="SbN-Gi-3m2" secondAttribute="leading" constant="10" id="9ah-yx-SUg"/>
+                                                <constraint firstItem="0L1-Dz-q3L" firstAttribute="centerY" secondItem="Wmg-DK-6xR" secondAttribute="centerY" id="F4A-CF-8FX"/>
+                                                <constraint firstAttribute="trailing" secondItem="BsS-lb-rq5" secondAttribute="trailing" constant="10" id="bnA-31-Xqa"/>
+                                                <constraint firstItem="IeS-Bs-yss" firstAttribute="centerY" secondItem="Wmg-DK-6xR" secondAttribute="centerY" id="fft-Rx-xf0"/>
+                                                <constraint firstItem="Wmg-DK-6xR" firstAttribute="centerY" secondItem="SbN-Gi-3m2" secondAttribute="centerY" id="kDU-W8-6ah"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0L1-Dz-q3L" secondAttribute="trailing" constant="10" id="odU-YX-gzc"/>
+                                                <constraint firstItem="BsS-lb-rq5" firstAttribute="firstBaseline" secondItem="PVz-3G-dWH" secondAttribute="firstBaseline" id="q1G-mk-9Xt"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="baseCurrency" destination="BsS-lb-rq5" id="bK1-TB-JlT"/>
+                                            <outlet property="currencyLabel" destination="0L1-Dz-q3L" id="jIn-Hf-XJC"/>
+                                            <outlet property="currencySign" destination="Wmg-DK-6xR" id="VpF-TO-oYc"/>
+                                            <outlet property="currencyValue" destination="PVz-3G-dWH" id="9TP-UA-sKk"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="edL-oB-lYW"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6F6-Vb-zi8" firstAttribute="leading" secondItem="edL-oB-lYW" secondAttribute="leading" constant="16" id="1KA-iA-psr"/>
                             <constraint firstItem="EaP-3T-HmN" firstAttribute="leading" secondItem="VpH-FG-p9g" secondAttribute="leading" id="1Wi-kN-Mjv"/>
                             <constraint firstItem="8e3-BZ-HhT" firstAttribute="top" secondItem="txE-8v-J1P" secondAttribute="bottom" constant="10" id="4nh-Cn-iaX"/>
                             <constraint firstItem="TR9-bp-AGh" firstAttribute="leading" secondItem="3c0-He-din" secondAttribute="leading" id="9q0-KD-N9s"/>
@@ -473,6 +550,7 @@
                             <constraint firstItem="ygs-Hb-ImT" firstAttribute="centerX" secondItem="AbD-ub-ndu" secondAttribute="centerX" id="X9n-6I-W8h"/>
                             <constraint firstItem="Sn0-eg-99V" firstAttribute="trailing" secondItem="txE-8v-J1P" secondAttribute="trailing" id="XGy-gH-kha"/>
                             <constraint firstItem="8e3-BZ-HhT" firstAttribute="trailing" secondItem="txE-8v-J1P" secondAttribute="trailing" id="XZl-Qn-fXG"/>
+                            <constraint firstItem="6F6-Vb-zi8" firstAttribute="top" secondItem="5nF-K3-F2x" secondAttribute="bottom" constant="10" id="XiS-rY-RxQ"/>
                             <constraint firstItem="8e3-BZ-HhT" firstAttribute="leading" secondItem="txE-8v-J1P" secondAttribute="leading" id="YNN-A3-4Tu"/>
                             <constraint firstItem="aH6-12-chN" firstAttribute="leading" secondItem="VpH-FG-p9g" secondAttribute="leading" id="YsO-B1-qa8"/>
                             <constraint firstItem="oIk-gA-s3U" firstAttribute="top" secondItem="Sn0-eg-99V" secondAttribute="bottom" constant="10" id="ZBR-9K-Ngf"/>
@@ -489,11 +567,13 @@
                             <constraint firstItem="oIk-gA-s3U" firstAttribute="trailing" secondItem="txE-8v-J1P" secondAttribute="trailing" id="ove-v1-hzb"/>
                             <constraint firstItem="edL-oB-lYW" firstAttribute="trailing" secondItem="txE-8v-J1P" secondAttribute="trailing" constant="16" id="qrF-je-fNP"/>
                             <constraint firstItem="txE-8v-J1P" firstAttribute="leading" secondItem="edL-oB-lYW" secondAttribute="leading" constant="16" id="sEZ-yf-PFJ"/>
+                            <constraint firstItem="edL-oB-lYW" firstAttribute="trailing" secondItem="6F6-Vb-zi8" secondAttribute="trailing" constant="16" id="sOg-8A-oMB"/>
                             <constraint firstItem="5nF-K3-F2x" firstAttribute="firstBaseline" secondItem="BJF-KH-kmM" secondAttribute="firstBaseline" id="sQv-C1-GSI"/>
                             <constraint firstItem="K5B-gZ-zwl" firstAttribute="top" secondItem="edL-oB-lYW" secondAttribute="top" constant="16" id="sq5-1Y-DVE"/>
                             <constraint firstItem="8e3-BZ-HhT" firstAttribute="height" secondItem="txE-8v-J1P" secondAttribute="height" id="svY-g8-kkv"/>
                             <constraint firstItem="txE-8v-J1P" firstAttribute="top" secondItem="K5B-gZ-zwl" secondAttribute="bottom" constant="20" id="thB-bb-WrN"/>
                             <constraint firstItem="edL-oB-lYW" firstAttribute="trailing" secondItem="AbD-ub-ndu" secondAttribute="trailing" constant="11" id="uoC-v7-nAn"/>
+                            <constraint firstItem="edL-oB-lYW" firstAttribute="bottom" secondItem="6F6-Vb-zi8" secondAttribute="bottom" constant="10" id="xrk-ti-aRS"/>
                             <constraint firstItem="K5B-gZ-zwl" firstAttribute="leading" secondItem="edL-oB-lYW" secondAttribute="leading" constant="16" id="zBL-XS-oWy"/>
                         </constraints>
                     </view>
@@ -503,6 +583,7 @@
                         <outlet property="baseLabel2" destination="aH6-12-chN" id="Hgm-Yn-OUY"/>
                         <outlet property="baseLabel3" destination="EaP-3T-HmN" id="f2H-pr-pjN"/>
                         <outlet property="baseLabel4" destination="lVF-dO-72S" id="wv9-Za-H2f"/>
+                        <outlet property="currencyCollectionView" destination="6F6-Vb-zi8" id="xP8-Zw-eKD"/>
                         <outlet property="eurLabel" destination="Rp1-Hr-1gt" id="qWw-YR-Jta"/>
                         <outlet property="eurValueLabel" destination="zYR-J5-Hkf" id="ow3-Ey-dMj"/>
                         <outlet property="eurView" destination="txE-8v-J1P" id="kNH-75-5iM"/>
@@ -1081,7 +1162,6 @@
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrY-Be-aiz">
                                                     <rect key="frame" x="116" y="66.5" width="16.5" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="location.fill" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                                     </state>

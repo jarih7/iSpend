@@ -5,6 +5,11 @@
 //  Created by Jaroslav Hampejs on 17/01/2021.
 //
 
+struct Currency {
+    var buttonImage: String
+    var title: String
+}
+
 import UIKit
 import FirebaseFirestore
 
@@ -23,11 +28,11 @@ final class DataManagement {
     var presentedTransaction: Transaction? = nil
     var updatedTransactions: [Transaction] = []
     
+    var currencies: [Currency] = []
     var lastWeekTransactions: [Transaction] = []
     var lastMonthTransactions: [Transaction] = []
     var transactions: [Transaction] = [] {
         didSet {
-            updateWeekAndMonthTransactions()
             updateOveriewData?()
             updateHistoryData?()
             updateTransactionDetailData?(false)
@@ -49,6 +54,7 @@ final class DataManagement {
     init() {
         dateComponentDays.day = -7
         dateComponentMonts.month = -1
+        fillCurrencies()
         startListening()
     }
     
@@ -57,8 +63,11 @@ final class DataManagement {
         mainListener?.remove()
     }
     
-    func updateWeekAndMonthTransactions() {
-        
+    func fillCurrencies() {
+        currencies.append(Currency(buttonImage: "eurosign.circle.fill", title: "EUR"))
+        currencies.append(Currency(buttonImage: "dollarsign.circle.fill", title: "USD"))
+        currencies.append(Currency(buttonImage: "sterlingsign.circle.fill", title: "GBP"))
+        currencies.append(Currency(buttonImage: "yensign.circle.fill", title: "JPY"))
     }
     
     func addOrUpdateTransaction(transaction: NSDictionary, updating: Bool, nextIndex: Int) {

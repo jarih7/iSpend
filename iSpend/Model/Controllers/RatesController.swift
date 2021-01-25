@@ -13,7 +13,7 @@ struct Response: Decodable {
     let rates: Dictionary<String, Double>
 }
 
-class RatesController: UIViewController {
+class RatesController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var eurView: ERView!
     @IBOutlet weak var eurLabel: UILabel!
     @IBOutlet weak var eurValueLabel: UILabel!
@@ -38,6 +38,8 @@ class RatesController: UIViewController {
     @IBOutlet weak var lastUpdatedLabelTitle: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     
+    @IBOutlet weak var currencyCollectionView: UICollectionView!
+    
     var usdVal: Double = Double()
     var eurVal: Double = Double()
     var gbpVal: Double = Double()
@@ -50,11 +52,44 @@ class RatesController: UIViewController {
         setupDateFormatter()
         setupLabels()
         setupShadows()
+        setupCollectionView()
         
         eurView.setupViewStyle()
         usdView.setupViewStyle()
         gbpView.setupViewStyle()
         jpyView.setupViewStyle()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        currencyCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 16.0, right: 16.0)
+    }
+    
+    func setupCollectionView() {
+        currencyCollectionView.automaticallyAdjustsScrollIndicatorInsets = true
+        currencyCollectionView.delegate = self
+        currencyCollectionView.dataSource = self
+    }
+    
+    func setupCellContent(cell: ERViewCell, currency: Currency) {
+        cell.baseCurrency.text = "CZK"
+        cell.currencyLabel.text = currency.title
+        cell.currencySign.setImage(UIImage(systemName: currency.buttonImage)?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 22.0, weight: .semibold, scale: .large)), for: .normal)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return DataManagement.sharedInstance.currencies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ERViewCell", for: indexPath) as! ERViewCell
+        let currencyData = DataManagement.sharedInstance.currencies[indexPath.row] as Currency
+        setupCellContent(cell: cell, currency: currencyData)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: currencyCollectionView.frame.width - 32, height: 50.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

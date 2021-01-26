@@ -34,6 +34,7 @@ class TransactionViewCell: UICollectionViewCell {
         layer.masksToBounds = false
         backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 10).cgPath
         setupLabels()
         setupShadows()
     }

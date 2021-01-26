@@ -8,6 +8,13 @@
 struct Currency {
     var buttonImage: String
     var title: String
+    var value: Double
+}
+
+struct Response: Decodable {
+    let base: String
+    let date: String
+    let rates: Dictionary<String, Double>
 }
 
 import UIKit
@@ -20,6 +27,7 @@ final class DataManagement {
     var mainListener: ListenerRegistration? = nil
     var metadataListener: ListenerRegistration? = nil
     var currency: String = "CZK"
+    var defaultIsIncoming: Bool = false
     
     var map: [String:Any] = [:]
     var procItem: [String:Any] = [:]
@@ -28,6 +36,7 @@ final class DataManagement {
     var presentedTransaction: Transaction? = nil
     var updatedTransactions: [Transaction] = []
     
+    var currenciesLastUpdated: Date = Date()
     var currencies: [Currency] = []
     var lastWeekTransactions: [Transaction] = []
     var lastMonthTransactions: [Transaction] = []
@@ -38,6 +47,11 @@ final class DataManagement {
             updateTransactionDetailData?(false)
         }
     }
+    
+    var usdVal: Double = Double()
+    var eurVal: Double = Double()
+    var gbpVal: Double = Double()
+    var jpyVal: Double = Double()
     
     var LMI: Double = Double()
     var LMO: Double = Double()
@@ -63,20 +77,48 @@ final class DataManagement {
         mainListener?.remove()
     }
     
+    func getERData() {
+        if let url = URL(string: "https://api.exchangeratesapi.io/latest?symbols=EUR,USD,GBP,JPY&base=CZK") {
+            URLSession.shared.dataTask(with: url) { [self]
+                data, response, error in
+                if let data = data {
+                    let jd = JSONDecoder()
+                    do {
+                        let parsed = try jd.decode(Response.self, from: data)
+                        eurVal = 1 / parsed.rates["EUR"]!
+                        usdVal = 1 / parsed.rates["USD"]!
+                        gbpVal = 1 / parsed.rates["GBP"]!
+                        jpyVal = 1 / parsed.rates["JPY"]!
+                        
+                        currencies[0].value = eurVal
+                        currencies[1].value = usdVal
+                        currencies[2].value = gbpVal
+                        currencies[3].value = jpyVal
+                        
+                        currenciesLastUpdated = Date()
+                    } catch let error {
+                        print("AN ERROR OCCURED GETTING ER DATA: \(error)")
+                    }
+                }
+            }.resume()
+        }
+    }
+    
     func fillCurrencies() {
-        currencies.append(Currency(buttonImage: "eurosign.circle.fill", title: "EUR"))
-        currencies.append(Currency(buttonImage: "dollarsign.circle.fill", title: "USD"))
-        currencies.append(Currency(buttonImage: "sterlingsign.circle.fill", title: "GBP"))
-        currencies.append(Currency(buttonImage: "yensign.circle.fill", title: "JPY"))
+        getERData()
+        currencies.append(Currency(buttonImage: "eurosign.circle.fill", title: "EUR", value: eurVal))
+        currencies.append(Currency(buttonImage: "dollarsign.circle.fill", title: "USD", value: usdVal))
+        currencies.append(Currency(buttonImage: "sterlingsign.circle.fill", title: "GBP", value: gbpVal))
+        currencies.append(Currency(buttonImage: "yensign.circle.fill", title: "JPY", value: jpyVal))
     }
     
     func addOrUpdateTransaction(transaction: NSDictionary, updating: Bool, nextIndex: Int) {
         changedValues = [:]
         changedValues["transMap." + (transaction["id"] as! Int).description] = transaction
         
-        print("SENDING ADD OR UPDATE TRANSACTION DATA REQUEST")
+        //print("SENDING ADD OR UPDATE TRANSACTION DATA REQUEST")
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(changedValues)
-        print("ADD OR UPDATE TRANSACTION DATA REQUEST SENT")
+        //print("ADD OR UPDATE TRANSACTION DATA REQUEST SENT")
         
         changedValues = [:]
         updateMetadata()
@@ -86,9 +128,9 @@ final class DataManagement {
             changedValues["LTId"] = transaction["id"]
         }
         
-        print("SENDING ADD OR UPDATE METADATA REQUEST")
+        //print("SENDING ADD OR UPDATE METADATA REQUEST")
         db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").updateData(changedValues)
-        print("ADD OR UPDATE METADATA REQUEST SENT")
+        //print("ADD OR UPDATE METADATA REQUEST SENT")
     }
     
     func getTransactionById(id: Int) {
@@ -98,18 +140,13 @@ final class DataManagement {
     }
     
     func deleteTransactionById(id: Int) {
-        //smazat mazanou transakci
-        //prepocitat LXI, LXO, ...
-        //odeslat data na firebase
-        
-        print("DELETING UPDATED TRANSACTIONS ARRAY")
         updatedTransactions.removeAll(where: { $0.id == id })
         changedValues = [:]
-        
         changedValues["transMap." + id.description] = FieldValue.delete()
-        print("SENDING DELETE TRANSACTION REQUEST")
+        
+        //print("SENDING DELETE TRANSACTION REQUEST")
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(changedValues)
-        print("DELETE TRANSACTION REQUEST SENT")
+        //print("DELETE TRANSACTION REQUEST SENT")
         
         //updateMetadata
         changedValues = [:]
@@ -127,9 +164,9 @@ final class DataManagement {
             updateMetadata()
         }
         
-        print("SENDING UPDATE METADATA REQUEST")
+        //print("SENDING UPDATE METADATA REQUEST")
         db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").updateData(changedValues)
-        print("UPDATE METADATA REQUEST SENT")
+        //print("UPDATE METADATA REQUEST SENT")
     }
     
     func updateMetadata() {
@@ -176,12 +213,22 @@ final class DataManagement {
         changedValues["LMTD"] = Date()
     }
     
+    func updateDefaultTransactionType(to: Int) {
+        changedValues = [:]
+        changedValues["defIsIn"] = to == 0 ? true : false
+        
+        //print("SENDING UPDATE DEF TR TYPE REQUEST")
+        db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").updateData(changedValues)
+        //print("UPDATE DEF TR TYPE REQUEST SENT")
+    }
+    
     var updateOveriewData: (() -> Void)?
     var updateHistoryData: (() -> Void)?
     var updateTransactionDetailData: ((_ firstLoad: Bool) -> Void)?
     
     func startListening() {
         metadataListener = db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
+            //print("*** METADATA LISTENING ***")
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -193,14 +240,13 @@ final class DataManagement {
                 return
             }
             
-            print("*** METADATA LISTENING ***")
-            
             LMI = data["LMI"] as! Double
             LMO = data["LMO"] as! Double
             LWI = data["LWI"] as! Double
             LWO = data["LWO"] as! Double
             LTId = data["LTId"] as! Int
             
+            defaultIsIncoming = data["defIsIn"] as! Bool
             nextTransactionIndex = data["nextTransactionIndex"] as! Int
             
             LMFromDate = Date(timeIntervalSince1970: TimeInterval((data["LMFD"] as! Timestamp).seconds))
@@ -208,8 +254,7 @@ final class DataManagement {
         })
         
         mainListener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
-            
-            print("*** MAIN LISTENING ***")
+            //print("*** MAIN LISTENING ***")
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -222,7 +267,6 @@ final class DataManagement {
             }
             
             map = data["transMap"] as! Dictionary<String, Any>
-            
             updatedTransactions.removeAll()
             lastMonthTransactions.removeAll()
             lastWeekTransactions.removeAll()
@@ -239,7 +283,6 @@ final class DataManagement {
                     lastMonthTransactions.append(updatedTransactions.last!)
                 }
             }
-            
             sortTransactions()
             transactions = updatedTransactions
         })

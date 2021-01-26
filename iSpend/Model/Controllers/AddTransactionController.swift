@@ -50,15 +50,15 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //print("STARTED LISTENNING FROM ADD_NEW_TRANSACTION...\n")
-        //startListening()
         scrollView.setContentOffset(CGPoint.zero, animated: true)
         locationManager.startUpdatingLocation()
+        
+        if (passedUpdate == false) {
+            incomingSegmentControl.selectedSegmentIndex = DataManagement.sharedInstance.defaultIsIncoming == true ? 0 : 1
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //print("STOPPED LISTENNING FROM ADD_NEW_TRANSACTION...\n")
-        //listener?.remove()
         locationManager.stopUpdatingLocation()
     }
     
@@ -108,7 +108,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
-        incomingSegmentControl.selectedSegmentIndex = 1
+        //incomingSegmentControl.selectedSegmentIndex = 1
         
         saveButton.layer.masksToBounds = false
         saveButton.layer.cornerRadius = 10
@@ -124,7 +124,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.text = passedConterparty
         totalTextField.text = passedTotal
         datePicker.date = passedDate
-        incomingSegmentControl.selectedSegmentIndex = passedIncoming ? 0 : 1
+        //incomingSegmentControl.selectedSegmentIndex = passedIncoming ? 0 : 1
     }
     
     func resetFields() {
@@ -134,7 +134,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         datePicker.date = Date()
         locationButton.isSelected = false
         locationButton.tintColor = .systemGray
-        incomingSegmentControl.selectedSegmentIndex = 1
+        //incomingSegmentControl.selectedSegmentIndex = 1
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {

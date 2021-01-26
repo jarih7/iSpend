@@ -122,7 +122,6 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     }
     
     func updateView() {
-        print("UPDATING DETAIL VIEW")
         titleLabel.text = DataManagement.sharedInstance.presentedTransaction?.title ?? "EMPTY"
         counterpartyLabel.text = DataManagement.sharedInstance.presentedTransaction?.counterparty ?? "EMPTY"
         dateLabel.text = dateFormatter.string(from: DataManagement.sharedInstance.presentedTransaction?.date ?? Date())

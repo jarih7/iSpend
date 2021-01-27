@@ -48,6 +48,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         DataManagement.sharedInstance.updateHistoryData = updateHistoryData
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateHistoryData()
+    }
+    
     func updateHistoryData() {
         transactionsCollectionView.reloadData()
     }

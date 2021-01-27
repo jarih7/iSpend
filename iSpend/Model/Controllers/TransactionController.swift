@@ -66,10 +66,12 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     }
     
     func updateTransactionDetailData(firstLoad: Bool = false) {
-        if (firstLoad == false) {
-            DataManagement.sharedInstance.getTransactionById(id: transId)
+        DispatchQueue.main.async { [self] in
+            if (firstLoad == false) {
+                DataManagement.sharedInstance.getTransactionById(id: transId)
+            }
+            updateView()            
         }
-        updateView()
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

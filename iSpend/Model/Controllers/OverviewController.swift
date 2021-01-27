@@ -25,17 +25,17 @@ class OverviewController: UIViewController {
         weekView.setupView()
         lastTransactionView.setupView()
         scrollView.delaysContentTouches = false
-        DataManagement.sharedInstance.updateOveriewData = updateOveriewData
+        DataManagement.sharedInstance.updateOverviewData = updateOverviewData
     }
     
-    func updateOveriewData() {
+    func updateOverviewData() {
         print("UPDATE OVERVIEW DATA")
         updateOverviewBlocks()
         updateLastTransaction()
     }
     
     func updateOverviewBlocks() {
-        monthView.fromDate.text = dateFormatter.string(from: DataManagement.sharedInstance.LMFromDate)
+        monthView.fromDate.text = dateFormatter.string(from: Calendar.current.date(byAdding: DataManagement.sharedInstance.dateComponentMonts, to: Date())!)
         monthView.toDate.text = dateFormatter.string(from: Date())
         
         monthView.monthInSum.text = Int(DataManagement.sharedInstance.LMI).description

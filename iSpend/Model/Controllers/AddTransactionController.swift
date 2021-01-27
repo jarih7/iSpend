@@ -28,8 +28,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     let locationManager = CLLocationManager()
     var myLocation: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
     let dateFormatter = DateFormatter()
-    
-    var newTransactionIndex = Int()
     var newTransactionPath: String = ""
     
     var passedIndex: Int = 0
@@ -150,7 +148,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             "total": Double(totalTextField.text?.replacingOccurrences(of: ",", with: ".") ?? "0")!
         ]
         
-        DataManagement.sharedInstance.addOrUpdateTransaction(transaction: newTransaction, updating: passedUpdate, nextIndex: newTransactionIndex + 1)
+        DataManagement.sharedInstance.addOrUpdateTransaction(transaction: newTransaction, updating: passedUpdate, nextIndex: DataManagement.sharedInstance.nextTransactionIndex + 1)
         
         if (passedUpdate == false) {
             tabBarController?.selectedIndex = 1

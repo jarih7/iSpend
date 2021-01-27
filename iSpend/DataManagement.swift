@@ -40,11 +40,15 @@ final class DataManagement {
     var currencies: [Currency] = []
     var lastWeekTransactions: [Transaction] = []
     var lastMonthTransactions: [Transaction] = []
+    
     var transactions: [Transaction] = [] {
         didSet {
-            updateOveriewData?()
-            updateHistoryData?()
-            updateTransactionDetailData?(false)
+            print("--- DID SET ---")
+            DispatchQueue.main.async { [self] in
+                updateOverviewData?()
+                updateHistoryData?()
+                updateTransactionDetailData?(false)
+            }
         }
     }
     
@@ -53,10 +57,10 @@ final class DataManagement {
     var gbpVal: Double = Double()
     var jpyVal: Double = Double()
     
-    var LMI: Double = Double()
-    var LMO: Double = Double()
-    var LWI: Double = Double()
-    var LWO: Double = Double()
+    var LMI: Double = 0
+    var LMO: Double = 0
+    var LWI: Double = 0
+    var LWO: Double = 0
     var LTId: Int = Int()
     var nextTransactionIndex = Int()
     var LMFromDate: Date = Date()
@@ -124,6 +128,7 @@ final class DataManagement {
         updateMetadata()
         
         if (updating == false) {
+            print("ADDING NEW TRANSACTION IN DMANAGER WITH ID: \(String(describing: transaction["id"])), NEXT ID IS: \(nextIndex)")
             changedValues["nextTransactionIndex"] = nextIndex
             changedValues["LTId"] = transaction["id"]
         }
@@ -144,73 +149,28 @@ final class DataManagement {
         changedValues = [:]
         changedValues["transMap." + id.description] = FieldValue.delete()
         
-        //print("SENDING DELETE TRANSACTION REQUEST")
+        print("SENDING DELETE TRANSACTION REQUEST")
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(changedValues)
-        //print("DELETE TRANSACTION REQUEST SENT")
+        print("DELETE TRANSACTION REQUEST SENT")
         
         //updateMetadata
         changedValues = [:]
         
         if (updatedTransactions.isEmpty) {
-            changedValues["LMFD"] = Date()
-            changedValues["LMTD"] = Date()
-            changedValues["LTId"] = -1
             changedValues["nextTransactionIndex"] = 0
-            changedValues["LMI"] = 0
-            changedValues["LMO"] = 0
-            changedValues["LWI"] = 0
-            changedValues["LWO"] = 0
-        } else {
-            updateMetadata()
         }
         
-        //print("SENDING UPDATE METADATA REQUEST")
+        updateMetadata()
+        
+        print("SENDING UPDATE METADATA REQUEST")
         db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").updateData(changedValues)
-        //print("UPDATE METADATA REQUEST SENT")
+        print("UPDATE METADATA REQUEST SENT")
     }
     
     func updateMetadata() {
-        var updatedLMI: Double = 0.0
-        var updatedLMO: Double = 0.0
-        var updatedLWI: Double = 0.0
-        var updatedLWO: Double = 0.0
-        var updatedLMFromDate: Date = Date()
-        //var updatedLMToDate: Date = Date()
-        
-        for item in updatedTransactions {
-            if (item.date > Calendar.current.date(byAdding: dateComponentDays, to: Date())!) {
-                if (item.incoming == true) {
-                    updatedLWI += item.total
-                    updatedLMI += item.total
-                } else {
-                    updatedLWO += item.total
-                    updatedLMO += item.total
-                }
-            } else if (item.date > Calendar.current.date(byAdding: dateComponentMonts, to: Date())!) {
-                if (item.incoming == true) {
-                    updatedLMI += item.total
-                } else {
-                    updatedLMO += item.total
-                }
-                
-                //get "from" and "to" dates
-                if (item.date.compare(LMFromDate) == .orderedAscending) {
-                    updatedLMFromDate = item.date
-                }
-                
-                //if (item.date.compare(LMToDate) == .orderedDescending) {
-                //    updatedLMToDate = item.date
-                //}
-            }
-        }
-        
-        changedValues["LMI"] = updatedLMI
-        changedValues["LMO"] = updatedLMO
-        changedValues["LWI"] = updatedLWI
-        changedValues["LWO"] = updatedLWO
         changedValues["LTId"] = updatedTransactions.first?.id ?? -1
-        changedValues["LMFD"] = updatedLMFromDate
-        changedValues["LMTD"] = Date()
+        //changedValues["LMFD"] = Calendar.current.date(byAdding: dateComponentMonts, to: Date())!
+        //changedValues["LMTD"] = Date()
     }
     
     func updateDefaultTransactionType(to: Int) {
@@ -222,39 +182,13 @@ final class DataManagement {
         //print("UPDATE DEF TR TYPE REQUEST SENT")
     }
     
-    var updateOveriewData: (() -> Void)?
+    var updateOverviewData: (() -> Void)?
     var updateHistoryData: (() -> Void)?
     var updateTransactionDetailData: ((_ firstLoad: Bool) -> Void)?
     
     func startListening() {
-        metadataListener = db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
-            //print("*** METADATA LISTENING ***")
-            
-            guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-            }
-            
-            guard let data = document.data() else {
-                print("Document data was empty.")
-                return
-            }
-            
-            LMI = data["LMI"] as! Double
-            LMO = data["LMO"] as! Double
-            LWI = data["LWI"] as! Double
-            LWO = data["LWO"] as! Double
-            LTId = data["LTId"] as! Int
-            
-            defaultIsIncoming = data["defIsIn"] as! Bool
-            nextTransactionIndex = data["nextTransactionIndex"] as! Int
-            
-            LMFromDate = Date(timeIntervalSince1970: TimeInterval((data["LMFD"] as! Timestamp).seconds))
-            LMToDate = Date(timeIntervalSince1970: TimeInterval((data["LMTD"] as! Timestamp).seconds))
-        })
-        
         mainListener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
-            //print("*** MAIN LISTENING ***")
+            print("*** MAIN LISTENING ***")
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -272,19 +206,63 @@ final class DataManagement {
             lastWeekTransactions.removeAll()
             procItem = [:]
             
+            LMI = 0
+            LMO = 0
+            LWI = 0
+            LWO = 0
+            
             for item in map {
                 procItem = item.value as! [String:Any]
-                updatedTransactions.append(Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45))
+                let newTransaction: Transaction = Transaction(counterparty: procItem["counterparty"] as? String ?? "COUNTERPARTY ERROR", date: Date(timeIntervalSince1970: TimeInterval((procItem["date"] as! Timestamp).seconds)), id: procItem["id"] as? Int ?? 999999, incoming: procItem["incoming"] as? Bool ?? false, latitude: (procItem["location"] as! GeoPoint).latitude, longitude: (procItem["location"] as! GeoPoint).longitude, title: procItem["title"] as? String ?? "TITLE ERROR", total: procItem["total"] as? Double ?? 123.45)
                 
-                if (updatedTransactions.last!.date > Calendar.current.date(byAdding: dateComponentDays, to: Date())!) {
-                    lastWeekTransactions.append(updatedTransactions.last!)
-                    lastMonthTransactions.append(updatedTransactions.last!)
-                } else if (updatedTransactions.last!.date > Calendar.current.date(byAdding: dateComponentMonts, to: Date())!) {
-                    lastMonthTransactions.append(updatedTransactions.last!)
+                updatedTransactions.append(newTransaction)
+                
+                if (newTransaction.date > Calendar.current.date(byAdding: dateComponentDays, to: Date())!) {
+                    //last week transaction
+                    lastWeekTransactions.append(newTransaction)
+                    lastMonthTransactions.append(newTransaction)
+                    
+                    if (newTransaction.incoming == true) {
+                        LWI += newTransaction.total
+                        LMI += newTransaction.total
+                    } else {
+                        LWO += newTransaction.total
+                        LMO += newTransaction.total
+                    }
+                } else if (newTransaction.date > Calendar.current.date(byAdding: dateComponentMonts, to: Date())!) {
+                    //last month transaction
+                    lastMonthTransactions.append(newTransaction)
+                    
+                    if (newTransaction.incoming == true) {
+                        LMI += newTransaction.total
+                    } else {
+                        LMO += newTransaction.total
+                    }
                 }
             }
+            
             sortTransactions()
+            //print("SETTING TRANSACTIONS ---")
             transactions = updatedTransactions
+            //print("TRANSACTIONS SET ---")
+        })
+        
+        metadataListener = db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
+            print("*** METADATA LISTENING ***")
+            
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            
+            LTId = data["LTId"] as! Int
+            defaultIsIncoming = data["defIsIn"] as! Bool
+            nextTransactionIndex = data["nextTransactionIndex"] as! Int
         })
     }
     

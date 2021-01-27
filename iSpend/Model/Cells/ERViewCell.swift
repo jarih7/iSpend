@@ -13,14 +13,6 @@ class ERViewCell: UICollectionViewCell {
     @IBOutlet weak var currencyValue: UILabel!
     @IBOutlet weak var baseCurrency: UILabel!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 10).cgPath

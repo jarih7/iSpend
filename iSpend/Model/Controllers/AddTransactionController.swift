@@ -23,12 +23,9 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     @IBOutlet weak var locationButton: UIButton!
     
     var headerText: String = "New Transaction"
-    
     var usingTransIndex: Int = Int()
     let locationManager = CLLocationManager()
     var myLocation: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
-    let dateFormatter = DateFormatter()
-    var newTransactionPath: String = ""
     
     var passedIndex: Int = 0
     var passedTitle: String = ""
@@ -40,30 +37,26 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
-        setupDateFormatter()
         setupFunctionality()
         setupStyle()
         setupContent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         scrollView.setContentOffset(CGPoint.zero, animated: true)
         locationManager.startUpdatingLocation()
         
         if (passedUpdate == false) {
             incomingSegmentControl.selectedSegmentIndex = DataManagement.sharedInstance.defaultIsIncoming == true ? 0 : 1
+        } else {
+            incomingSegmentControl.selectedSegmentIndex = passedIncoming == true ? 0 : 1
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         locationManager.stopUpdatingLocation()
-    }
-    
-    func setupDateFormatter() {
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. MM. yyyy"
     }
     
     func setupFunctionality() {
@@ -90,23 +83,14 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     }
     
     func setupStyle() {
-        dismissButton.tintColor = .systemGray4
-        dismissButtonBackground.tintColor = .systemGray
-        
         locationButton.setImage(UIImage(systemName: "location.fill"), for: .selected)
         locationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
         locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .systemGray : .systemBlue
         
-        titleTextField.layer.cornerRadius = 5
-        counterpartyTextField.layer.cornerRadius = 5
-        totalTextField.layer.cornerRadius = 5
-        
         titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
         totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
-        
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
-        //incomingSegmentControl.selectedSegmentIndex = 1
         
         saveButton.layer.masksToBounds = false
         saveButton.layer.cornerRadius = 10
@@ -122,7 +106,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         counterpartyTextField.text = passedConterparty
         totalTextField.text = passedTotal
         datePicker.date = passedDate
-        //incomingSegmentControl.selectedSegmentIndex = passedIncoming ? 0 : 1
     }
     
     func resetFields() {
@@ -132,7 +115,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         datePicker.date = Date()
         locationButton.isSelected = false
         locationButton.tintColor = .systemGray
-        //incomingSegmentControl.selectedSegmentIndex = 1
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -155,17 +137,10 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         } else {
             passedUpdate = false
             dismiss(animated: true, completion: nil)
-            //print("UPDATING DETAIL DATA")
-            //DataManagement.sharedInstance.updateTransactionDetailData?()
-            //print("UPDATE DETAIL DATA CALL FINISHED")
         }
         
         headerLabel.text = "New Transaction"
         resetFields()
-    }
-    
-    @IBAction func dismissButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
@@ -179,5 +154,9 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
             myLocation = newLocation
         }
         locationButton.tintColor = locationButton.isSelected ? .systemBlue : .systemGray
+    }
+    
+    @IBAction func dismissButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -17,32 +17,25 @@ class TransactionViewCell: UICollectionViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var locationBadge: UIButton!
     
-    var doubleTotalValue: Double = 0.0
     var incoming: Bool = false
     var id: Int = 0
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
     override func layoutSubviews() {
+        super.layoutSubviews()
+        setupView()
+        setupLabels()
+        setupShadows()
+    }
+    
+    func setupView() {
         clipsToBounds = true
         layer.masksToBounds = false
         backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 10).cgPath
-        setupLabels()
-        setupShadows()
     }
     
     func setupLabels() {
-        label.textColor = .label
-        total.textColor = .label
-        
         if (incoming == true) {
             totalSymbol.textColor = .systemGreen
         } else {
@@ -50,11 +43,6 @@ class TransactionViewCell: UICollectionViewCell {
         }
         
         total.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .bold)
-        counterpartyLabel.textColor = .secondaryLabel
-        counterparty.textColor = .label
-        dateLabel.textColor = .secondaryLabel
-        date.textColor = .label
-        locationBadge.tintColor = .systemBlue
     }
     
     func setupShadows() {

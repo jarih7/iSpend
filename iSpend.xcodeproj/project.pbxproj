@@ -77,6 +77,7 @@
 		64A133642549F9DF001717AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				64F4EAE325C1AC7A00B941E9 /* Cells */,
 				64FB08C225B32D19000F0DBC /* Controllers */,
 				64FB08C525B32DE0000F0DBC /* Delegates */,
 				64FB08C125B32CDC000F0DBC /* Storyboards */,
@@ -116,6 +117,17 @@
 			path = iSpend;
 			sourceTree = "<group>";
 		};
+		64F4EAE325C1AC7A00B941E9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				64E4726D25BF44340044AD07 /* ERViewCell.swift */,
+				649C40272567FC6800B5C516 /* HistoryViewHeader.swift */,
+				6477E4E325C02838007AEC7D /* SettingsViewCell.swift */,
+				64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		64FB08C125B32CDC000F0DBC /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,13 +154,9 @@
 		64FB08C325B32D52000F0DBC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				649C40272567FC6800B5C516 /* HistoryViewHeader.swift */,
 				64259524257FFD81006E3193 /* LastTransactionView.swift */,
 				64B15E24255E85330066528C /* MonthView.swift */,
-				64A80B0F254F3AB800D89C05 /* TransactionViewCell.swift */,
 				64B15E27255E861D0066528C /* WeekView.swift */,
-				64E4726D25BF44340044AD07 /* ERViewCell.swift */,
-				6477E4E325C02838007AEC7D /* SettingsViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

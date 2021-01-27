@@ -15,35 +15,17 @@ import UIKit
 import FirebaseFirestore
 
 class HistoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
-    
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var dismissButtonBackground: UIButton!
     
     var display = viewType.full
-    let dateFormatter = DateFormatter()
-    var dateComponentDays = DateComponents()
-    var dateComponentMonts = DateComponents()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
-        
-        dismissButtonBackground.layer.shadowColor = UIColor.black.cgColor
-        dismissButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
-        dismissButtonBackground.layer.shadowRadius = 5
-        dismissButtonBackground.layer.shadowOpacity = 0.1
-        
-        if (display == viewType.week || display == viewType.month) {
-            dismissButton.isHidden = false
-            dismissButtonBackground.isHidden = false
-        } else {
-            dismissButton.isHidden = true
-            dismissButtonBackground.isHidden = true
-        }
-        
+        setupButtons()
+        setupShadows()
         setupCollectionView()
-        setupDateFormatter()
         transactionsCollectionView.delaysContentTouches = false
         DataManagement.sharedInstance.updateHistoryData = updateHistoryData
     }
@@ -62,24 +44,34 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 16.0, right: 16.0)
     }
     
+    func setupButtons() {
+        if (display == viewType.week || display == viewType.month) {
+            dismissButton.isHidden = false
+            dismissButtonBackground.isHidden = false
+        } else {
+            dismissButton.isHidden = true
+            dismissButtonBackground.isHidden = true
+        }
+    }
+    
+    func setupShadows() {
+        dismissButtonBackground.layer.shadowColor = UIColor.black.cgColor
+        dismissButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
+        dismissButtonBackground.layer.shadowRadius = 5
+        dismissButtonBackground.layer.shadowOpacity = 0.1
+    }
+    
     func setupCollectionView() {
         transactionsCollectionView.automaticallyAdjustsScrollIndicatorInsets = true
         transactionsCollectionView.delegate = self
         transactionsCollectionView.dataSource = self
     }
     
-    func setupDateFormatter() {
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. M. yyyy"
-        dateComponentDays.day = -7
-        dateComponentMonts.month = -1
-    }
-    
     func setupCellContent(cell: TransactionViewCell, transaction: Transaction) {
         cell.id = transaction.id
         cell.label.text = transaction.title
         cell.total.text = Int(transaction.total).description
+        cell.total.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .bold)
         
         if (transaction.incoming == true) {
             cell.incoming = true
@@ -96,8 +88,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         }
         
         cell.counterparty.text = transaction.counterparty
-        cell.date.text = dateFormatter.string(from: transaction.date)
-        cell.doubleTotalValue = transaction.total
+        cell.date.text = DataManagement.sharedInstance.dateFormatter.string(from: transaction.date)
     }
     
     //----------------------------------------------------
@@ -145,7 +136,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
                 historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 45.0, weight: .heavy)
             }
             
-            historyViewHeader.headerLabel.textColor = .label
             return historyViewHeader
         }
         return UICollectionReusableView()
@@ -162,12 +152,11 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         }
     }
     
-    @IBAction func unwindToController(segue: UIStoryboardSegue) {
-        
-    }
-    
     @IBAction func dismissButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func unwindToController(segue: UIStoryboardSegue) {
     }
 }
 

@@ -36,7 +36,6 @@ final class DataManagement {
     var presentedTransaction: Transaction? = nil
     var updatedTransactions: [Transaction] = []
     
-    var currenciesLastUpdated: Date = Date()
     var currencies: [Currency] = []
     var lastWeekTransactions: [Transaction] = []
     var lastMonthTransactions: [Transaction] = []
@@ -57,19 +56,21 @@ final class DataManagement {
     var gbpVal: Double = Double()
     var jpyVal: Double = Double()
     
-    var LMI: Double = 0
-    var LMO: Double = 0
-    var LWI: Double = 0
-    var LWO: Double = 0
+    var LMI: Double = 0.0
+    var LMO: Double = 0.0
+    var LWI: Double = 0.0
+    var LWO: Double = 0.0
     var LTId: Int = Int()
-    var nextTransactionIndex = Int()
-    var LMFromDate: Date = Date()
-    var LMToDate: Date = Date()
+    var nextTransactionIndex: Int = Int()
     
-    var dateComponentDays = DateComponents()
-    var dateComponentMonts = DateComponents()
+    let dateFormatter: DateFormatter = DateFormatter()
+    var dateComponentDays: DateComponents = DateComponents()
+    var dateComponentMonts: DateComponents = DateComponents()
     
     init() {
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "d. M. yyyy"
         dateComponentDays.day = -7
         dateComponentMonts.month = -1
         fillCurrencies()
@@ -98,8 +99,6 @@ final class DataManagement {
                         currencies[1].value = usdVal
                         currencies[2].value = gbpVal
                         currencies[3].value = jpyVal
-                        
-                        currenciesLastUpdated = Date()
                     } catch let error {
                         print("AN ERROR OCCURED GETTING ER DATA: \(error)")
                     }
@@ -128,7 +127,7 @@ final class DataManagement {
         updateMetadata()
         
         if (updating == false) {
-            print("ADDING NEW TRANSACTION IN DMANAGER WITH ID: \(String(describing: transaction["id"])), NEXT ID IS: \(nextIndex)")
+            //print("ADDING NEW TRANSACTION IN DMANAGER WITH ID: \(String(describing: transaction["id"])), NEXT ID IS: \(nextIndex)")
             changedValues["nextTransactionIndex"] = nextIndex
             changedValues["LTId"] = transaction["id"]
         }
@@ -149,9 +148,9 @@ final class DataManagement {
         changedValues = [:]
         changedValues["transMap." + id.description] = FieldValue.delete()
         
-        print("SENDING DELETE TRANSACTION REQUEST")
+        //print("SENDING DELETE TRANSACTION REQUEST")
         db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").updateData(changedValues)
-        print("DELETE TRANSACTION REQUEST SENT")
+        //print("DELETE TRANSACTION REQUEST SENT")
         
         //updateMetadata
         changedValues = [:]
@@ -162,9 +161,9 @@ final class DataManagement {
         
         updateMetadata()
         
-        print("SENDING UPDATE METADATA REQUEST")
+        //print("SENDING UPDATE METADATA REQUEST")
         db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").updateData(changedValues)
-        print("UPDATE METADATA REQUEST SENT")
+        //print("UPDATE METADATA REQUEST SENT")
     }
     
     func updateMetadata() {
@@ -188,7 +187,7 @@ final class DataManagement {
     
     func startListening() {
         mainListener = db.collection("iSpend").document("UtE3HXvUEmamvjtRaDDs").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
-            print("*** MAIN LISTENING ***")
+            //print("*** MAIN LISTENING ***")
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -248,7 +247,7 @@ final class DataManagement {
         })
         
         metadataListener = db.collection("iSpend").document("3bvxdXdmwUKlVIiRZjTO").addSnapshotListener(includeMetadataChanges: false, listener: { [self] (documentSnapshot, error) in
-            print("*** METADATA LISTENING ***")
+            //print("*** METADATA LISTENING ***")
             
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")

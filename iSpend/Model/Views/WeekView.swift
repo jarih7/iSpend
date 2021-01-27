@@ -8,45 +8,25 @@
 import UIKit
 
 class WeekView: UIControl {
-    @IBOutlet weak var lastWeekLabel: UILabel!
-    @IBOutlet weak var chevron: UIButton!
     @IBOutlet weak var weekInSymbol: UILabel!
     @IBOutlet weak var weekInSum: UILabel!
     @IBOutlet weak var weekOutSymbol: UILabel!
     @IBOutlet weak var weekOutSum: UILabel!
-    @IBOutlet weak var weekBalanceLabel: UILabel!
     @IBOutlet weak var weekBalance: UILabel!
     @IBOutlet weak var weekCurrency: UILabel!
     @IBOutlet weak var weekInCurrency: UILabel!
     @IBOutlet weak var weekOutCurrency: UILabel!
     
-    var currency: String = "CZK"
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     func setupView() {
-        backgroundColor = .tertiarySystemBackground
         layer.cornerRadius = 10
         setupLabels()
         setupShadows()
     }
     
     func setupLabels() {
-        lastWeekLabel.text = "Last Week"
-        weekInSymbol.text = "→"
-        weekOutSymbol.text = "←"
-        weekInSymbol.textColor = .systemGreen
-        weekOutSymbol.textColor = .systemOrange
-        weekBalanceLabel.textColor = .secondaryLabel
-        weekCurrency.text = currency
-        weekInCurrency.text = currency
-        weekOutCurrency.text = currency
+        weekCurrency.text = DataManagement.sharedInstance.currency
+        weekInCurrency.text = DataManagement.sharedInstance.currency
+        weekOutCurrency.text = DataManagement.sharedInstance.currency
         weekInSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekOutSum.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .semibold)
         weekBalance.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)

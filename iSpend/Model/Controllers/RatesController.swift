@@ -8,24 +8,22 @@
 import UIKit
 
 class RatesController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
     @IBOutlet weak var updateButton: UIButton!
-    @IBOutlet weak var lastUpdatedLabelTitle: UILabel!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     @IBOutlet weak var currencyCollectionView: UICollectionView!
     
-    var lastUpdated: Date = Date()
-    var dateFormatter = DateFormatter()
+    let dateFormatter: DateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDateFormatter()
         setupLabels()
         setupShadows()
+        setupDateFormatter()
         setupCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         DataManagement.sharedInstance.getERData()
         currencyCollectionView.reloadData()
         lastUpdatedLabel.text = dateFormatter.string(from: Date())
@@ -36,6 +34,12 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
         currencyCollectionView.contentInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
     }
     
+    func setupDateFormatter() {
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .medium
+        dateFormatter.locale = .current
+    }
+    
     func setupCollectionView() {
         currencyCollectionView.automaticallyAdjustsScrollIndicatorInsets = true
         currencyCollectionView.delegate = self
@@ -43,7 +47,7 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func setupCellContent(cell: ERViewCell, index: Int, currency: Currency) {
-        cell.baseCurrency.text = "CZK"
+        cell.baseCurrency.text = DataManagement.sharedInstance.currency
         cell.currencyLabel.text = currency.title
         cell.currencySign.setImage(UIImage(systemName: currency.buttonImage)?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 22.0, weight: .semibold, scale: .large)), for: .normal)
         cell.currencyValue.text = String(format: "%.4f", DataManagement.sharedInstance.currencies[index].value)
@@ -71,18 +75,8 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
         lastUpdatedLabel.text = dateFormatter.string(from: Date())
     }
     
-    func setupDateFormatter() {
-        dateFormatter.dateStyle = .none
-        dateFormatter.timeStyle = .medium
-        dateFormatter.locale = .current
-    }
-    
     func setupLabels() {
-        lastUpdatedLabel.text = dateFormatter.string(from: lastUpdated)
         lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
-        
-        lastUpdatedLabelTitle.textColor = .secondaryLabel
-        lastUpdatedLabel.textColor = .secondaryLabel
     }
     
     func setupShadows() {

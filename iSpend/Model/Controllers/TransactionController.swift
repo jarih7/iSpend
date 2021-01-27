@@ -12,12 +12,9 @@ import FirebaseFirestore
 
 class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var counterpartyLabelTitle: UILabel!
     @IBOutlet weak var counterpartyLabel: UILabel!
-    @IBOutlet weak var dateLabelTitle: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var totalLabelTitle: UILabel!
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var symbolLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
@@ -29,37 +26,18 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     @IBOutlet weak var optionsButton: UIButton!
     
     var location = MKPointAnnotation()
-    
     let locationManager = CLLocationManager()
-    let dateFormatter = DateFormatter()
-    var dateComponentDays = DateComponents()
-    var dateComponentMonts = DateComponents()
-
     var transId: Int = 0
-    var hasLocation: Bool = false
-    let locationButtonOnSymbolName: String = "trash.circle.fill"
-    let locationButtonOffSymbolName: String = "location.circle.fill"
-    let locationSet: String = "location"
-    let locationNotSet: String = "no location"
     var isQuickView: Bool = false
     
-    var updatedLMI: Double = Double()
-    var updatedLMO: Double = Double()
-    var updatedLWI: Double = Double()
-    var updatedLWO: Double = Double()
-    
-    var updatedLMFromDate: Date = Date()
-    var updatedLMToDate: Date = Date()
-    
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
         setupView()
-        setupDateFormatter()
         DataManagement.sharedInstance.getTransactionById(id: transId)
         DataManagement.sharedInstance.updateTransactionDetailData = updateTransactionDetailData
         updateTransactionDetailData(firstLoad: true)
@@ -76,7 +54,6 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
-
         let identifier = "Annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
@@ -91,33 +68,13 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     }
     
     func setupView() {
-        view.backgroundColor = .systemBackground
         backButton.isHidden = isQuickView ? true : false
-        backButton.tintColor = .systemBlue
-        backButton.setTitleColor(.systemBlue, for: .normal)
-        
         dismissButton.isHidden = isQuickView ? false : true
-        dismissButton.tintColor = .systemGray5
         dismissButtonBackground.isHidden = isQuickView ? false : true
-        dismissButtonBackground.tintColor = .systemGray
-        
-        titleLabel.textColor = .label
-        counterpartyLabel.textColor = .label
-        totalLabelTitle.textColor = .secondaryLabel
-        dateLabelTitle.textColor = .secondaryLabel
-        counterpartyLabelTitle.textColor = .secondaryLabel
-        dateLabel.textColor = .label
-        
-        priceLabel.textColor = .label
         priceLabel.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .bold)
-        
         currencyLabel.text = "(\(DataManagement.sharedInstance.currency))"
-        currencyLabel.textColor = .secondaryLabel
-        
         locationManager.delegate = self
         locationLabel.isHidden = true
-        locationLabel.textColor = .secondaryLabel
-        
         mapView.delegate = self
         mapView.isHidden = true
         mapView.layer.cornerRadius = 10
@@ -126,7 +83,7 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     func updateView() {
         titleLabel.text = DataManagement.sharedInstance.presentedTransaction?.title ?? "EMPTY"
         counterpartyLabel.text = DataManagement.sharedInstance.presentedTransaction?.counterparty ?? "EMPTY"
-        dateLabel.text = dateFormatter.string(from: DataManagement.sharedInstance.presentedTransaction?.date ?? Date())
+        dateLabel.text = DataManagement.sharedInstance.dateFormatter.string(from: DataManagement.sharedInstance.presentedTransaction?.date ?? Date())
         priceLabel.text = String(format: "%.2f", DataManagement.sharedInstance.presentedTransaction?.total ?? 0.0)
         
         if (DataManagement.sharedInstance.presentedTransaction?.incoming == true) {
@@ -138,19 +95,12 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         }
         
         locationLabel.isHidden = (DataManagement.sharedInstance.presentedTransaction?.locationEnabled())! ? false : true
-        
         mapView.isHidden = (DataManagement.sharedInstance.presentedTransaction?.locationEnabled())! ? false : true
         
         location.coordinate = CLLocationCoordinate2D(latitude: DataManagement.sharedInstance.presentedTransaction?.latitude ?? 0.0, longitude: DataManagement.sharedInstance.presentedTransaction?.longitude ?? 0.0)
         mapView.addAnnotation(location)
         mapView.setCenter(location.coordinate, animated: true)
         mapView.setRegion(MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000), animated: true)
-    }
-    
-    func setupDateFormatter() {
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. M. yyyy"
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
@@ -163,10 +113,9 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     }
     
     @IBAction func optionsButtonTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Actions", message: "What do you want to do with this Transaction?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Transaction Options", message: "What do you want to do with this Transaction?", preferredStyle: .actionSheet)
         
         let editAction = UIAlertAction(title: "Edit", style: .default) { [self] (UIAlertAction) in
-            print("EDIT ACTION SELECTED")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let addTC = storyboard.instantiateViewController(identifier: "AddTransactionController") as! AddTransactionController
             
@@ -179,21 +128,16 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
             addTC.passedIncoming = DataManagement.sharedInstance.presentedTransaction?.incoming ?? false
             addTC.myLocation = GeoPoint(latitude: DataManagement.sharedInstance.presentedTransaction?.latitude ?? 0.0, longitude: DataManagement.sharedInstance.presentedTransaction?.longitude ?? 0.0)
             addTC.passedUpdate = true
-            
             present(addTC, animated: true, completion: nil)
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [self] (UIAlertAction) in
-            print("DEL 1")
             DataManagement.sharedInstance.deleteTransactionById(id: transId)
             
             if (isQuickView == true) {
-                print("DISMISSING")
                 dismiss(animated: true, completion: nil)
             } else {
-                print("POPPING")
                 navigationController?.popViewController(animated: true)
-                print("POPPED")
             }
         }
         

@@ -15,28 +15,23 @@ class OverviewController: UIViewController {
     @IBOutlet weak var lastTransactionView: LastTransactionView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    let dateFormatter = DateFormatter()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
-        setupDateFormatter()
+        scrollView.delaysContentTouches = false
         monthView.setupView()
         weekView.setupView()
         lastTransactionView.setupView()
-        scrollView.delaysContentTouches = false
         DataManagement.sharedInstance.updateOverviewData = updateOverviewData
     }
     
     func updateOverviewData() {
-        print("UPDATE OVERVIEW DATA")
         updateOverviewBlocks()
         updateLastTransaction()
     }
     
     func updateOverviewBlocks() {
-        monthView.fromDate.text = dateFormatter.string(from: Calendar.current.date(byAdding: DataManagement.sharedInstance.dateComponentMonts, to: Date())!)
-        monthView.toDate.text = dateFormatter.string(from: Date())
+        monthView.fromDate.text = DataManagement.sharedInstance.dateFormatter.string(from: Calendar.current.date(byAdding: DataManagement.sharedInstance.dateComponentMonts, to: Date())!)
+        monthView.toDate.text = DataManagement.sharedInstance.dateFormatter.string(from: Date())
         
         monthView.monthInSum.text = Int(DataManagement.sharedInstance.LMI).description
         monthView.monthOutSum.text = Int(DataManagement.sharedInstance.LMO).description
@@ -53,7 +48,6 @@ class OverviewController: UIViewController {
             lastTransactionLabel.isHidden = false
             prepareLastTransactionBlock()
         } else {
-            //no transactions
             print("NO LAST ITEM")
             lastTransactionView.isHidden = true
             lastTransactionLabel.isHidden = true
@@ -79,13 +73,7 @@ class OverviewController: UIViewController {
         }
         
         lastTransactionView.ltCounterparty.text = DataManagement.sharedInstance.transactions.first?.counterparty ?? "EMPTY"
-        lastTransactionView.ltDate.text = dateFormatter.string(from: DataManagement.sharedInstance.transactions.first?.date ?? Date())
-    }
-    
-    func setupDateFormatter() {
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "d. M. yyyy"
+        lastTransactionView.ltDate.text = DataManagement.sharedInstance.dateFormatter.string(from: DataManagement.sharedInstance.transactions.first?.date ?? Date())
     }
     
     @IBAction func lastTransactionTapped(_ sender: LastTransactionView) {
@@ -93,7 +81,6 @@ class OverviewController: UIViewController {
         let transactionVC = storyBoard.instantiateViewController(identifier: "TransactionController") as! TransactionController
         transactionVC.transId = DataManagement.sharedInstance.transactions.first!.id
         transactionVC.isQuickView = true
-        
         present(transactionVC, animated: true, completion: nil)
     }
     
@@ -101,7 +88,6 @@ class OverviewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
         vc.display = viewType.week
-
         present(vc, animated: true, completion: nil)
     }
     
@@ -109,7 +95,6 @@ class OverviewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
         vc.display = viewType.month
-        
         present(vc, animated: true, completion: nil)
     }
 }

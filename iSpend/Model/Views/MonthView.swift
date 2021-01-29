@@ -44,8 +44,8 @@ class MonthView: UIControl {
     }
     
     func shring(down: Bool) {
-        UIView.animate(withDuration: 0.12, delay: 0, options: .allowUserInteraction) {
-            self.transform = down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 2, options: .curveEaseInOut) {
+            self.transform = down ? CGAffineTransform(scaleX: 0.92, y: 0.92) : .identity
         } completion: { _ in }
     }
     

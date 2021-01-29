@@ -76,7 +76,7 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func setupLabels() {
-        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
+        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .medium)
     }
     
     func setupShadows() {

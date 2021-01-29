@@ -63,8 +63,8 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
+        //saveButton.translatesAutoresizingMaskIntoConstraints = false
+        //saveButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
         
         if (passedUpdate == false) {
             dismissButton.isHidden = true
@@ -87,17 +87,19 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         locationButton.setImage(UIImage(systemName: "location.slash.fill"), for: .normal)
         locationButton.tintColor = myLocation == GeoPoint(latitude: 0, longitude: 0) ? .systemGray : .systemBlue
         
-        titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
-        counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
-        totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's title", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel, NSAttributedString.Key.font : UIFont(name: "SFProRounded-Regular", size: 18)!])
+        counterpartyTextField.attributedPlaceholder = NSAttributedString(string: "enter counterparty's name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel, NSAttributedString.Key.font : UIFont(name: "SFProRounded-Regular", size: 18)!])
+        totalTextField.attributedPlaceholder = NSAttributedString(string: "enter transaction's total", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel, NSAttributedString.Key.font : UIFont(name: "SFProRounded-Regular", size: 18)!])
         totalTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         
-        saveButton.layer.masksToBounds = false
+        saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius = 10
         
-        datePicker.backgroundColor = .systemBackground
-        datePicker.layer.cornerRadius = 10
+        incomingSegmentControl.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "SFCompactRounded-Medium", size: 13)!], for: .normal)
+        
+        datePicker.backgroundColor = .tertiarySystemBackground
         datePicker.layer.masksToBounds = true
+        datePicker.layer.cornerRadius = 10
     }
     
     func setupContent() {

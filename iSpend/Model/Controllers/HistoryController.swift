@@ -127,13 +127,13 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
             
             if (display == viewType.month) {
                 historyViewHeader.headerLabel.text = "Last Month"
-                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 30.0, weight: .bold)
+                historyViewHeader.headerLabel.font = UIFont(name: "SFProRounded-Bold", size: 30)
             } else if (display == viewType.week) {
                 historyViewHeader.headerLabel.text = "Last Week"
-                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 30.0, weight: .bold)
+                historyViewHeader.headerLabel.font = UIFont(name: "SFProRounded-Bold", size: 30)
             } else {
                 historyViewHeader.headerLabel.text = "History"
-                historyViewHeader.headerLabel.font = UIFont.systemFont(ofSize: 45.0, weight: .heavy)
+                historyViewHeader.headerLabel.font = UIFont(name: "SFProRounded-Heavy", size: 46)
             }
             
             return historyViewHeader

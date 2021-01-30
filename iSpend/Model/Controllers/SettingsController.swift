@@ -13,7 +13,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var copyrightLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    let versionNumber: String = "0.9.7"
+    let versionNumber: String = "0.9.8"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +38,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         cell.label.text = "Default transaction type"
         cell.segmentControl.setTitle("Incoming", forSegmentAt: 0)
         cell.segmentControl.setTitle("Outgoing", forSegmentAt: 1)
+        cell.segmentControl.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "SFCompactRounded-Medium", size: 13)!], for: .normal)
         cell.segmentControl.selectedSegmentIndex = DataManagement.sharedInstance.defaultIsIncoming ? 0 : 1
         return cell
     }

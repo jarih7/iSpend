@@ -138,6 +138,8 @@
 		64A133642549F9DF001717AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				64B17945257D380100BA52E6 /* Transaction.swift */,
+				6487EC8725B4391000B32CEB /* DataManagement.swift */,
 				64F4EAE325C1AC7A00B941E9 /* Cells */,
 				64FB08C225B32D19000F0DBC /* Controllers */,
 				64FB08C525B32DE0000F0DBC /* Delegates */,
@@ -170,11 +172,9 @@
 			children = (
 				6442A7E725C4940800C170A5 /* Fonts */,
 				64EA08EA2549ADFC003AC8A4 /* Assets.xcassets */,
-				6487EC8725B4391000B32CEB /* DataManagement.swift */,
 				64089E62254DC14300483B4F /* GoogleService-Info.plist */,
 				64EA08EF2549ADFC003AC8A4 /* Info.plist */,
 				64A133642549F9DF001717AD /* Model */,
-				64B17945257D380100BA52E6 /* Transaction.swift */,
 			);
 			path = iSpend;
 			sourceTree = "<group>";

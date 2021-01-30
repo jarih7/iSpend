@@ -40,6 +40,7 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         setupFunctionality()
         setupStyle()
         setupContent()
+        setupShadows()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,9 +63,6 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
     func setupFunctionality() {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        
-        //saveButton.translatesAutoresizingMaskIntoConstraints = false
-        //saveButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
         
         if (passedUpdate == false) {
             dismissButton.isHidden = true
@@ -100,6 +98,13 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         datePicker.backgroundColor = .tertiarySystemBackground
         datePicker.layer.masksToBounds = true
         datePicker.layer.cornerRadius = 10
+    }
+    
+    func setupShadows() {
+        dismissButtonBackground.layer.shadowColor = UIColor.black.cgColor
+        dismissButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
+        dismissButtonBackground.layer.shadowRadius = 5
+        dismissButtonBackground.layer.shadowOpacity = 0.1
     }
     
     func setupContent() {

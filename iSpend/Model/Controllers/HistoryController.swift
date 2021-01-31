@@ -116,7 +116,7 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if (display == viewType.month || display == viewType.week) {
-            return CGSize(width: transactionsCollectionView.frame.width - 32, height: 70.0)
+            return CGSize(width: transactionsCollectionView.frame.width - 32, height: 110.0)
         } else {
             return CGSize(width: transactionsCollectionView.frame.width - 32, height: 90.0)
         }
@@ -125,17 +125,27 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let historyViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? HistoryViewHeader {
             
+            historyViewHeader.inLabel.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .regular)
+            historyViewHeader.outLabel.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .regular)
+            
             if (display == viewType.month) {
                 historyViewHeader.headerLabel.text = "Last Month"
                 historyViewHeader.headerLabel.font = UIFont(name: "SFProRounded-Bold", size: 30)
+                historyViewHeader.inLabel.text = Int(DataManagement.sharedInstance.LMI).description
+                historyViewHeader.outLabel.text = Int(DataManagement.sharedInstance.LMO).description
             } else if (display == viewType.week) {
                 historyViewHeader.headerLabel.text = "Last Week"
                 historyViewHeader.headerLabel.font = UIFont(name: "SFProRounded-Bold", size: 30)
+                historyViewHeader.inLabel.text = Int(DataManagement.sharedInstance.LWI).description
+                historyViewHeader.outLabel.text = Int(DataManagement.sharedInstance.LWO).description
             } else {
                 historyViewHeader.headerLabel.text = "History"
                 historyViewHeader.headerLabel.font = UIFont(name: "SFProRounded-Heavy", size: 46)
+                historyViewHeader.inLabel.isHidden = true
+                historyViewHeader.outLabel.isHidden = true
+                historyViewHeader.inSymbol.isHidden = true
+                historyViewHeader.outSymbol.isHidden = true
             }
-            
             return historyViewHeader
         }
         return UICollectionReusableView()

@@ -9,4 +9,8 @@ import UIKit
 
 class HistoryViewHeader: UICollectionReusableView {
     @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var inLabel: UILabel!
+    @IBOutlet weak var outLabel: UILabel!
+    @IBOutlet weak var inSymbol: UIButton!
+    @IBOutlet weak var outSymbol: UIButton!
 }

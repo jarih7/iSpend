@@ -368,6 +368,7 @@
                         <constraints>
                             <constraint firstItem="6F6-Vb-zi8" firstAttribute="leading" secondItem="edL-oB-lYW" secondAttribute="leading" id="1KA-iA-psr"/>
                             <constraint firstItem="BJF-KH-kmM" firstAttribute="leading" secondItem="5nF-K3-F2x" secondAttribute="trailing" constant="4" id="CN3-bi-cH4"/>
+                            <constraint firstItem="edL-oB-lYW" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BJF-KH-kmM" secondAttribute="trailing" constant="16" id="WSp-V4-C2e"/>
                             <constraint firstItem="ygs-Hb-ImT" firstAttribute="centerX" secondItem="AbD-ub-ndu" secondAttribute="centerX" id="X9n-6I-W8h"/>
                             <constraint firstItem="BJF-KH-kmM" firstAttribute="centerY" secondItem="AbD-ub-ndu" secondAttribute="centerY" id="ZoO-N4-gdc"/>
                             <constraint firstItem="ygs-Hb-ImT" firstAttribute="centerY" secondItem="AbD-ub-ndu" secondAttribute="centerY" id="dWy-kE-lbv"/>
@@ -945,13 +946,13 @@
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="12" id="p9b-Lk-d8H">
                                     <size key="itemSize" width="374" height="100"/>
-                                    <size key="headerReferenceSize" width="50" height="70"/>
+                                    <size key="headerReferenceSize" width="50" height="100"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TransactionViewCell" id="BiF-cV-2fR" customClass="TransactionViewCell" customModule="iSpend" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="70" width="374" height="100"/>
+                                        <rect key="frame" x="0.5" y="100" width="374" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="szF-Dn-JRi">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
@@ -1055,7 +1056,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="Header" id="95a-hJ-Rdu" customClass="HistoryViewHeader" customModule="iSpend" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nadpis" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opB-8f-8Uw">
@@ -1064,26 +1065,66 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="last x out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiP-gg-bvl">
+                                            <rect key="frame" x="21.5" y="71.5" width="59" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2Z-lc-vUD">
+                                            <rect key="frame" x="0.0" y="52" width="16.5" height="22"/>
+                                            <color key="tintColor" systemColor="systemGreenColor"/>
+                                            <state key="normal" image="arrow.right" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="13" weight="black"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRi-gx-nFO">
+                                            <rect key="frame" x="0.0" y="69" width="16.5" height="22"/>
+                                            <color key="tintColor" systemColor="systemOrangeColor"/>
+                                            <state key="normal" image="arrow.left" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="13" weight="black"/>
+                                            </state>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="last x in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tqD-0s-3qx">
+                                            <rect key="frame" x="21.5" y="54.5" width="49.5" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="VRi-gx-nFO" firstAttribute="centerY" secondItem="iiP-gg-bvl" secondAttribute="centerY" id="AAF-Jr-Vin"/>
+                                        <constraint firstItem="tqD-0s-3qx" firstAttribute="leading" secondItem="c2Z-lc-vUD" secondAttribute="trailing" constant="5" id="Eqr-EY-tzv"/>
+                                        <constraint firstItem="VRi-gx-nFO" firstAttribute="leading" secondItem="opB-8f-8Uw" secondAttribute="leading" id="GkF-Uv-945"/>
+                                        <constraint firstItem="tqD-0s-3qx" firstAttribute="top" secondItem="opB-8f-8Uw" secondAttribute="bottom" constant="5" id="Gs4-ex-rbo"/>
+                                        <constraint firstItem="iiP-gg-bvl" firstAttribute="leading" secondItem="VRi-gx-nFO" secondAttribute="trailing" constant="5" id="N9a-LN-Qgd"/>
                                         <constraint firstItem="opB-8f-8Uw" firstAttribute="leading" secondItem="95a-hJ-Rdu" secondAttribute="leading" id="Rb4-ks-19a"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iiP-gg-bvl" secondAttribute="trailing" constant="16" id="Rp8-P2-If7"/>
                                         <constraint firstItem="opB-8f-8Uw" firstAttribute="top" secondItem="95a-hJ-Rdu" secondAttribute="top" constant="16" id="YQx-md-WbR"/>
+                                        <constraint firstItem="c2Z-lc-vUD" firstAttribute="leading" secondItem="opB-8f-8Uw" secondAttribute="leading" id="azH-CW-edr"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="opB-8f-8Uw" secondAttribute="trailing" constant="16" id="goS-bO-Yrv"/>
+                                        <constraint firstItem="iiP-gg-bvl" firstAttribute="top" secondItem="tqD-0s-3qx" secondAttribute="bottom" id="iRs-lE-VLN"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tqD-0s-3qx" secondAttribute="trailing" constant="16" id="txc-P1-OEi"/>
+                                        <constraint firstItem="c2Z-lc-vUD" firstAttribute="centerY" secondItem="tqD-0s-3qx" secondAttribute="centerY" id="uzT-Rh-ZdQ"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="headerLabel" destination="opB-8f-8Uw" id="Hnk-WS-Xbg"/>
+                                        <outlet property="inLabel" destination="tqD-0s-3qx" id="q9G-1V-peh"/>
+                                        <outlet property="inSymbol" destination="c2Z-lc-vUD" id="xK9-hE-z6j"/>
+                                        <outlet property="outLabel" destination="iiP-gg-bvl" id="CSD-sa-r9c"/>
+                                        <outlet property="outSymbol" destination="VRi-gx-nFO" id="GFr-lE-GZJ"/>
                                     </connections>
                                 </collectionReusableView>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdv-dr-TG9" userLabel="background">
-                                <rect key="frame" x="324.5" y="17" width="34" height="33"/>
+                                <rect key="frame" x="326.5" y="15" width="34" height="33"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" image="circle.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="23" scale="large" weight="semibold"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewI-v9-2Ob">
-                                <rect key="frame" x="318.5" y="11" width="45.5" height="44.5"/>
+                                <rect key="frame" x="320.5" y="9" width="45.5" height="44.5"/>
                                 <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" image="xmark.circle.fill" catalog="system">
@@ -1099,8 +1140,8 @@
                         <constraints>
                             <constraint firstItem="lwN-9o-R3r" firstAttribute="height" secondItem="UnH-vc-P6d" secondAttribute="height" id="3kO-R1-K6C"/>
                             <constraint firstItem="UnH-vc-P6d" firstAttribute="trailing" secondItem="lwN-9o-R3r" secondAttribute="trailing" id="7cJ-F1-JvV"/>
-                            <constraint firstItem="UnH-vc-P6d" firstAttribute="trailing" secondItem="ewI-v9-2Ob" secondAttribute="trailing" constant="11" id="Z5y-Mk-Hhj"/>
-                            <constraint firstItem="ewI-v9-2Ob" firstAttribute="top" secondItem="UnH-vc-P6d" secondAttribute="top" constant="11" id="eeA-hL-LR6"/>
+                            <constraint firstItem="UnH-vc-P6d" firstAttribute="trailing" secondItem="ewI-v9-2Ob" secondAttribute="trailing" constant="9" id="Z5y-Mk-Hhj"/>
+                            <constraint firstItem="ewI-v9-2Ob" firstAttribute="top" secondItem="UnH-vc-P6d" secondAttribute="top" constant="9" id="eeA-hL-LR6"/>
                             <constraint firstItem="UnH-vc-P6d" firstAttribute="bottom" secondItem="lwN-9o-R3r" secondAttribute="bottom" id="ily-kd-wWI"/>
                             <constraint firstItem="lwN-9o-R3r" firstAttribute="leading" secondItem="UnH-vc-P6d" secondAttribute="leading" id="mK5-y9-cCT"/>
                             <constraint firstItem="gdv-dr-TG9" firstAttribute="centerY" secondItem="ewI-v9-2Ob" secondAttribute="centerY" id="r0L-A9-fBo"/>
@@ -1375,6 +1416,8 @@
     </scenes>
     <resources>
         <image name="arrow.clockwise.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="arrow.left" catalog="system" width="128" height="98"/>
+        <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="chart.bar.doc.horizontal" catalog="system" width="115" height="128"/>
         <image name="chart.bar.xaxis" catalog="system" width="128" height="98"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>

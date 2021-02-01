@@ -30,17 +30,17 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
     var transId: Int = 0
     var isQuickView: Bool = false
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         DataManagement.sharedInstance.getTransactionById(id: transId)
         DataManagement.sharedInstance.updateTransactionDetailData = updateTransactionDetailData
         updateTransactionDetailData(firstLoad: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     func updateTransactionDetailData(firstLoad: Bool = false) {
@@ -50,21 +50,6 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
             }
             updateView()            
         }
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-
-        return annotationView
     }
     
     func setupView() {
@@ -101,6 +86,21 @@ class TransactionController: UIViewController, UIGestureRecognizerDelegate, CLLo
         mapView.addAnnotation(location)
         mapView.setCenter(location.coordinate, animated: true)
         mapView.setRegion(MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000), animated: true)
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+
+        return annotationView
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool

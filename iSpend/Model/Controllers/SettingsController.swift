@@ -12,7 +12,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var versionNumberLabel: UILabel!
     @IBOutlet weak var copyrightLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
     let versionNumber: String = "0.9.8"
     
     override func viewDidLoad() {

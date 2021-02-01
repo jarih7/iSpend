@@ -18,7 +18,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     @IBOutlet weak var transactionsCollectionView: UICollectionView!
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var dismissButtonBackground: UIButton!
-    
     var display = viewType.full
     
     override func viewDidLoad() {
@@ -33,10 +32,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateHistoryData()
-    }
-    
-    func updateHistoryData() {
-        transactionsCollectionView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -67,6 +62,10 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         transactionsCollectionView.dataSource = self
     }
     
+    func updateHistoryData() {
+        transactionsCollectionView.reloadData()
+    }
+    
     func setupCellContent(cell: TransactionViewCell, transaction: Transaction) {
         cell.id = transaction.id
         cell.label.text = transaction.title
@@ -90,8 +89,6 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
         cell.counterparty.text = transaction.counterparty
         cell.date.text = DataManagement.sharedInstance.dateFormatter.string(from: transaction.date)
     }
-    
-    //----------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (display == viewType.month) {
@@ -125,8 +122,8 @@ class HistoryController: UIViewController, UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let historyViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? HistoryViewHeader {
             
-            historyViewHeader.inLabel.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .regular)
-            historyViewHeader.outLabel.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .regular)
+            historyViewHeader.inLabel.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
+            historyViewHeader.outLabel.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
             
             if (display == viewType.month) {
                 historyViewHeader.headerLabel.text = "Last Month"

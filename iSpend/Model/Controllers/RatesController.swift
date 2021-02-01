@@ -11,7 +11,6 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
     @IBOutlet weak var updateButton: UIButton!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     @IBOutlet weak var currencyCollectionView: UICollectionView!
-    
     let dateFormatter: DateFormatter = DateFormatter()
     
     override func viewDidLoad() {
@@ -46,6 +45,17 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
         currencyCollectionView.dataSource = self
     }
     
+    func setupLabels() {
+        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .medium)
+    }
+    
+    func setupShadows() {
+        updateButton.layer.shadowColor = UIColor.black.cgColor
+        updateButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        updateButton.layer.shadowRadius = 5
+        updateButton.layer.shadowOpacity = 0.1
+    }
+    
     func setupCellContent(cell: ERViewCell, index: Int, currency: Currency) {
         cell.baseCurrency.text = DataManagement.sharedInstance.currency
         cell.currencyLabel.text = currency.title
@@ -73,16 +83,5 @@ class RatesController: UIViewController, UICollectionViewDelegate, UICollectionV
         DataManagement.sharedInstance.getERData()
         currencyCollectionView.reloadData()
         lastUpdatedLabel.text = dateFormatter.string(from: Date())
-    }
-    
-    func setupLabels() {
-        lastUpdatedLabel.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .medium)
-    }
-    
-    func setupShadows() {
-        updateButton.layer.shadowColor = UIColor.black.cgColor
-        updateButton.layer.shadowOffset = CGSize(width: 0, height: 1)
-        updateButton.layer.shadowRadius = 5
-        updateButton.layer.shadowOpacity = 0.1
     }
 }

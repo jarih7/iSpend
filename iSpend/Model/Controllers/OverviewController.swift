@@ -84,17 +84,17 @@ class OverviewController: UIViewController {
         present(transactionVC, animated: true, completion: nil)
     }
     
-    @IBAction func lastWeekTapped(_ sender: WeekView) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
-        vc.display = viewType.week
-        present(vc, animated: true, completion: nil)
-    }
-    
     @IBAction func lastMonthTapped(_ sender: MonthView) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
         vc.display = viewType.month
+        present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func lastWeekTapped(_ sender: WeekView) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(identifier: "HistoryController") as! HistoryController
+        vc.display = viewType.week
         present(vc, animated: true, completion: nil)
     }
 }

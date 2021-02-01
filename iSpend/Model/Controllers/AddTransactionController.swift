@@ -100,19 +100,19 @@ class AddTransactionController: UIViewController, UITextFieldDelegate, CLLocatio
         datePicker.layer.cornerRadius = 10
     }
     
-    func setupShadows() {
-        dismissButtonBackground.layer.shadowColor = UIColor.black.cgColor
-        dismissButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
-        dismissButtonBackground.layer.shadowRadius = 5
-        dismissButtonBackground.layer.shadowOpacity = 0.1
-    }
-    
     func setupContent() {
         headerLabel.text = headerText
         titleTextField.text = passedTitle
         counterpartyTextField.text = passedConterparty
         totalTextField.text = passedTotal
         datePicker.date = passedDate
+    }
+    
+    func setupShadows() {
+        dismissButtonBackground.layer.shadowColor = UIColor.black.cgColor
+        dismissButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
+        dismissButtonBackground.layer.shadowRadius = 5
+        dismissButtonBackground.layer.shadowOpacity = 0.1
     }
     
     func resetFields() {
